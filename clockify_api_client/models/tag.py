@@ -24,5 +24,5 @@ class Tag(AbstractClockify):
             return self.get(url)
 
         except Exception as e:
-            logging.exception("API error: {0}".format(e))
+            logging.exception("API error")
             raise e

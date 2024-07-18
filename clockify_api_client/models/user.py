@@ -17,7 +17,7 @@ class User(AbstractClockify):
             url = self.base_url + "/user/"
             return self.get(url)
         except Exception as e:
-            logging.exception("API error: {0}".format(e))
+            logging.exception("API error")
             raise e
 
     def get_users(self, workspace_id, params=None):
@@ -34,7 +34,7 @@ class User(AbstractClockify):
                 url = self.base_url + "/workspaces/" + workspace_id + "/users/"
             return self.get(url)
         except Exception as e:
-            logging.exception("API error: {0}".format(e))
+            logging.exception("API error")
             raise e
 
     def add_user(self, workspace_id, email):
@@ -49,7 +49,7 @@ class User(AbstractClockify):
             data = {"emails": emails}
             return self.post(url, data)
         except Exception as e:
-            logging.exception("API error: {0}".format(e))
+            logging.exception("API error")
             raise e
 
     def update_user(self, workspace_id, user_id, payload):
@@ -63,7 +63,7 @@ class User(AbstractClockify):
             url = self.base_url + "/workspaces/" + workspace_id + "/users/" + user_id
             return self.put(url, payload)
         except Exception as e:
-            logging.exception("API error: {0}".format(e))
+            logging.exception("API error")
             raise e
 
     def remove_user(self, workspace_id, user_id):
@@ -75,5 +75,5 @@ class User(AbstractClockify):
             url = self.base_url + "/workspaces/" + workspace_id + "/users/" + user_id
             return self.delete(url)
         except Exception as e:
-            logging.exception("API error: {0}".format(e))
+            logging.exception("API error")
             raise e
