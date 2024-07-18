@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from clockify_api_client.factories.abstract_factory import AbstractFactory
 from clockify_api_client.models.project import Project
 

@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Self
+
 from clockify_api_client.factories.client_factory import ClientFactory
 from clockify_api_client.factories.project_factory import ProjectFactory
 from clockify_api_client.factories.report_factory import ReportFactory
@@ -8,19 +12,28 @@ from clockify_api_client.factories.user_factory import UserFactory
 from clockify_api_client.factories.workspace_factory import WorkspaceFactory
 from clockify_api_client.utils import Singleton
 
+if TYPE_CHECKING:
+    from clockify_api_client.models.client import Client
+    from clockify_api_client.models.project import Project
+    from clockify_api_client.models.report import Report
+    from clockify_api_client.models.tag import Tag
+    from clockify_api_client.models.task import Task
+    from clockify_api_client.models.time_entry import TimeEntry
+    from clockify_api_client.models.user import User
+    from clockify_api_client.models.workspace import Workspace
+
 
 class ClockifyAPIClient(metaclass=Singleton):
-    def __init__(self) -> None:
-        self.workspaces = None
-        self.projects = None
-        self.tags = None
-        self.tasks = None
-        self.time_entries = None
-        self.users = None
-        self.reports = None
-        self.clients = None
+    workspaces: Workspace
+    projects: Project
+    tags: Tag
+    tasks: Task
+    time_entries: TimeEntry
+    users: User
+    reports: Report
+    clients: Client
 
-    def build(self, api_key, api_url):
+    def build(self, api_key: str, api_url: str) -> Self:
         """Builds services from available factories.
         :param api_key Clockify API key.
         :param api_url Clockify API url.

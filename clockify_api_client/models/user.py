@@ -1,15 +1,18 @@
+from __future__ import annotations
+
 import logging
+from typing import TYPE_CHECKING
 from urllib.parse import urlencode
 
 from clockify_api_client.abstract_clockify import AbstractClockify
 
+if TYPE_CHECKING:
+    from clockify_api_client.types import JsonType
+
 
 class User(AbstractClockify):
 
-    def __init__(self, api_key, api_url) -> None:
-        super().__init__(api_key=api_key, api_url=api_url)
-
-    def get_current_user(self):
+    def get_current_user(self) -> JsonType:
         """Get user by paired with API key.
         :return User dictionary representation.
         """
@@ -20,7 +23,7 @@ class User(AbstractClockify):
             logging.exception("API error")
             raise
 
-    def get_users(self, workspace_id, params=None):
+    def get_users(self, workspace_id: str, params: dict | None=None) -> JsonType:
         """Returns list of all users in given workspace.
         :param workspace_id Id of workspace.
         :param params       Request URL query params.
@@ -28,8 +31,8 @@ class User(AbstractClockify):
         """
         try:
             if params:
-                params = urlencode(params, doseq=True)
-                url = self.base_url + "/workspaces/" + workspace_id + "/users?" + params
+                params_str = urlencode(params, doseq=True)
+                url = self.base_url + "/workspaces/" + workspace_id + "/users?" + params_str
             else:
                 url = self.base_url + "/workspaces/" + workspace_id + "/users/"
             return self.get(url)
@@ -37,7 +40,7 @@ class User(AbstractClockify):
             logging.exception("API error")
             raise
 
-    def add_user(self, workspace_id, email):
+    def add_user(self, workspace_id: str, email: str) -> JsonType:
         """Adds new user into workspace.
         :param workspace_id Id of workspace.
         :param email        Email of new user.
@@ -52,7 +55,7 @@ class User(AbstractClockify):
             logging.exception("API error")
             raise
 
-    def update_user(self, workspace_id, user_id, payload):
+    def update_user(self, workspace_id: str, user_id: str, payload: dict) -> JsonType:
         """Adds new user into workspace.
         :param workspace_id Id of workspace.
         :param user_id      User Id.
@@ -66,7 +69,7 @@ class User(AbstractClockify):
             logging.exception("API error")
             raise
 
-    def remove_user(self, workspace_id, user_id):
+    def remove_user(self, workspace_id: str, user_id: str) -> JsonType:
         """Removes user from workspace.
         :param workspace_id Id of workspace.
         :param user_id      User Id.

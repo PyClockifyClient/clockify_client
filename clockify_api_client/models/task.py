@@ -1,15 +1,18 @@
+from __future__ import annotations
+
 import logging
+from typing import TYPE_CHECKING
 from urllib.parse import urlencode
 
 from clockify_api_client.abstract_clockify import AbstractClockify
 
+if TYPE_CHECKING:
+    from clockify_api_client.types import JsonType
+
 
 class Task(AbstractClockify):
 
-    def __init__(self, api_key, api_url) -> None:
-        super().__init__(api_key=api_key, api_url=api_url)
-
-    def add_task(self, workspace_id, project_id, task_name, request_data=None):
+    def add_task(self, workspace_id: str, project_id: str, task_name: str, request_data: dict | None=None) -> JsonType:
         """Creates new task in Clockify.
         :param workspace_id  Id of workspace.
         :param request_data  Dictionary with request data.
@@ -27,7 +30,7 @@ class Task(AbstractClockify):
             logging.exception("API error")
             raise
 
-    def update_task(self,  workspace_id, project_id, task_id, request_data=None):
+    def update_task(self,  workspace_id: str, project_id: str, task_id: str, request_data: dict | None=None) -> JsonType:
         """Updates task in Clockify.
         :param workspace_id  Id of workspace.
         :param project_id    Id of project.
@@ -42,7 +45,7 @@ class Task(AbstractClockify):
             logging.exception("API error")
             raise
 
-    def get_tasks(self, workspace_id, project_id, params=None):
+    def get_tasks(self, workspace_id: str, project_id: str, params: dict | None=None) -> JsonType:
         """Gets list of tasks from Clockify.
         :param workspace_id  Id of workspace.
         :param project_id    Id of project.
@@ -61,7 +64,7 @@ class Task(AbstractClockify):
             logging.exception("API error")
             raise
 
-    def get_task(self, workspace_id, project_id, task_id):
+    def get_task(self, workspace_id: str, project_id: str, task_id: str) -> JsonType:
         """Gets task from Clockify.
         :param workspace_id  Id of workspace.
         :param project_id    Id of project.

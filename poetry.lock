@@ -1028,6 +1028,20 @@ rich = ">=12.0.0"
 urllib3 = ">=1.26.0"
 
 [[package]]
+name = "types-requests"
+version = "2.32.0.20240712"
+description = "Typing stubs for requests"
+optional = true
+python-versions = ">=3.8"
+files = [
+    {file = "types-requests-2.32.0.20240712.tar.gz", hash = "sha256:90c079ff05e549f6bf50e02e910210b98b8ff1ebdd18e19c873cd237737c1358"},
+    {file = "types_requests-2.32.0.20240712-py3-none-any.whl", hash = "sha256:f754283e152c752e46e70942fa2a146b5bc70393522257bb85bd1ef7e019dcc3"},
+]
+
+[package.dependencies]
+urllib3 = ">=2"
+
+[[package]]
 name = "typing-extensions"
 version = "4.12.2"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -1071,10 +1085,10 @@ doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linke
 test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", "jaraco.test", "more-itertools", "pytest (>=6,!=8.1.*)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-ignore-flaky", "pytest-mypy", "pytest-ruff (>=0.2.1)"]
 
 [extras]
-dev = ["black", "coverage", "mypy", "pytest", "pytest-mock", "ruff", "twine"]
+dev = ["black", "coverage", "mypy", "pytest", "pytest-mock", "ruff", "twine", "types-requests"]
 test = ["coverage", "pytest", "pytest-mock"]
 
 [metadata]
 lock-version = "2.0"
-python-versions = "^3.9"
-content-hash = "52ed8af173c4f25532698c43ca88d750cb0faae5a257d91529ff38c839a81c93"
+python-versions = "^3.10"
+content-hash = "cbe32e9aba881178b9d6497a30d06d09580fbaf695fc8ce479f1199f03b3e552"

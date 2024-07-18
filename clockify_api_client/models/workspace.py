@@ -1,14 +1,17 @@
+from __future__ import annotations
+
 import logging
+from typing import TYPE_CHECKING
 
 from clockify_api_client.abstract_clockify import AbstractClockify
+
+if TYPE_CHECKING:
+    from clockify_api_client.types import JsonType
 
 
 class Workspace(AbstractClockify):
 
-    def __init__(self, api_key, api_url) -> None:
-        super().__init__(api_key=api_key, api_url=api_url)
-
-    def get_workspaces(self):
+    def get_workspaces(self) -> JsonType:
         """Returns all workspaces.
         :return List of Workspaces in dictionary representation.
         """
