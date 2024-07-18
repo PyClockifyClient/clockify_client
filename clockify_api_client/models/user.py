@@ -44,7 +44,7 @@ class User(AbstractClockify):
         :return             Dictionary representation of user."""
         try:
             url = self.base_url + "/workspaces/" + workspace_id + "/users/"
-            emails = list()
+            emails = []
             emails.append(email)
             data = {"emails": emails}
             return self.post(url, data)
