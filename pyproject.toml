@@ -41,43 +41,44 @@ line-length = 88  # same as Black.
 extend-exclude = [
     "docs",
 ]
+output-format = "concise"
 
 [tool.ruff.lint]
 select = [
-    "A",  # flake8-builtins
-    "ANN",  # flake8-annotations
-    "ARG",  # flake8-unused-arguments
-    "B",  # flake8-bugbear
-    "BLE",  # flake8-blind-except
-    "C4",  # flake8-comprehensions
-    "D",  # pydocstyle
-    "E",  # pycodestyle error
-    "EM",  # flake8-errmsg
-    "ERA",  # eradicate
-    "F",  # Pyflakes
-    "FA",  # flake8-future-annotations
-    "FBT",  # flake8-boolean-trap
-    "FIX",  # flake8-fixme
-    "FLY",  # flynt
-    "I",  # isort
-    "ICN",  # flake8-import-conventions
-    "ISC",  # flake8-implicit-str-concat
-    "PGH",  # pygrep-hooks
-    "PIE",  # flake8-pie
-    "PL",  # pylint
-    "PT",  # flake8-pytest-style
+#    "A",  # flake8-builtins
+#    "ANN",  # flake8-annotations
+#    "ARG",  # flake8-unused-arguments
+#    "B",  # flake8-bugbear
+#    "BLE",  # flake8-blind-except
+#    "C4",  # flake8-comprehensions
+#    "D",  # pydocstyle
+#    "E",  # pycodestyle error
+#    "EM",  # flake8-errmsg
+#    "ERA",  # eradicate
+#    "F",  # Pyflakes
+#    "FA",  # flake8-future-annotations
+#    "FBT",  # flake8-boolean-trap
+#    "FIX",  # flake8-fixme
+#    "FLY",  # flynt
+#    "I",  # isort
+#    "ICN",  # flake8-import-conventions
+#    "ISC",  # flake8-implicit-str-concat
+#    "PGH",  # pygrep-hooks
+#    "PIE",  # flake8-pie
+#    "PL",  # pylint
+#    "PT",  # flake8-pytest-style
     "Q",  # flake8-quotes
-    "RET",  # flake8-return
-    "RSE",  # flake8-raise
-    "RUF",  # ruff specific
-    "SIM",  # flake8-simplify
-    "T10",  # flake8-debugger
-    "T20",  # flake8-print
-    "TCH",  # flake8-type-checking
-    "TRY",  # tryceratops
-    "UP",  # python upgrade
-    "W",  # pycodestyle warning
-    "YTT",  # flake8-2020
+#    "RET",  # flake8-return
+#    "RSE",  # flake8-raise
+#    "RUF",  # ruff specific
+#    "SIM",  # flake8-simplify
+#    "T10",  # flake8-debugger
+#    "T20",  # flake8-print
+#    "TCH",  # flake8-type-checking
+#    "TRY",  # tryceratops
+#    "UP",  # python upgrade
+#    "W",  # pycodestyle warning
+#    "YTT",  # flake8-2020
 
     # we would like these someday, but not yet
     # "FURB",  # refurb
@@ -100,6 +101,129 @@ extend-safe-fixes = [
     "UP006", "UP007",
     "W291",
 ]
+
+# marcels special rules -- temporary
+#select = [
+#    "A",  # flake8-builtins
+#    "ANN",  # flake8-annotations
+##    "ARG",  # flake8-unused-arguments
+#    "B",  # flake8-bugbear
+##    "BLE",  # flake8-blind-except
+#    "C4",  # flake8-comprehensions
+#    "D",  # pydocstyle
+#    "DTZ", # flake8-datetimez
+#    "E",  # pycodestyle error
+#    "EXE", # flake8-executable
+##    "EM",  # flake8-errmsg
+##    "ERA",  # eradicate
+#    "F",  # Pyflakes
+#    "FA", # flake8-future-annotations
+##    "FBT",  # flake8-boolean-trap
+##    "FIX",  # flake8-fixme
+#    "FLY", # flynt
+#    "I",  # isort
+##    "ICN",  # flake8-import-conventions
+#    "ISC",  # flake8-implicit-str-concat
+#    "PERF", # perflint
+##    "PGH",  # pygrep-hooks
+#    "PIE", # flake8-pie
+#    "PL", # pylint
+##    "PT",  # flake8-pytest-style
+#    "Q",  # flake8-quotes
+#    "RET",  # flake8-return
+#    "RSE",  # flake8-raise
+#    "RUF",  # ruff specific
+#    "SIM",  # flake8-simplify
+##    "T10",  # flake8-debugger
+##    "T20",  # flake8-print
+#    "TCH",  # flake8-type-checking
+##    "TRY",  # tryceratops
+#    "UP",  # python upgrade
+#    "W",  # pycodestyle warning
+#    "YTT",  # flake8-2020
+#    #    "N", # pep8 naming -- dear lord, leave this off
+#
+#    # may eventually use but for now these are not helpful
+#    #    "FURB", # refurb
+#    #    "ARG",  # unused arguments
+#    #    "PT",  # Pytest style
+#    #    "TD",  #TODOs
+#    #    "FBT",  # boolean trap
+#]
+#ignore = [
+#    #    "PT003",  # pytest fixture scope implied
+#    #    "PT004",  # pytest fixture setup doesn't return anything
+#    "RUF100",  # blanket noqa
+#    "ANN101",  # missing-type-self
+#    "ANN102",  # cls 
+#    "E501",   # line too long -- black will take care of this for us
+#    "E721", # type-comparison WTF? 
+#    "B028", # No explicit `stacklevel` keyword argument found
+#    "SIM102", # single if instead of nested -- only sometimes useful
+#    "SIM114", # combine if branches using logical OR -- only sometimes useful
+#    "SIM115", # use context handler for open -- situationally useful
+#    "SIM118", # use x in y instead of y.keys() - sometimes we want the keys 
+#    "SIM300", # yoda conditions -- meh
+#
+#    "PERF203", # `try`-`except` within a loop incurs performance overhead
+#    "PERF401", # use list comp
+#    "UP038", # use `int | float` in `isinstance` *slower
+#    "UP040", # use type vs TypeAlias
+#
+#    # NOT OPTIONAL. MUST REMAIN AS SET
+#    # these are all completely unnecessary 
+#    "D100", # Missing docstring in public module
+#    "D101", # Missing docstring in public class
+#    "D102", # Missing docstring in public method
+#    "D103", # Missing docstring in public function
+#    "D104", # Missing docstring in public package
+#    "D105", # Missing docstring in magic method
+#    "D106", # Missing docstring in public nested class
+#    "D107", # Missing docstring in `__init__`
+#    "D200", # One-line docstring should fit on one line
+#    "D202", # no blank lines after docstring
+#    "D203", # one-blank-line-before-class
+#    "D204", # blank line required after docstring
+#    "D205", # blank line between summary and description
+#    "D210", # whitespace
+#    "D212", # Multi-line summary should start at the first line
+#    "D214", # Section overindented
+#    "D301", # Use `r"""` if any backslashes in a docstring
+#    "D400", # First line should end with a period
+#    "D401", # imperative mood
+#    "D403", # first word of 1st line caps
+#    "D404", # First word of the docstring should not be "This"
+#    "D405", # Section name should be properly capitalized
+#    "D406", # Section name should end with a newline 
+#    "D407", # Missing dashed underline after section
+#    "D411", # Missing blank line before section
+#    "D412", # No blank lines allowed between a section header and its content
+#    "D413", # Missing blank line after last section
+#    "D415", # First line should end with punctuation
+#    "A003", # Class attribute shadow builtin
+#    "PLC0414", # useless-import-alias
+#    "PLR0911", # too-many-return-statements
+#    "PLR0912", # too-many-branches
+#    "PLR0913", # too-many-arguments
+#    "PLR0915", # too-many-statements
+#    "PLR2004", # magic-value-comparison
+#
+#]
+#
+#extend-safe-fixes = [
+#    "ANN201", "ANN202",
+#    "EM101", "EM102",
+#    "E711", # Comparison to `None` should be `cond is None`
+#    "TCH001", "TCH002", "TCH003", "TCH004",
+#    "C419",
+#    "D200", "D205", "D415",
+#    "PT003", "PT006", "PT018",
+#    "RET504",
+#    "UP007",
+#    "RSE102",
+#    "SIM105", "SIM108",
+#    "W291",
+#]
 
 [tool.ruff.lint.flake8-pytest-style]
 mark-parentheses = false

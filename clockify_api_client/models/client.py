@@ -20,10 +20,10 @@ class Client(AbstractClockify):
         try:
             assert name
             data = {
-                'name': name,
-                'note' : note
+                "name": name,
+                "note" : note
             }
-            url = self.base_url + '/workspaces/' + workspace_id + '/clients/'
+            url = self.base_url + "/workspaces/" + workspace_id + "/clients/"
             return self.post(url, payload=data)
         except Exception as e:
             logging.error("API error: {0}".format(e))
@@ -38,9 +38,9 @@ class Client(AbstractClockify):
         try:
             if params:
                 url_params = urlencode(params, doseq=True)
-                url = self.base_url + '/workspaces/' + workspace_id + '/clients?' + url_params
+                url = self.base_url + "/workspaces/" + workspace_id + "/clients?" + url_params
             else:
-                url = self.base_url + '/workspaces/' + workspace_id + '/clients/'
+                url = self.base_url + "/workspaces/" + workspace_id + "/clients/"
             return self.get(url)
         except Exception as e:
             logging.error("API error: {0}".format(e))

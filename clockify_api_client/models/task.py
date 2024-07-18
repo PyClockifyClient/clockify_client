@@ -18,8 +18,8 @@ class Task(AbstractClockify):
         :return              Dictionary with task object representation.
         """
         try:
-            url = self.base_url + '/workspaces/' + workspace_id + '/projects/' + project_id + '/tasks/'
-            payload = {'name': task_name, 'projectId': project_id}
+            url = self.base_url + "/workspaces/" + workspace_id + "/projects/" + project_id + "/tasks/"
+            payload = {"name": task_name, "projectId": project_id}
             if request_data:
                 payload = {**payload, **request_data}
             return self.post(url, payload)
@@ -36,7 +36,7 @@ class Task(AbstractClockify):
         :return              Dictionary with task object representation.
         """
         try:
-            url = self.base_url + '/workspaces/' + workspace_id + '/projects/' + project_id + '/tasks/' + task_id
+            url = self.base_url + "/workspaces/" + workspace_id + "/projects/" + project_id + "/tasks/" + task_id
             return self.put(url, request_data)
         except Exception as e:
             logging.error("API error: {0}".format(e))
@@ -52,9 +52,9 @@ class Task(AbstractClockify):
         try:
             if params:
                 url_params = urlencode(params)
-                url = self.base_url + '/workspaces/' + workspace_id + '/projects/' + project_id + '/tasks?' + url_params
+                url = self.base_url + "/workspaces/" + workspace_id + "/projects/" + project_id + "/tasks?" + url_params
             else:
-                url = self.base_url + '/workspaces/' + workspace_id + '/projects/' + project_id + '/tasks/'
+                url = self.base_url + "/workspaces/" + workspace_id + "/projects/" + project_id + "/tasks/"
             return self.get(url)
 
         except Exception as e:
@@ -69,7 +69,7 @@ class Task(AbstractClockify):
         :return              List with dictionaries with task object representation.
         """
         try:
-            url = self.base_url + '/workspaces/' + workspace_id + '/projects/' + project_id + '/tasks/' + task_id
+            url = self.base_url + "/workspaces/" + workspace_id + "/projects/" + project_id + "/tasks/" + task_id
             return self.get(url)
         except Exception as e:
             logging.error("API error: {0}".format(e))

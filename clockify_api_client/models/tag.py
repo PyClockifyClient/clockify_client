@@ -18,9 +18,9 @@ class Tag(AbstractClockify):
         try:
             if params:
                 url_params = urlencode(params)
-                url = self.base_url + '/workspaces/' + workspace_id + '/tags?' + url_params
+                url = self.base_url + "/workspaces/" + workspace_id + "/tags?" + url_params
             else:
-                url = self.base_url + '/workspaces/' + workspace_id + '/tags/'
+                url = self.base_url + "/workspaces/" + workspace_id + "/tags/"
             return self.get(url)
 
         except Exception as e:

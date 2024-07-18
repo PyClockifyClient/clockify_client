@@ -14,7 +14,7 @@ class User(AbstractClockify):
         :return User dictionary representation.
         """
         try:
-            url = self.base_url + '/user/'
+            url = self.base_url + "/user/"
             return self.get(url)
         except Exception as e:
             logging.error("API error: {0}".format(e))
@@ -29,9 +29,9 @@ class User(AbstractClockify):
         try:
             if params:
                 params = urlencode(params, doseq=True)
-                url = self.base_url + '/workspaces/' + workspace_id + '/users?' + params
+                url = self.base_url + "/workspaces/" + workspace_id + "/users?" + params
             else:
-                url = self.base_url + '/workspaces/' + workspace_id + '/users/'
+                url = self.base_url + "/workspaces/" + workspace_id + "/users/"
             return self.get(url)
         except Exception as e:
             logging.error("API error: {0}".format(e))
@@ -43,10 +43,10 @@ class User(AbstractClockify):
         :param email        Email of new user.
         :return             Dictionary representation of user."""
         try:
-            url = self.base_url + '/workspaces/' + workspace_id + '/users/'
+            url = self.base_url + "/workspaces/" + workspace_id + "/users/"
             emails = list()
             emails.append(email)
-            data = {'emails': emails}
+            data = {"emails": emails}
             return self.post(url, data)
         except Exception as e:
             logging.error("API error: {0}".format(e))
@@ -60,7 +60,7 @@ class User(AbstractClockify):
         :return             Dictionary representation of user.
         """
         try:
-            url = self.base_url + '/workspaces/' + workspace_id + '/users/' + user_id
+            url = self.base_url + "/workspaces/" + workspace_id + "/users/" + user_id
             return self.put(url, payload)
         except Exception as e:
             logging.error("API error: {0}".format(e))
@@ -72,7 +72,7 @@ class User(AbstractClockify):
         :param user_id      User Id.
         """
         try:
-            url = self.base_url + '/workspaces/' + workspace_id + '/users/' + user_id
+            url = self.base_url + "/workspaces/" + workspace_id + "/users/" + user_id
             return self.delete(url)
         except Exception as e:
             logging.error("API error: {0}".format(e))

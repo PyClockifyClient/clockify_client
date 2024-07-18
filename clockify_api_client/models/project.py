@@ -18,9 +18,9 @@ class Project(AbstractClockify):
         try:
             if params:
                 url_params = urlencode(params, doseq=True)
-                url = self.base_url + '/workspaces/' + workspace_id + '/projects?' + url_params
+                url = self.base_url + "/workspaces/" + workspace_id + "/projects?" + url_params
             else:
-                url = self.base_url + '/workspaces/' + workspace_id + '/projects/'
+                url = self.base_url + "/workspaces/" + workspace_id + "/projects/"
             return self.get(url)
         except Exception as e:
             logging.error("API error: {0}".format(e))
@@ -35,9 +35,9 @@ class Project(AbstractClockify):
         :return             Dictionary representation of new project.
         """
         try:
-            url = self.base_url + '/workspaces/' + workspace_id + '/projects/'
+            url = self.base_url + "/workspaces/" + workspace_id + "/projects/"
             data = {
-                'name': project_name,
+                "name": project_name,
                 "clientId": client_id,
                 "isPublic": "true" if public else "false",
                 "billable": billable

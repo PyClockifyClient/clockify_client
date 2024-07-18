@@ -6,9 +6,9 @@ import requests
 class AbstractClockify(ABC):
     def __init__(self, api_key, api_url):
 
-        self.base_url = f'https://global.{api_url}'.strip('/')
+        self.base_url = f"https://global.{api_url}".strip("/")
         self.api_key = api_key
-        self.header = {'X-Api-Key': self.api_key}
+        self.header = {"X-Api-Key": self.api_key}
 
     def get(self, url):
         response = requests.get(url, headers=self.header)

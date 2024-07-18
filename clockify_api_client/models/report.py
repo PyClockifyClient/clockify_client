@@ -6,7 +6,7 @@ from clockify_api_client.abstract_clockify import AbstractClockify
 class Report(AbstractClockify):
     def __init__(self, api_key, api_url):
         super(Report, self).__init__(api_key=api_key, api_url=api_url)
-        self.base_url = f'https://reports.{api_url}'.strip('/')
+        self.base_url = f"https://reports.{api_url}".strip("/")
 
     def get_summary_report(self, workspace_id, payload):
         """Calls Clockify API for summary report. Returns summary report object(Dictionary)
@@ -15,7 +15,7 @@ class Report(AbstractClockify):
         :return             Dictionary with summary report.
         """
         try:
-            url = self.base_url + '/workspaces/' + workspace_id + '/reports/summary/'
+            url = self.base_url + "/workspaces/" + workspace_id + "/reports/summary/"
             return self.post(url, payload)
         except Exception as e:
             logging.error("API error: {0}".format(e))
@@ -28,7 +28,7 @@ class Report(AbstractClockify):
         :return             Dictionary with detailed report.
         """
         try:
-            url = self.base_url + '/workspaces/' + workspace_id + '/reports/detailed/'
+            url = self.base_url + "/workspaces/" + workspace_id + "/reports/detailed/"
             return self.post(url, payload)
         except Exception as e:
             logging.error("API error: {0}".format(e))
@@ -41,7 +41,7 @@ class Report(AbstractClockify):
         :return             Dictionary with weekly report.
         """
         try:
-            url = self.base_url + '/workspaces/' + workspace_id + '/reports/weekly/'
+            url = self.base_url + "/workspaces/" + workspace_id + "/reports/weekly/"
             return self.post(url, payload)
         except Exception as e:
             logging.error("API error: {0}".format(e))
