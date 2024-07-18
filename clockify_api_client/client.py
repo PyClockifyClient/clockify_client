@@ -10,7 +10,7 @@ from clockify_api_client.utils import Singleton
 
 
 class ClockifyAPIClient(metaclass=Singleton):
-    def __init__(self):
+    def __init__(self) -> None:
         self.workspaces = None
         self.projects = None
         self.tags = None

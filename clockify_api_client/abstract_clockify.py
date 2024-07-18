@@ -4,7 +4,7 @@ import requests
 
 
 class AbstractClockify(ABC):
-    def __init__(self, api_key, api_url):
+    def __init__(self, api_key, api_url) -> None:
 
         self.base_url = f"https://global.{api_url}".strip("/")
         self.api_key = api_key

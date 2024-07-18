@@ -6,7 +6,7 @@ from clockify_api_client.abstract_clockify import AbstractClockify
 
 class Client(AbstractClockify):
 
-    def __init__(self, api_key, api_url):
+    def __init__(self, api_key, api_url) -> None:
         super().__init__(api_key=api_key, api_url=api_url)
 
 
