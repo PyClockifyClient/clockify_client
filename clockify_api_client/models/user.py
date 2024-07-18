@@ -16,9 +16,9 @@ class User(AbstractClockify):
         try:
             url = self.base_url + "/user/"
             return self.get(url)
-        except Exception as e:
+        except Exception:
             logging.exception("API error")
-            raise e
+            raise
 
     def get_users(self, workspace_id, params=None):
         """Returns list of all users in given workspace.
@@ -33,9 +33,9 @@ class User(AbstractClockify):
             else:
                 url = self.base_url + "/workspaces/" + workspace_id + "/users/"
             return self.get(url)
-        except Exception as e:
+        except Exception:
             logging.exception("API error")
-            raise e
+            raise
 
     def add_user(self, workspace_id, email):
         """Adds new user into workspace.
@@ -48,9 +48,9 @@ class User(AbstractClockify):
             emails.append(email)
             data = {"emails": emails}
             return self.post(url, data)
-        except Exception as e:
+        except Exception:
             logging.exception("API error")
-            raise e
+            raise
 
     def update_user(self, workspace_id, user_id, payload):
         """Adds new user into workspace.
@@ -62,9 +62,9 @@ class User(AbstractClockify):
         try:
             url = self.base_url + "/workspaces/" + workspace_id + "/users/" + user_id
             return self.put(url, payload)
-        except Exception as e:
+        except Exception:
             logging.exception("API error")
-            raise e
+            raise
 
     def remove_user(self, workspace_id, user_id):
         """Removes user from workspace.
@@ -74,6 +74,6 @@ class User(AbstractClockify):
         try:
             url = self.base_url + "/workspaces/" + workspace_id + "/users/" + user_id
             return self.delete(url)
-        except Exception as e:
+        except Exception:
             logging.exception("API error")
-            raise e
+            raise

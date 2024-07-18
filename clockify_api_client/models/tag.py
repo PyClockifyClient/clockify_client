@@ -23,6 +23,6 @@ class Tag(AbstractClockify):
                 url = self.base_url + "/workspaces/" + workspace_id + "/tags/"
             return self.get(url)
 
-        except Exception as e:
+        except Exception:
             logging.exception("API error")
-            raise e
+            raise

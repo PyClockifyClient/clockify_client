@@ -23,9 +23,9 @@ class Task(AbstractClockify):
             if request_data:
                 payload = {**payload, **request_data}
             return self.post(url, payload)
-        except Exception as e:
+        except Exception:
             logging.exception("API error")
-            raise e
+            raise
 
     def update_task(self,  workspace_id, project_id, task_id, request_data=None):
         """Updates task in Clockify.
@@ -38,9 +38,9 @@ class Task(AbstractClockify):
         try:
             url = self.base_url + "/workspaces/" + workspace_id + "/projects/" + project_id + "/tasks/" + task_id
             return self.put(url, request_data)
-        except Exception as e:
+        except Exception:
             logging.exception("API error")
-            raise e
+            raise
 
     def get_tasks(self, workspace_id, project_id, params=None):
         """Gets list of tasks from Clockify.
@@ -57,9 +57,9 @@ class Task(AbstractClockify):
                 url = self.base_url + "/workspaces/" + workspace_id + "/projects/" + project_id + "/tasks/"
             return self.get(url)
 
-        except Exception as e:
+        except Exception:
             logging.exception("API error")
-            raise e
+            raise
 
     def get_task(self, workspace_id, project_id, task_id):
         """Gets task from Clockify.
@@ -71,6 +71,6 @@ class Task(AbstractClockify):
         try:
             url = self.base_url + "/workspaces/" + workspace_id + "/projects/" + project_id + "/tasks/" + task_id
             return self.get(url)
-        except Exception as e:
+        except Exception:
             logging.exception("API error")
-            raise e
+            raise

@@ -15,6 +15,6 @@ class Workspace(AbstractClockify):
         try:
             url = self.base_url + "/workspaces/"
             return self.get(url)
-        except Exception as e:
+        except Exception:
             logging.exception("API error")
-            raise e
+            raise

@@ -25,9 +25,9 @@ class Client(AbstractClockify):
             }
             url = self.base_url + "/workspaces/" + workspace_id + "/clients/"
             return self.post(url, payload=data)
-        except Exception as e:
+        except Exception:
             logging.exception("API error")
-            raise e
+            raise
 
     def get_clients(self, workspace_id, params=None):
         """Returns all clients.
@@ -42,6 +42,6 @@ class Client(AbstractClockify):
             else:
                 url = self.base_url + "/workspaces/" + workspace_id + "/clients/"
             return self.get(url)
-        except Exception as e:
+        except Exception:
             logging.exception("API error")
-            raise e
+            raise
