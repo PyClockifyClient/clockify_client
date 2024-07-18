@@ -23,7 +23,7 @@ class Project(AbstractClockify):
                 url = self.base_url + "/workspaces/" + workspace_id + "/projects/"
             return self.get(url)
         except Exception as e:
-            logging.error("API error: {0}".format(e))
+            logging.exception("API error: {0}".format(e))
             raise e
 
     def add_project(self, workspace_id, project_name, client_id, billable=False, public=False):
@@ -44,5 +44,5 @@ class Project(AbstractClockify):
             }
             return self.post(url, data)
         except Exception as e:
-            logging.error("API error: {0}".format(e))
+            logging.exception("API error: {0}".format(e))
             raise e

@@ -24,7 +24,7 @@ class TimeEntry(AbstractClockify):
                 url = self.base_url + "/workspaces/" + workspace_id + "/user/" + user_id + "/time-entries/"
             return self.get(url)
         except Exception as e:
-            logging.error("API error: {0}".format(e))
+            logging.exception("API error: {0}".format(e))
             raise e
 
     def get_time_entry(self, workspace_id, time_entry_id):
@@ -37,7 +37,7 @@ class TimeEntry(AbstractClockify):
             url = self.base_url + "/workspaces/" + workspace_id + "/time-entries/" + time_entry_id
             return self.get(url)
         except Exception as e:
-            logging.error("API error: {0}".format(e))
+            logging.exception("API error: {0}".format(e))
             raise e
 
     def update_time_entry(self, workspace_id, entry_id, payload):
@@ -51,7 +51,7 @@ class TimeEntry(AbstractClockify):
             url = self.base_url + "/workspaces/" + workspace_id + "/time-entries/" + entry_id
             return self.put(url, payload)
         except Exception as e:
-            logging.error("API error: {0}".format(e))
+            logging.exception("API error: {0}".format(e))
             raise e
 
     def add_time_entry(self, workspace_id, user_id, payload):
@@ -66,5 +66,5 @@ class TimeEntry(AbstractClockify):
             url = self.base_url + "/workspaces/" + workspace_id + "/user/" + user_id + "/time-entries/"
             return self.post(url, payload)
         except Exception as e:
-            logging.error("API error: {0}".format(e))
+            logging.exception("API error: {0}".format(e))
             raise e

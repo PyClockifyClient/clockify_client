@@ -18,7 +18,7 @@ class Report(AbstractClockify):
             url = self.base_url + "/workspaces/" + workspace_id + "/reports/summary/"
             return self.post(url, payload)
         except Exception as e:
-            logging.error("API error: {0}".format(e))
+            logging.exception("API error: {0}".format(e))
             raise e
 
     def get_detailed_report(self, workspace_id, payload):
@@ -31,7 +31,7 @@ class Report(AbstractClockify):
             url = self.base_url + "/workspaces/" + workspace_id + "/reports/detailed/"
             return self.post(url, payload)
         except Exception as e:
-            logging.error("API error: {0}".format(e))
+            logging.exception("API error: {0}".format(e))
             raise e
 
     def get_weekly_report(self, workspace_id, payload):
@@ -44,5 +44,5 @@ class Report(AbstractClockify):
             url = self.base_url + "/workspaces/" + workspace_id + "/reports/weekly/"
             return self.post(url, payload)
         except Exception as e:
-            logging.error("API error: {0}".format(e))
+            logging.exception("API error: {0}".format(e))
             raise e
