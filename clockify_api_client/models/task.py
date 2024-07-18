@@ -7,7 +7,7 @@ from clockify_api_client.abstract_clockify import AbstractClockify
 class Task(AbstractClockify):
 
     def __init__(self, api_key, api_url):
-        super(Task, self).__init__(api_key=api_key, api_url=api_url)
+        super().__init__(api_key=api_key, api_url=api_url)
 
     def add_task(self, workspace_id, project_id, task_name, request_data=None):
         """Creates new task in Clockify.

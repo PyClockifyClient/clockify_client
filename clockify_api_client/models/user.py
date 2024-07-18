@@ -7,7 +7,7 @@ from clockify_api_client.abstract_clockify import AbstractClockify
 class User(AbstractClockify):
 
     def __init__(self, api_key, api_url):
-        super(User, self).__init__(api_key=api_key, api_url=api_url)
+        super().__init__(api_key=api_key, api_url=api_url)
 
     def get_current_user(self):
         """Get user by paired with API key.

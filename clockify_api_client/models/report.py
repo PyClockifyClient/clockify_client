@@ -5,7 +5,7 @@ from clockify_api_client.abstract_clockify import AbstractClockify
 
 class Report(AbstractClockify):
     def __init__(self, api_key, api_url):
-        super(Report, self).__init__(api_key=api_key, api_url=api_url)
+        super().__init__(api_key=api_key, api_url=api_url)
         self.base_url = f"https://reports.{api_url}".strip("/")
 
     def get_summary_report(self, workspace_id, payload):
