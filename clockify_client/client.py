@@ -11,7 +11,7 @@ from clockify_client.models.workspace import Workspace
 from clockify_client.utils import Singleton
 
 
-class ClockifyAPIClient(metaclass=Singleton):
+class ClockifyClient(metaclass=Singleton):
 
     def __init__(self, api_key: str, api_url: str) -> None:
         """

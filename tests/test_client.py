@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from clockify_client import ClockifyAPIClient
+from clockify_client import ClockifyClient
 
 
 if TYPE_CHECKING:
@@ -15,12 +15,12 @@ if TYPE_CHECKING:
 
 class TestClient:
     def test_can_be_instantiated(self) -> None:
-        client = ClockifyAPIClient("", "")
-        assert isinstance(client, ClockifyAPIClient)
+        client = ClockifyClient("", "")
+        assert isinstance(client, ClockifyClient)
     
     def test_singleton(self) -> None:
-        client1 = ClockifyAPIClient("1", "1")
-        client2 = ClockifyAPIClient("2", "2")
+        client1 = ClockifyClient("1", "1")
+        client2 = ClockifyClient("2", "2")
         
         assert client1.clients.api_key == "1" 
         assert client2.clients.api_key == "1" 
