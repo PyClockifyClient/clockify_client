@@ -53,9 +53,7 @@ class User(AbstractClockify):
         :return             Dictionary representation of user."""
         try:
             url = self.base_url + "/workspaces/" + workspace_id + "/users/"
-            emails = []
-            emails.append(email)
-            data = {"emails": emails}
+            data = {"emails": [email]}
             return self.post(url, data)
         except Exception:
             logging.exception("API error")
