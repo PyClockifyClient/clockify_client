@@ -23,7 +23,7 @@ class User(AbstractClockify):
             logging.exception("API error")
             raise
 
-    def get_users(self, workspace_id: str, params: dict | None=None) -> JsonType:
+    def get_users(self, workspace_id: str, params: dict | None = None) -> JsonType:
         """Returns list of all users in given workspace.
         :param workspace_id Id of workspace.
         :param params       Request URL query params.
@@ -32,7 +32,13 @@ class User(AbstractClockify):
         try:
             if params:
                 params_str = urlencode(params, doseq=True)
-                url = self.base_url + "/workspaces/" + workspace_id + "/users?" + params_str
+                url = (
+                    self.base_url
+                    + "/workspaces/"
+                    + workspace_id
+                    + "/users?"
+                    + params_str
+                )
             else:
                 url = self.base_url + "/workspaces/" + workspace_id + "/users/"
             return self.get(url)

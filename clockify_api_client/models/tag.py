@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 class Tag(AbstractClockify):
 
-    def get_tags(self, workspace_id: str, params: dict | None=None) -> JsonType:
+    def get_tags(self, workspace_id: str, params: dict | None = None) -> JsonType:
         """Gets list of tags from Clockify.
         :param workspace_id  Id of workspace.
         :param params        Request URL query parameters.
@@ -21,7 +21,13 @@ class Tag(AbstractClockify):
         try:
             if params:
                 url_params = urlencode(params)
-                url = self.base_url + "/workspaces/" + workspace_id + "/tags?" + url_params
+                url = (
+                    self.base_url
+                    + "/workspaces/"
+                    + workspace_id
+                    + "/tags?"
+                    + url_params
+                )
             else:
                 url = self.base_url + "/workspaces/" + workspace_id + "/tags/"
             return self.get(url)

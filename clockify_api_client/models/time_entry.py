@@ -12,7 +12,9 @@ if TYPE_CHECKING:
 
 class TimeEntry(AbstractClockify):
 
-    def get_time_entries(self, workspace_id: str, user_id: str, params: dict | None=None) -> JsonType:
+    def get_time_entries(
+        self, workspace_id: str, user_id: str, params: dict | None = None
+    ) -> JsonType:
         """Returns user time entries.
         :param workspace_id Id of workspace.
         :param user_id      Id of user.
@@ -22,9 +24,24 @@ class TimeEntry(AbstractClockify):
         try:
             if params:
                 url_params = urlencode(params, doseq=True)
-                url = self.base_url + "/workspaces/" + workspace_id + "/user/" + user_id + "/time-entries?" + url_params
+                url = (
+                    self.base_url
+                    + "/workspaces/"
+                    + workspace_id
+                    + "/user/"
+                    + user_id
+                    + "/time-entries?"
+                    + url_params
+                )
             else:
-                url = self.base_url + "/workspaces/" + workspace_id + "/user/" + user_id + "/time-entries/"
+                url = (
+                    self.base_url
+                    + "/workspaces/"
+                    + workspace_id
+                    + "/user/"
+                    + user_id
+                    + "/time-entries/"
+                )
             return self.get(url)
         except Exception:
             logging.exception("API error")
@@ -37,13 +54,21 @@ class TimeEntry(AbstractClockify):
         :return              Dictionary representation of time entry.
         """
         try:
-            url = self.base_url + "/workspaces/" + workspace_id + "/time-entries/" + time_entry_id
+            url = (
+                self.base_url
+                + "/workspaces/"
+                + workspace_id
+                + "/time-entries/"
+                + time_entry_id
+            )
             return self.get(url)
         except Exception:
             logging.exception("API error")
             raise
 
-    def update_time_entry(self, workspace_id: str, entry_id: str, payload: dict) -> JsonType:
+    def update_time_entry(
+        self, workspace_id: str, entry_id: str, payload: dict
+    ) -> JsonType:
         """Updates time entry in Clockify with provided payload data.
         :param workspace_id Id of workspace.
         :param entry_id     Id of time entry.
@@ -51,13 +76,21 @@ class TimeEntry(AbstractClockify):
         :return             Updated time entry.
         """
         try:
-            url = self.base_url + "/workspaces/" + workspace_id + "/time-entries/" + entry_id
+            url = (
+                self.base_url
+                + "/workspaces/"
+                + workspace_id
+                + "/time-entries/"
+                + entry_id
+            )
             return self.put(url, payload)
         except Exception:
             logging.exception("API error")
             raise
 
-    def add_time_entry(self, workspace_id: str, user_id: str, payload: dict) -> JsonType:
+    def add_time_entry(
+        self, workspace_id: str, user_id: str, payload: dict
+    ) -> JsonType:
         """Adds time entry in Clockify with provided payload data.
         Paid feature, workspace need to have active paid subscription.
         :param workspace_id Id of workspace.
@@ -66,7 +99,14 @@ class TimeEntry(AbstractClockify):
         :return             Updated time entry.
         """
         try:
-            url = self.base_url + "/workspaces/" + workspace_id + "/user/" + user_id + "/time-entries/"
+            url = (
+                self.base_url
+                + "/workspaces/"
+                + workspace_id
+                + "/user/"
+                + user_id
+                + "/time-entries/"
+            )
             return self.post(url, payload)
         except Exception:
             logging.exception("API error")

@@ -8,10 +8,10 @@ if TYPE_CHECKING:
     P = ParamSpec("P")
     T = TypeVar("T")
 
-class Singleton(type):
-    """Singleton metaclass. Creates **singleton** instead of normal class when used as metaclass of class
 
-    """
+class Singleton(type):
+    """Singleton metaclass. Creates **singleton** instead of normal class when used as metaclass of class"""
+
     _instances: ClassVar[dict] = {}
 
     def __call__(cls, *args: P.args, **kwargs: P.kwargs) -> Singleton:

@@ -12,7 +12,13 @@ if TYPE_CHECKING:
 
 class Task(AbstractClockify):
 
-    def add_task(self, workspace_id: str, project_id: str, task_name: str, request_data: dict | None=None) -> JsonType:
+    def add_task(
+        self,
+        workspace_id: str,
+        project_id: str,
+        task_name: str,
+        request_data: dict | None = None,
+    ) -> JsonType:
         """Creates new task in Clockify.
         :param workspace_id  Id of workspace.
         :param request_data  Dictionary with request data.
@@ -21,7 +27,14 @@ class Task(AbstractClockify):
         :return              Dictionary with task object representation.
         """
         try:
-            url = self.base_url + "/workspaces/" + workspace_id + "/projects/" + project_id + "/tasks/"
+            url = (
+                self.base_url
+                + "/workspaces/"
+                + workspace_id
+                + "/projects/"
+                + project_id
+                + "/tasks/"
+            )
             payload = {"name": task_name, "projectId": project_id}
             if request_data:
                 payload = {**payload, **request_data}
@@ -30,7 +43,13 @@ class Task(AbstractClockify):
             logging.exception("API error")
             raise
 
-    def update_task(self,  workspace_id: str, project_id: str, task_id: str, request_data: dict | None=None) -> JsonType:
+    def update_task(
+        self,
+        workspace_id: str,
+        project_id: str,
+        task_id: str,
+        request_data: dict | None = None,
+    ) -> JsonType:
         """Updates task in Clockify.
         :param workspace_id  Id of workspace.
         :param project_id    Id of project.
@@ -39,13 +58,23 @@ class Task(AbstractClockify):
         :return              Dictionary with task object representation.
         """
         try:
-            url = self.base_url + "/workspaces/" + workspace_id + "/projects/" + project_id + "/tasks/" + task_id
+            url = (
+                self.base_url
+                + "/workspaces/"
+                + workspace_id
+                + "/projects/"
+                + project_id
+                + "/tasks/"
+                + task_id
+            )
             return self.put(url, request_data)
         except Exception:
             logging.exception("API error")
             raise
 
-    def get_tasks(self, workspace_id: str, project_id: str, params: dict | None=None) -> JsonType:
+    def get_tasks(
+        self, workspace_id: str, project_id: str, params: dict | None = None
+    ) -> JsonType:
         """Gets list of tasks from Clockify.
         :param workspace_id  Id of workspace.
         :param project_id    Id of project.
@@ -55,9 +84,24 @@ class Task(AbstractClockify):
         try:
             if params:
                 url_params = urlencode(params)
-                url = self.base_url + "/workspaces/" + workspace_id + "/projects/" + project_id + "/tasks?" + url_params
+                url = (
+                    self.base_url
+                    + "/workspaces/"
+                    + workspace_id
+                    + "/projects/"
+                    + project_id
+                    + "/tasks?"
+                    + url_params
+                )
             else:
-                url = self.base_url + "/workspaces/" + workspace_id + "/projects/" + project_id + "/tasks/"
+                url = (
+                    self.base_url
+                    + "/workspaces/"
+                    + workspace_id
+                    + "/projects/"
+                    + project_id
+                    + "/tasks/"
+                )
             return self.get(url)
 
         except Exception:
@@ -72,7 +116,15 @@ class Task(AbstractClockify):
         :return              List with dictionaries with task object representation.
         """
         try:
-            url = self.base_url + "/workspaces/" + workspace_id + "/projects/" + project_id + "/tasks/" + task_id
+            url = (
+                self.base_url
+                + "/workspaces/"
+                + workspace_id
+                + "/projects/"
+                + project_id
+                + "/tasks/"
+                + task_id
+            )
             return self.get(url)
         except Exception:
             logging.exception("API error")

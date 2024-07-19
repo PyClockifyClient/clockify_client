@@ -12,7 +12,9 @@ if TYPE_CHECKING:
 
 class Client(AbstractClockify):
 
-    def add_client(self, workspace_id: str, name: str | None=None, note: str | None=None) -> JsonType:
+    def add_client(
+        self, workspace_id: str, name: str | None = None, note: str | None = None
+    ) -> JsonType:
         """Adds new client.
         :param workspace_id Id of workspace to look for clients.
         :param name         Name of the new client.
@@ -21,17 +23,14 @@ class Client(AbstractClockify):
         """
         try:
             assert name
-            data = {
-                "name": name,
-                "note" : note
-            }
+            data = {"name": name, "note": note}
             url = self.base_url + "/workspaces/" + workspace_id + "/clients/"
             return self.post(url, payload=data)
         except Exception:
             logging.exception("API error")
             raise
 
-    def get_clients(self, workspace_id: str, params: dict | None=None) -> JsonType:
+    def get_clients(self, workspace_id: str, params: dict | None = None) -> JsonType:
         """Returns all clients.
         :param workspace_id Id of workspace to look for clients.
         :param params       URL params of request.
@@ -40,7 +39,13 @@ class Client(AbstractClockify):
         try:
             if params:
                 url_params = urlencode(params, doseq=True)
-                url = self.base_url + "/workspaces/" + workspace_id + "/clients?" + url_params
+                url = (
+                    self.base_url
+                    + "/workspaces/"
+                    + workspace_id
+                    + "/clients?"
+                    + url_params
+                )
             else:
                 url = self.base_url + "/workspaces/" + workspace_id + "/clients/"
             return self.get(url)
