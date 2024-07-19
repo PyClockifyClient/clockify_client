@@ -25,9 +25,9 @@ pipenv install clockify-api-client
 
 ## 2. Usage
 
-
 ```python
-from clockify_api_client.client import ClockifyAPIClient
+from clockify_client.client import ClockifyAPIClient
+
 
 API_KEY = 'yourclockifyAPIkey'
 API_URL = 'api.clockify.me/v1'

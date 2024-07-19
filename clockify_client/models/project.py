@@ -4,10 +4,10 @@ import logging
 from typing import TYPE_CHECKING
 from urllib.parse import urlencode
 
-from clockify_api_client.abstract_clockify import AbstractClockify
+from clockify_client.abstract_clockify import AbstractClockify
 
 if TYPE_CHECKING:
-    from clockify_api_client.types import JsonType
+    from clockify_client.types import JsonType
 
 
 class Project(AbstractClockify):

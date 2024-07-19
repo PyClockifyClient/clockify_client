@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 import requests
 
 if TYPE_CHECKING:
-    from clockify_api_client.types import JsonType
+    from clockify_client.types import JsonType
 
 
 class AbstractClockify(ABC):

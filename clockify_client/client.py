@@ -1,14 +1,14 @@
 from __future__ import annotations
 
-from clockify_api_client.models.client import Client
-from clockify_api_client.models.project import Project
-from clockify_api_client.models.report import Report
-from clockify_api_client.models.tag import Tag
-from clockify_api_client.models.task import Task
-from clockify_api_client.models.time_entry import TimeEntry
-from clockify_api_client.models.user import User
-from clockify_api_client.models.workspace import Workspace
-from clockify_api_client.utils import Singleton
+from clockify_client.models.client import Client
+from clockify_client.models.project import Project
+from clockify_client.models.report import Report
+from clockify_client.models.tag import Tag
+from clockify_client.models.task import Task
+from clockify_client.models.time_entry import TimeEntry
+from clockify_client.models.user import User
+from clockify_client.models.workspace import Workspace
+from clockify_client.utils import Singleton
 
 
 class ClockifyAPIClient(metaclass=Singleton):
