@@ -24,12 +24,12 @@ class Project(AbstractClockify):
                 url = (
                     self.base_url
                     + "/workspaces/"
-                    + workspace_id
+                    + f"{workspace_id}"
                     + "/projects?"
                     + url_params
                 )
             else:
-                url = self.base_url + "/workspaces/" + workspace_id + "/projects/"
+                url = f"{self.base_url}/workspaces/{workspace_id}/projects/"
             return self.get(url)
         except Exception:
             logging.exception("API error")
@@ -51,7 +51,7 @@ class Project(AbstractClockify):
         :return             Dictionary representation of new project.
         """
         try:
-            url = self.base_url + "/workspaces/" + workspace_id + "/projects/"
+            url = f"{self.base_url}/workspaces/{workspace_id}/projects/"
             data = {
                 "name": project_name,
                 "clientId": client_id,

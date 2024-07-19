@@ -110,6 +110,7 @@ extend-safe-fixes = [
     "UP006", "UP007", "UP008", 
     "W291",
     "TRY201",
+    "ISC001",
 ]
 
 # marcels special rules -- temporary

@@ -24,7 +24,7 @@ class Client(AbstractClockify):
         try:
             assert name
             data = {"name": name, "note": note}
-            url = self.base_url + "/workspaces/" + workspace_id + "/clients/"
+            url = f"{self.base_url}/workspaces/{workspace_id}/clients/"
             return self.post(url, payload=data)
         except Exception:
             logging.exception("API error")
@@ -47,7 +47,7 @@ class Client(AbstractClockify):
                     + url_params
                 )
             else:
-                url = self.base_url + "/workspaces/" + workspace_id + "/clients/"
+                url = f"{self.base_url}/workspaces/{workspace_id}/clients/"
             return self.get(url)
         except Exception:
             logging.exception("API error")

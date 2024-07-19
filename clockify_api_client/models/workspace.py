@@ -16,7 +16,7 @@ class Workspace(AbstractClockify):
         :return List of Workspaces in dictionary representation.
         """
         try:
-            url = self.base_url + "/workspaces/"
+            url = f"{self.base_url}/workspaces/"
             return self.get(url)
         except Exception:
             logging.exception("API error")

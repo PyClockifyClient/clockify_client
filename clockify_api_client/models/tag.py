@@ -18,18 +18,13 @@ class Tag(AbstractClockify):
         :param params        Request URL query parameters.
         :return              List with dictionaries with tag object representation.
         """
+        if params:
+            url_params = urlencode(params)
+            url = f"{self.base_url}/workspaces/{workspace_id}/tags?{url_params}"
+        else:
+            url = f"{self.base_url}/workspaces/{workspace_id}/tags/"
+
         try:
-            if params:
-                url_params = urlencode(params)
-                url = (
-                    self.base_url
-                    + "/workspaces/"
-                    + workspace_id
-                    + "/tags?"
-                    + url_params
-                )
-            else:
-                url = self.base_url + "/workspaces/" + workspace_id + "/tags/"
             return self.get(url)
 
         except Exception:

@@ -16,8 +16,9 @@ class User(AbstractClockify):
         """Get user by paired with API key.
         :return User dictionary representation.
         """
+        url = f"{self.base_url}/user/"
+
         try:
-            url = self.base_url + "/user/"
             return self.get(url)
         except Exception:
             logging.exception("API error")
@@ -29,18 +30,14 @@ class User(AbstractClockify):
         :param params       Request URL query params.
         :return             List of Users dictionary representation.
         """
+        if params:
+            params_str = urlencode(params, doseq=True)
+            url = f"{self.base_url}/workspaces/{workspace_id}/users?{params_str}"
+        else:
+            url = f"{self.base_url}/workspaces/{workspace_id}/users/"
+
         try:
-            if params:
-                params_str = urlencode(params, doseq=True)
-                url = (
-                    self.base_url
-                    + "/workspaces/"
-                    + workspace_id
-                    + "/users?"
-                    + params_str
-                )
-            else:
-                url = self.base_url + "/workspaces/" + workspace_id + "/users/"
+
             return self.get(url)
         except Exception:
             logging.exception("API error")
@@ -50,10 +47,12 @@ class User(AbstractClockify):
         """Adds new user into workspace.
         :param workspace_id Id of workspace.
         :param email        Email of new user.
-        :return             Dictionary representation of user."""
+        :return             Dictionary representation of user.
+        """
+        url = f"{self.base_url}/workspaces/{workspace_id}/users/"
+        data = {"emails": [email]}
+
         try:
-            url = self.base_url + "/workspaces/" + workspace_id + "/users/"
-            data = {"emails": [email]}
             return self.post(url, data)
         except Exception:
             logging.exception("API error")
@@ -66,8 +65,9 @@ class User(AbstractClockify):
         :param payload      User data to update.
         :return             Dictionary representation of user.
         """
+        url = f"{self.base_url}/workspaces/{workspace_id}/users/{user_id}"
+
         try:
-            url = self.base_url + "/workspaces/" + workspace_id + "/users/" + user_id
             return self.put(url, payload)
         except Exception:
             logging.exception("API error")
@@ -78,8 +78,9 @@ class User(AbstractClockify):
         :param workspace_id Id of workspace.
         :param user_id      User Id.
         """
+        url = f"{self.base_url}/workspaces/{workspace_id}/users/{user_id}"
+
         try:
-            url = self.base_url + "/workspaces/" + workspace_id + "/users/" + user_id
             return self.delete(url)
         except Exception:
             logging.exception("API error")

@@ -26,18 +26,12 @@ class Task(AbstractClockify):
         :param task_name     Name of new task.
         :return              Dictionary with task object representation.
         """
+        url = f"{self.base_url}/workspaces/{workspace_id}/projects/{project_id}/tasks/"
+        payload = {"name": task_name, "projectId": project_id}
+        if request_data:
+            payload = {**payload, **request_data}
+
         try:
-            url = (
-                self.base_url
-                + "/workspaces/"
-                + workspace_id
-                + "/projects/"
-                + project_id
-                + "/tasks/"
-            )
-            payload = {"name": task_name, "projectId": project_id}
-            if request_data:
-                payload = {**payload, **request_data}
             return self.post(url, payload)
         except Exception:
             logging.exception("API error")
@@ -57,16 +51,9 @@ class Task(AbstractClockify):
         :param request_data  Dictionary with request data.
         :return              Dictionary with task object representation.
         """
+        url = f"{self.base_url}/workspaces/{workspace_id}/projects/{project_id}/tasks/{task_id}"
+
         try:
-            url = (
-                self.base_url
-                + "/workspaces/"
-                + workspace_id
-                + "/projects/"
-                + project_id
-                + "/tasks/"
-                + task_id
-            )
             return self.put(url, request_data)
         except Exception:
             logging.exception("API error")
@@ -81,29 +68,15 @@ class Task(AbstractClockify):
         :param params        Request URL query parameters.
         :return              List with dictionaries with task object representation.
         """
-        try:
-            if params:
-                url_params = urlencode(params)
-                url = (
-                    self.base_url
-                    + "/workspaces/"
-                    + workspace_id
-                    + "/projects/"
-                    + project_id
-                    + "/tasks?"
-                    + url_params
-                )
-            else:
-                url = (
-                    self.base_url
-                    + "/workspaces/"
-                    + workspace_id
-                    + "/projects/"
-                    + project_id
-                    + "/tasks/"
-                )
-            return self.get(url)
+        _url = f"{self.base_url}/workspaces/{workspace_id}/projects/{project_id}"
+        if params:
+            url_params = urlencode(params)
+            url = f"{_url}/tasks?{url_params}"
+        else:
+            url = f"{_url}/tasks/"
 
+        try:
+            return self.get(url)
         except Exception:
             logging.exception("API error")
             raise
@@ -115,16 +88,9 @@ class Task(AbstractClockify):
         :param task_id       Request URL query parameters.
         :return              List with dictionaries with task object representation.
         """
+        url = f"{self.base_url}/workspaces/{workspace_id}/projects/{project_id}/tasks/{task_id}"
+
         try:
-            url = (
-                self.base_url
-                + "/workspaces/"
-                + workspace_id
-                + "/projects/"
-                + project_id
-                + "/tasks/"
-                + task_id
-            )
             return self.get(url)
         except Exception:
             logging.exception("API error")
