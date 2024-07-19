@@ -19,7 +19,9 @@ class Task(AbstractClockify):
         task_name: str,
         request_data: dict | None = None,
     ) -> JsonType:
-        """Creates new task in Clockify.
+        """
+        Creates new task in Clockify.
+
         :param workspace_id  Id of workspace.
         :param request_data  Dictionary with request data.
         :param project_id    Id of project.
@@ -44,14 +46,17 @@ class Task(AbstractClockify):
         task_id: str,
         request_data: dict | None = None,
     ) -> JsonType:
-        """Updates task in Clockify.
+        """
+        Updates task in Clockify.
+
         :param workspace_id  Id of workspace.
         :param project_id    Id of project.
         :param task_id       Id of task.
         :param request_data  Dictionary with request data.
         :return              Dictionary with task object representation.
         """
-        url = f"{self.base_url}/workspaces/{workspace_id}/projects/{project_id}/tasks/{task_id}"
+        path = f"/workspaces/{workspace_id}/projects/{project_id}/tasks/{task_id}"
+        url = f"{self.base_url}/{path}"
 
         try:
             return self.put(url, request_data)
@@ -62,7 +67,9 @@ class Task(AbstractClockify):
     def get_tasks(
         self, workspace_id: str, project_id: str, params: dict | None = None
     ) -> JsonType:
-        """Gets list of tasks from Clockify.
+        """
+        Gets list of tasks from Clockify.
+
         :param workspace_id  Id of workspace.
         :param project_id    Id of project.
         :param params        Request URL query parameters.
@@ -82,13 +89,16 @@ class Task(AbstractClockify):
             raise
 
     def get_task(self, workspace_id: str, project_id: str, task_id: str) -> JsonType:
-        """Gets task from Clockify.
+        """
+        Gets task from Clockify.
+
         :param workspace_id  Id of workspace.
         :param project_id    Id of project.
         :param task_id       Request URL query parameters.
         :return              List with dictionaries with task object representation.
         """
-        url = f"{self.base_url}/workspaces/{workspace_id}/projects/{project_id}/tasks/{task_id}"
+        path = f"/workspaces/{workspace_id}/projects/{project_id}/tasks/{task_id}"
+        url = f"{self.base_url}/{path}"
 
         try:
             return self.get(url)

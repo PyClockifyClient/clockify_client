@@ -15,7 +15,11 @@ class Report(AbstractClockify):
         self.base_url = f"https://reports.{api_url}".strip("/")
 
     def get_summary_report(self, workspace_id: str, payload: dict) -> JsonType:
-        """Calls Clockify API for summary report. Returns summary report object(Dictionary)
+        """
+        Calls Clockify API for summary report.
+
+        Returns summary report object(Dictionary)
+
         :param workspace_id Id of workspace for report.
         :param payload      Body of request for summary report.
         :return             Dictionary with summary report.
@@ -29,7 +33,11 @@ class Report(AbstractClockify):
             raise
 
     def get_detailed_report(self, workspace_id: str, payload: dict) -> JsonType:
-        """Calls Clockify API for detailed report. Returns detailed report object(Dictionary)
+        """
+        Calls Clockify API for detailed report.
+
+        Returns detailed report object(Dictionary)
+
         :param workspace_id Id of workspace for report.
         :param payload      Body of request for detailed report.
         :return             Dictionary with detailed report.
@@ -43,7 +51,11 @@ class Report(AbstractClockify):
             raise
 
     def get_weekly_report(self, workspace_id: str, payload: dict) -> JsonType:
-        """Calls Clockify API for weekly report. Returns weekly report object(Dictionary)
+        """
+        Calls Clockify API for weekly report.
+
+        Returns weekly report object(Dictionary)
+
         :param workspace_id Id of workspace for report.
         :param payload      Body of request for weekly report.
         :return             Dictionary with weekly report.

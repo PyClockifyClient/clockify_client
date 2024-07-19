@@ -32,7 +32,7 @@ from clockify_api_client.client import ClockifyAPIClient
 API_KEY = 'yourclockifyAPIkey'
 API_URL = 'api.clockify.me/v1'
 
-client = ClockifyAPIClient().build(API_KEY, API_URL)
+client = ClockifyAPIClient(API_KEY, API_URL)
 
 workspaces = client.workspaces.get_workspaces()  # Returns list of workspaces.
 

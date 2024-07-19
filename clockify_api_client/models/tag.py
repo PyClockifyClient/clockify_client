@@ -13,7 +13,9 @@ if TYPE_CHECKING:
 class Tag(AbstractClockify):
 
     def get_tags(self, workspace_id: str, params: dict | None = None) -> JsonType:
-        """Gets list of tags from Clockify.
+        """
+        Gets list of tags from Clockify.
+
         :param workspace_id  Id of workspace.
         :param params        Request URL query parameters.
         :return              List with dictionaries with tag object representation.

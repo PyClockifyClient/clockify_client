@@ -10,7 +10,10 @@ if TYPE_CHECKING:
 
 
 class Singleton(type):
-    """Singleton metaclass. Creates **singleton** instead of normal class when used as metaclass of class"""
+    """
+    Singleton metaclass.
+    Creates **singleton** instead of normal class when used as metaclass of class.
+    """
 
     _instances: ClassVar[dict] = {}
 

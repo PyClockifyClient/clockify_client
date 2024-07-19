@@ -51,18 +51,22 @@ select = [
     "B",  # flake8-bugbear
     "BLE",  # flake8-blind-except
     "C4",  # flake8-comprehensions
-#    "D",  # pydocstyle
+    "D",  # pydocstyle
+    "DTZ", # flake8-datetimez
     "E",  # pycodestyle error
     "EM",  # flake8-errmsg
     "ERA",  # eradicate
+    "EXE", # flake8-executable
     "F",  # Pyflakes
     "FA",  # flake8-future-annotations
 #    "FBT",  # flake8-boolean-trap
     "FIX",  # flake8-fixme
     "FLY",  # flynt
+    "FURB",  # refurb
     "I",  # isort
     "ICN",  # flake8-import-conventions
     "ISC",  # flake8-implicit-str-concat
+    "PERF", # perflint
     "PGH",  # pygrep-hooks
     "PIE",  # flake8-pie
     "PL",  # pylint
@@ -79,10 +83,6 @@ select = [
     "UP",  # python upgrade
     "W",  # pycodestyle warning
     "YTT",  # flake8-2020
-
-    # we would like these someday, but not yet
-    # "FURB",  # refurb
-#    "I001"
 ]
 ignore = [
     "D107",  # missing __init__ docstring, we do that in the class docstring.
@@ -90,25 +90,40 @@ ignore = [
     "D212",  # multi line summary first line, we want a one line summary.
     "ANN101",  # missing self annotation, we only annotate self when we return it.
     "ANN102",  # missing cls annotation, we only annotate cls when we return it.
-    
+    "UP038", # use `int | float` in `isinstance` *slower
+    "UP040", # type for TypeAlias - mypy doesnt support yet
+
     #TEMP IGNORES
-    "B024",
+    "B024", # abstract base class
     "TRY002", # own exceptions
-    "E501",
-#    "ANN201",
-    "UP040", # type for TypeAlias
+
+    # docstring rules
+    
+    "D100", # Missing docstring in public module
+    "D101", # Missing docstring in public class
+    "D102", # Missing docstring in public method
+    "D103", # Missing docstring in public function
+    "D104", # Missing docstring in public package
+    "D105", # Missing docstring in magic method
+    "D106", # Missing docstring in public nested class
+    "D107", # Missing docstring in `__init__`
+
+    "D205", # blank line between summary and description
 ]
 
 extend-safe-fixes = [
-    "ANN204",
+    "ANN201", "ANN202", "ANN204",
     "EM101", "EM102",
+    "E711", # Comparison to `None` should be `cond is None`
     "TCH001", "TCH002", "TCH003", "TCH004",
     "C408", "C419",
     "D200", "D205", "D415",
     "PT003", "PT006", "PT018",
     "RET504",
+    "RSE102",
+    "SIM105", "SIM108",
     "UP006", "UP007", "UP008", 
-    "W291",
+    "W291", "W293",
     "TRY201",
     "ISC001",
 ]
@@ -179,7 +194,7 @@ extend-safe-fixes = [
 #    "PERF203", # `try`-`except` within a loop incurs performance overhead
 #    "PERF401", # use list comp
 #    "UP038", # use `int | float` in `isinstance` *slower
-#    "UP040", # use type vs TypeAlias
+#    "UP040", # use type vs TypeAlias -- not supported by mypy yet
 #
 #    # NOT OPTIONAL. MUST REMAIN AS SET
 #    # these are all completely unnecessary 
@@ -218,23 +233,8 @@ extend-safe-fixes = [
 #    "PLR0913", # too-many-arguments
 #    "PLR0915", # too-many-statements
 #    "PLR2004", # magic-value-comparison
-#
 #]
-#
-#extend-safe-fixes = [
-#    "ANN201", "ANN202",
-#    "EM101", "EM102",
-#    "E711", # Comparison to `None` should be `cond is None`
-#    "TCH001", "TCH002", "TCH003", "TCH004",
-#    "C419",
-#    "D200", "D205", "D415",
-#    "PT003", "PT006", "PT018",
-#    "RET504",
-#    "UP007",
-#    "RSE102",
-#    "SIM105", "SIM108",
-#    "W291",
-#]
+
 
 [tool.ruff.lint.flake8-pytest-style]
 mark-parentheses = false

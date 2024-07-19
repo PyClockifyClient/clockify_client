@@ -13,23 +13,20 @@ if TYPE_CHECKING:
 class Project(AbstractClockify):
 
     def get_projects(self, workspace_id: str, params: dict | None = None) -> JsonType:
-        """Returns projects from given workspace with applied params if provided.
+        """
+        Returns projects from given workspace with applied params if provided.
+
         :param workspace_id Id of workspace.
         :param params       Dictionary with request parameters.
         :return             List of projects.
         """
+        if params:
+            url_params = urlencode(params, doseq=True)
+            url = f"{self.base_url}/workspaces/{workspace_id}/projects?{url_params}"
+        else:
+            url = f"{self.base_url}/workspaces/{workspace_id}/projects/"
+
         try:
-            if params:
-                url_params = urlencode(params, doseq=True)
-                url = (
-                    self.base_url
-                    + "/workspaces/"
-                    + f"{workspace_id}"
-                    + "/projects?"
-                    + url_params
-                )
-            else:
-                url = f"{self.base_url}/workspaces/{workspace_id}/projects/"
             return self.get(url)
         except Exception:
             logging.exception("API error")
@@ -43,21 +40,24 @@ class Project(AbstractClockify):
         billable: bool = False,
         public: bool = False,
     ) -> JsonType:
-        """Add new project into workspace.
+        """
+        Add new project into workspace.
+
         :param workspace_id Id of workspace.
         :param project_name Name of new project.
         :param client_id    Id of client.
         :param billable     Bool flag.
         :return             Dictionary representation of new project.
         """
+        url = f"{self.base_url}/workspaces/{workspace_id}/projects/"
+        data = {
+            "name": project_name,
+            "clientId": client_id,
+            "isPublic": "true" if public else "false",
+            "billable": billable,
+        }
+
         try:
-            url = f"{self.base_url}/workspaces/{workspace_id}/projects/"
-            data = {
-                "name": project_name,
-                "clientId": client_id,
-                "isPublic": "true" if public else "false",
-                "billable": billable,
-            }
             return self.post(url, data)
         except Exception:
             logging.exception("API error")

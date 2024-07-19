@@ -15,11 +15,13 @@ class TimeEntry(AbstractClockify):
     def get_time_entries(
         self, workspace_id: str, user_id: str, params: dict | None = None
     ) -> JsonType:
-        """Returns user time entries.
+        """
+        Returns user time entries.
+
         :param workspace_id Id of workspace.
         :param user_id      Id of user.
         :param params       Request URL query params.
-        :return             List with dictionary representation of time entries from clockify.
+        :return  List with dictionary representation of time entries from clockify.
         """
         _url = f"{self.base_url}/workspaces/{workspace_id}/user/{user_id}"
 
@@ -36,7 +38,9 @@ class TimeEntry(AbstractClockify):
             raise
 
     def get_time_entry(self, workspace_id: str, time_entry_id: str) -> JsonType:
-        """Gets specific time entry.
+        """
+        Gets specific time entry.
+
         :param workspace_id  Id of workspace.
         :param time_entry_id Id of time entry
         :return              Dictionary representation of time entry.
@@ -52,7 +56,9 @@ class TimeEntry(AbstractClockify):
     def update_time_entry(
         self, workspace_id: str, entry_id: str, payload: dict
     ) -> JsonType:
-        """Updates time entry in Clockify with provided payload data.
+        """
+        Updates time entry in Clockify with provided payload data.
+
         :param workspace_id Id of workspace.
         :param entry_id     Id of time entry.
         :param payload      Dictionary with payload data for update.
@@ -69,7 +75,9 @@ class TimeEntry(AbstractClockify):
     def add_time_entry(
         self, workspace_id: str, user_id: str, payload: dict
     ) -> JsonType:
-        """Adds time entry in Clockify with provided payload data.
+        """
+        Adds time entry in Clockify with provided payload data.
+
         Paid feature, workspace need to have active paid subscription.
         :param workspace_id Id of workspace.
         :param user_id      Id of workspace.
