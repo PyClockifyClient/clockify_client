@@ -1028,6 +1028,21 @@ rich = ">=12.0.0"
 urllib3 = ">=1.26.0"
 
 [[package]]
+name = "types-factory-boy"
+version = "0.4.1"
+description = "Typing stubs for factory-boy"
+optional = true
+python-versions = ">=3.7"
+files = [
+    {file = "types_factory_boy-0.4.1-py3-none-any.whl", hash = "sha256:a1fa265fad8b24ddf2d4363227d675d0c4cd44951b71d68ea8fc58aa90b0f85d"},
+    {file = "types_factory_boy-0.4.1.tar.gz", hash = "sha256:275b9e17a6ad79992bec77b956bb707770f7b0256e4172265e2139e48faf6faf"},
+]
+
+[package.dependencies]
+factory-boy = ">=3.2.0"
+typing-extensions = ">=4.2.0,<5.0.0"
+
+[[package]]
 name = "types-requests"
 version = "2.32.0.20240712"
 description = "Typing stubs for requests"
@@ -1085,10 +1100,10 @@ doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linke
 test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", "jaraco.test", "more-itertools", "pytest (>=6,!=8.1.*)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-ignore-flaky", "pytest-mypy", "pytest-ruff (>=0.2.1)"]
 
 [extras]
-dev = ["black", "coverage", "mypy", "pytest", "pytest-mock", "ruff", "twine", "types-requests"]
+dev = ["black", "coverage", "mypy", "pytest", "pytest-mock", "ruff", "twine", "types-factory-boy", "types-requests"]
 test = ["coverage", "pytest", "pytest-mock"]
 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "cbe32e9aba881178b9d6497a30d06d09580fbaf695fc8ce479f1199f03b3e552"
+content-hash = "8fc19d5fab4c72c310fe52b7a55a450a95bfcd56daf760027605dc692dc9c969"

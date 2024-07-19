@@ -1,5 +1,5 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, TypeAlias
 
-type JsonType = None | int | str | bool | list | dict[str, Any]
+JsonType: TypeAlias = None | int | str | bool | list | dict[str, Any]

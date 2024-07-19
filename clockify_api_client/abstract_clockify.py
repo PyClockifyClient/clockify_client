@@ -28,7 +28,7 @@ class AbstractClockify(ABC):
             return response.json()
         raise Exception(response.json())
 
-    def put(self, url: str, payload: dict) -> JsonType:
+    def put(self, url: str, payload: dict | None = None) -> JsonType:
         response = requests.put(url, headers=self.header, json=payload)
         if response.status_code in [200, 201, 202]:
             return response.json()

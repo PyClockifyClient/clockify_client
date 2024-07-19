@@ -96,6 +96,7 @@ ignore = [
     "TRY002", # own exceptions
     "E501",
 #    "ANN201",
+    "UP040", # type for TypeAlias
 ]
 
 extend-safe-fixes = [
@@ -106,7 +107,7 @@ extend-safe-fixes = [
     "D200", "D205", "D415",
     "PT003", "PT006", "PT018",
     "RET504",
-    "UP006", "UP007", "UP008", "UP040",
+    "UP006", "UP007", "UP008", 
     "W291",
     "TRY201",
 ]
@@ -313,6 +314,7 @@ ruff = {version = ">=0.5.0", optional = true}
 #tox = {version = "*", optional = true}
 twine = {version = "*", optional = true}
 types-requests = {version = "*", optional = true}
+types-factory-boy = {version = "*", optional = true}
 
 [tool.poetry.extras]
 dev = [
@@ -324,6 +326,7 @@ dev = [
     "ruff",
     "twine",
     "types-requests",
+    "types-factory-boy",
 ]
 test = [
     "coverage",
