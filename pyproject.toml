@@ -7,7 +7,6 @@
 # PIP:
 #   pip install -e .[dev]
 
-# everything in the boilerplate *SHOULD* match between the ScreenPyHQ packages.
 ################################################################################
 #                START OF BOILERPLATE CONFIGURATIONS                #
 ################################################################################
@@ -269,20 +268,18 @@ split-on-trailing-comma = false
 
 
 [tool.poetry]
-name = "clockify-api-client"
+name = "clockify_client"
 version = "0.1.1"
-description = "Simple python API client for clockify. Inspired by https://pypi.org/project/clockify/library."
-authors = ["Michael Bláha <michael.blaha@eluvia.com>"]
+description = "Python API client for clockify. Inspired by https://github.com/eluvia-com/clockify-api-aclient."
+authors = ["Marcel Wilson <m.wilson@acustaf.com>", "Alexis Rhote <a.rhote@acustaf.com>"]
 maintainers = ["Marcel Wilson", "Alexis Rhote"]
 license = "MIT"
-repository = "https://github.com/eluvia-com/clockify-api-aclient"
+repository = "https://github.com/PyClockifyClient/clockify_client"
 #documentation = ""
 readme = "README.md"
 classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
@@ -298,7 +295,7 @@ classifiers = [
 # so we dont have two different sets of package versions to update.
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.12"
 requests = "*"
 importlib_metadata = {version = "*", python = "3.10.*"}
 typing_extensions = ">=4.8.0"
@@ -339,7 +336,7 @@ test = [
 
 
 [tool.coverage.run]
-source = ["clockify-api-client"]
+source = ["clockify_client"]
 omit = [
     "/tests/*",
 ]
