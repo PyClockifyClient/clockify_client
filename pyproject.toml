@@ -298,7 +298,6 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.10"
 requests = "*"
-importlib_metadata = {version = "*", python = "3.10.*"}
 typing_extensions = ">=4.8.0"
 
 # convenience packages for development

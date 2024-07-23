@@ -462,7 +462,7 @@ files = [
 name = "importlib-metadata"
 version = "8.1.0"
 description = "Read metadata from Python packages"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "importlib_metadata-8.1.0-py3-none-any.whl", hash = "sha256:3cd29f739ed65973840b068e3132135ce954c254d48b5b640484467ef7ab3c8c"},
@@ -1205,7 +1205,7 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 name = "zipp"
 version = "3.19.2"
 description = "Backport of pathlib-compatible object wrapper for zip files"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "zipp-3.19.2-py3-none-any.whl", hash = "sha256:f091755f667055f2d02b32c53771a7a6c8b47e1fdbc4b72a8b9072b3eef8015c"},
@@ -1223,4 +1223,4 @@ test = ["coverage", "pytest", "pytest-mock", "responses", "tox"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "9072a50372ddee40fa0d970e6a7cd3a1e8e34f30af689bf91e0a13f911238ac5"
+content-hash = "910dcf0312dc1d07f525f22127e75ee711a67dabca861638a94f84e1c5a9cb72"
