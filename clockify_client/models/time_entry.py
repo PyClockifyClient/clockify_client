@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import logging
 from typing import TYPE_CHECKING
 from urllib.parse import urlencode
 
@@ -31,11 +30,7 @@ class TimeEntry(AbstractClockify):
         else:
             url = f"{_url}/time-entries/"
 
-        try:
-            return self.get(url)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.get(url)
 
     def get_time_entry(self, workspace_id: str, time_entry_id: str) -> JsonType:
         """
@@ -47,11 +42,7 @@ class TimeEntry(AbstractClockify):
         """
         url = f"{self.base_url}/workspaces/{workspace_id}/time-entries/{time_entry_id}"
 
-        try:
-            return self.get(url)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.get(url)
 
     def update_time_entry(
         self, workspace_id: str, entry_id: str, payload: dict
@@ -66,11 +57,7 @@ class TimeEntry(AbstractClockify):
         """
         url = f"{self.base_url}/workspaces/{workspace_id}/time-entries/{entry_id}"
 
-        try:
-            return self.put(url, payload)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.put(url, payload)
 
     def add_time_entry(
         self, workspace_id: str, user_id: str, payload: dict
@@ -86,8 +73,4 @@ class TimeEntry(AbstractClockify):
         """
         url = f"{self.base_url}/workspaces/{workspace_id}/user/{user_id}/time-entries/"
 
-        try:
-            return self.post(url, payload)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.post(url, payload)
