@@ -18,24 +18,28 @@ class AbstractClockify(ABC):
 
     def get(self, url: str) -> JsonType:
         response = requests.get(url, headers=self.header)
+        response.raise_for_status()
         if response.status_code in [200, 201, 202]:
             return response.json()
-        raise Exception(response.json())
+        return None
 
     def post(self, url: str, payload: dict) -> JsonType:
         response = requests.post(url, headers=self.header, json=payload)
+        response.raise_for_status()
         if response.status_code in [200, 201, 202]:
             return response.json()
-        raise Exception(response.json())
+        return None
 
     def put(self, url: str, payload: dict | None = None) -> JsonType:
         response = requests.put(url, headers=self.header, json=payload)
+        response.raise_for_status()
         if response.status_code in [200, 201, 202]:
             return response.json()
-        raise Exception(response.json())
+        return None
 
     def delete(self, url: str) -> JsonType:
         response = requests.delete(url, headers=self.header)
-        if response.status_code in [200, 201, 202, 204]:
+        response.raise_for_status()
+        if response.status_code in [200, 201, 202]:
             return response.json()
-        raise Exception(response.json())
+        return None

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import logging
 from typing import TYPE_CHECKING
 from urllib.parse import urlencode
 
@@ -18,11 +17,7 @@ class User(AbstractClockify):
         """
         url = f"{self.base_url}/user/"
 
-        try:
-            return self.get(url)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.get(url)
 
     def get_users(self, workspace_id: str, params: dict | None = None) -> JsonType:
         """Returns list of all users in given workspace.
@@ -36,12 +31,7 @@ class User(AbstractClockify):
         else:
             url = f"{self.base_url}/workspaces/{workspace_id}/users/"
 
-        try:
-
-            return self.get(url)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.get(url)
 
     def add_user(self, workspace_id: str, email: str) -> JsonType:
         """Adds new user into workspace.
@@ -52,26 +42,19 @@ class User(AbstractClockify):
         url = f"{self.base_url}/workspaces/{workspace_id}/users/"
         data = {"emails": [email]}
 
-        try:
-            return self.post(url, data)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.post(url, data)
 
-    def update_user(self, workspace_id: str, user_id: str, payload: dict) -> JsonType:
-        """Adds new user into workspace.
+    def update_user(self, workspace_id: str, user_id: str, status: str) -> JsonType:
+        """Update user status in workspace.
         :param workspace_id Id of workspace.
         :param user_id      User Id.
-        :param payload      User data to update.
+        :param status       ACTIVE or INACTIVE.
         :return             Dictionary representation of user.
         """
+        payload = {"status": status}
         url = f"{self.base_url}/workspaces/{workspace_id}/users/{user_id}"
 
-        try:
-            return self.put(url, payload)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.put(url, payload)
 
     def remove_user(self, workspace_id: str, user_id: str) -> JsonType:
         """Removes user from workspace.
@@ -80,8 +63,4 @@ class User(AbstractClockify):
         """
         url = f"{self.base_url}/workspaces/{workspace_id}/users/{user_id}"
 
-        try:
-            return self.delete(url)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.delete(url)

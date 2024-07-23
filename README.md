@@ -1,7 +1,7 @@
-# Clockify API Client
+# Clockify Client
 
 # Simple API client for Clockify.
-Simple Python API client for Clockify. [Clockify API reference](https://clockify.me/developers-api)
+Python API client for Clockify. [Clockify API reference](https://clockify.me/developers-api)
 
 - Base endpoints
   - Client
@@ -20,19 +20,19 @@ Simple Python API client for Clockify. [Clockify API reference](https://clockify
 Add package to your project:
 
 ```
-pipenv install clockify-api-client
+pip install clockify_client
 ```
 
 ## 2. Usage
 
 ```python
-from clockify_client.client import ClockifyAPIClient
+from clockify_client import ClockifyClient
 
 
 API_KEY = 'yourclockifyAPIkey'
 API_URL = 'api.clockify.me/v1'
 
-client = ClockifyAPIClient(API_KEY, API_URL)
+client = ClockifyClient(API_KEY, API_URL)
 
 workspaces = client.workspaces.get_workspaces()  # Returns list of workspaces.
 

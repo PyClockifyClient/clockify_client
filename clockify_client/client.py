@@ -8,10 +8,9 @@ from clockify_client.models.task import Task
 from clockify_client.models.time_entry import TimeEntry
 from clockify_client.models.user import User
 from clockify_client.models.workspace import Workspace
-from clockify_client.utils import Singleton
 
 
-class ClockifyAPIClient(metaclass=Singleton):
+class ClockifyClient:
 
     def __init__(self, api_key: str, api_url: str) -> None:
         """

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import logging
 from typing import TYPE_CHECKING
 from urllib.parse import urlencode
 
@@ -26,11 +25,7 @@ class Project(AbstractClockify):
         else:
             url = f"{self.base_url}/workspaces/{workspace_id}/projects/"
 
-        try:
-            return self.get(url)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.get(url)
 
     def add_project(
         self,
@@ -53,12 +48,8 @@ class Project(AbstractClockify):
         data = {
             "name": project_name,
             "clientId": client_id,
-            "isPublic": "true" if public else "false",
+            "isPublic": public,
             "billable": billable,
         }
 
-        try:
-            return self.post(url, data)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.post(url, data)

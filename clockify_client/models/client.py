@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import logging
 from typing import TYPE_CHECKING
 from urllib.parse import urlencode
 
@@ -13,7 +12,12 @@ if TYPE_CHECKING:
 class Client(AbstractClockify):
 
     def add_client(
-        self, workspace_id: str, name: str | None = None, note: str | None = None
+        self,
+        workspace_id: str,
+        name: str,
+        note: str | None = None,
+        email: str | None = None,
+        address: str | None = None,
     ) -> JsonType:
         """
         Adds new client.
@@ -23,15 +27,15 @@ class Client(AbstractClockify):
         :param note         Description of client
         :return             Dictionary representation of new client.
         """
-        assert name
-        data = {"name": name, "note": note}
+        data = {
+            "address": address,
+            "email": email,
+            "name": name,
+            "note": note,
+        }
         url = f"{self.base_url}/workspaces/{workspace_id}/clients/"
 
-        try:
-            return self.post(url, payload=data)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.post(url, payload=data)
 
     def get_clients(self, workspace_id: str, params: dict | None = None) -> JsonType:
         """
@@ -47,8 +51,4 @@ class Client(AbstractClockify):
         else:
             url = f"{self.base_url}/workspaces/{workspace_id}/clients/"
 
-        try:
-            return self.get(url)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.get(url)

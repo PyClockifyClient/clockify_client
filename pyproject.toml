@@ -257,7 +257,6 @@ split-on-trailing-comma = false
     "FBT",  # using a boolean as a test object is useful!
     "PLR",  # likewise using specific numbers and strings in tests.
 ]
-#"__version__.py" = ["D"]
 
 
 ################################################################################
@@ -280,6 +279,8 @@ readme = "README.md"
 classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
@@ -295,20 +296,18 @@ classifiers = [
 # so we dont have two different sets of package versions to update.
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.10"
 requests = "*"
-importlib_metadata = {version = "*", python = "3.10.*"}
-typing_extensions = ">=4.8.0"
 
 # convenience packages for development
 black = {version = "*", optional = true}
 coverage = {version = "*", optional = true}
-#cruft = {version = "*", optional = true}
 mypy = {version = "*", optional = true}
 pytest = {version = "*", optional = true}
 pytest-mock = {version = "*", optional = true}
+responses = {version = "*", optional = true}
 ruff = {version = ">=0.5.0", optional = true}
-#tox = {version = "*", optional = true}
+tox = {version = "*", optional = true}
 twine = {version = "*", optional = true}
 types-requests = {version = "*", optional = true}
 
@@ -319,27 +318,23 @@ dev = [
     "mypy",
     "pytest",
     "pytest-mock",
+    "responses",
     "ruff",
     "twine",
     "types-requests",
+    "tox",
 ]
 test = [
     "coverage",
     "pytest",
     "pytest-mock",
+    "responses",
+    "tox",
 ]
-#docs = [
-#    "autodoc-pydantic",
-#    "sphinx",
-#    "sphinx-rtd-theme",
-#]
 
 
 [tool.coverage.run]
 source = ["clockify_client"]
-omit = [
-    "/tests/*",
-]
 
 
 [tool.coverage.report]

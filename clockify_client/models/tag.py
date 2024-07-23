@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import logging
 from typing import TYPE_CHECKING
 from urllib.parse import urlencode
 
@@ -26,9 +25,4 @@ class Tag(AbstractClockify):
         else:
             url = f"{self.base_url}/workspaces/{workspace_id}/tags/"
 
-        try:
-            return self.get(url)
-
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.get(url)
