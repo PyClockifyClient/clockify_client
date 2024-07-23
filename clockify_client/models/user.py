@@ -41,8 +41,8 @@ class User(AbstractClockify):
         """
         path = f"/workspaces/{workspace_id}/users/"
 
-        data = {"emails": [email]}
-        return self.post(path, data)
+        payload = {"emails": [email]}
+        return self.post(path, payload=payload)
 
     def update_user(self, workspace_id: str, user_id: str, status: str) -> JsonType:
         """Update user status in workspace.
@@ -51,10 +51,10 @@ class User(AbstractClockify):
         :param status       ACTIVE or INACTIVE.
         :return             Dictionary representation of user.
         """
-        payload = {"status": status}
         path = f"/workspaces/{workspace_id}/users/{user_id}"
 
-        return self.put(path, payload)
+        payload = {"status": status}
+        return self.put(path, payload=payload)
 
     def remove_user(self, workspace_id: str, user_id: str) -> JsonType:
         """Removes user from workspace.

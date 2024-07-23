@@ -29,13 +29,13 @@ class Client(AbstractClockify):
         """
         path = f"/workspaces/{workspace_id}/clients/"
 
-        data = {
+        payload = {
             "address": address,
             "email": email,
             "name": name,
             "note": note,
         }
-        return self.post(path, payload=data)
+        return self.post(path, payload=payload)
 
     def get_clients(self, workspace_id: str, params: dict | None = None) -> JsonType:
         """

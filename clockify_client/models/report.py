@@ -25,7 +25,7 @@ class Report(AbstractClockify):
         """
         path = f"/workspaces/{workspace_id}/reports/summary/"
 
-        return self.post(path, payload)
+        return self.post(path, payload=payload)
 
     def get_detailed_report(self, workspace_id: str, payload: dict) -> JsonType:
         """
@@ -39,7 +39,7 @@ class Report(AbstractClockify):
         """
         path = f"/workspaces/{workspace_id}/reports/detailed/"
 
-        return self.post(path, payload)
+        return self.post(path, payload=payload)
 
     def get_weekly_report(self, workspace_id: str, payload: dict) -> JsonType:
         """
@@ -53,4 +53,4 @@ class Report(AbstractClockify):
         """
         path = f"/workspaces/{workspace_id}/reports/weekly/"
 
-        return self.post(path, payload)
+        return self.post(path, payload=payload)

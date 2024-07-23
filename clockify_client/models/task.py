@@ -16,31 +16,30 @@ class Task(AbstractClockify):
         workspace_id: str,
         project_id: str,
         task_name: str,
-        request_data: dict | None = None,
+        payload: dict | None = None,
     ) -> JsonType:
         """
         Creates new task in Clockify.
 
         :param workspace_id  Id of workspace.
-        :param request_data  Dictionary with request data.
+        :param payload       Dictionary with request data.
         :param project_id    Id of project.
         :param task_name     Name of new task.
         :return              Dictionary with task object representation.
         """
         path = f"/workspaces/{workspace_id}/projects/{project_id}/tasks/"
 
-        payload = {"name": task_name, "projectId": project_id}
-        if request_data:
-            payload = {**payload, **request_data}
+        _payload = {"name": task_name, "projectId": project_id}
+        payload = {**_payload, **payload} if payload else _payload
 
-        return self.post(path, payload)
+        return self.post(path, payload=payload)
 
     def update_task(
         self,
         workspace_id: str,
         project_id: str,
         task_id: str,
-        request_data: dict | None = None,
+        payload: dict | None = None,
     ) -> JsonType:
         """
         Updates task in Clockify.
@@ -48,12 +47,12 @@ class Task(AbstractClockify):
         :param workspace_id  Id of workspace.
         :param project_id    Id of project.
         :param task_id       Id of task.
-        :param request_data  Dictionary with request data.
+        :param payload       Dictionary with request data.
         :return              Dictionary with task object representation.
         """
         path = f"/workspaces/{workspace_id}/projects/{project_id}/tasks/{task_id}"
 
-        return self.put(path, request_data)
+        return self.put(path, payload=payload)
 
     def get_tasks(
         self, workspace_id: str, project_id: str, params: dict | None = None

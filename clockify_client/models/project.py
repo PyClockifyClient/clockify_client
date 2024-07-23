@@ -46,10 +46,10 @@ class Project(AbstractClockify):
         """
         path = f"/workspaces/{workspace_id}/projects/"
 
-        data = {
+        payload = {
             "name": project_name,
             "clientId": client_id,
             "isPublic": public,
             "billable": billable,
         }
-        return self.post(path, data)
+        return self.post(path, payload=payload)

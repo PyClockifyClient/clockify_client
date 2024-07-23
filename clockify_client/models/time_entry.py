@@ -57,7 +57,7 @@ class TimeEntry(AbstractClockify):
         """
         path = f"/workspaces/{workspace_id}/time-entries/{entry_id}"
 
-        return self.put(path, payload)
+        return self.put(path, payload=payload)
 
     def add_time_entry(
         self, workspace_id: str, user_id: str, payload: dict
@@ -73,4 +73,4 @@ class TimeEntry(AbstractClockify):
         """
         path = f"/workspaces/{workspace_id}/user/{user_id}/time-entries/"
 
-        return self.post(path, payload)
+        return self.post(path, payload=payload)
