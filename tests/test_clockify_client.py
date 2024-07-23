@@ -4,7 +4,7 @@ from clockify_client import ClockifyClient
 
 
 def test_can_be_instantiated() -> None:
-    client = ClockifyClient("0", "0")
+    client = ClockifyClient("apikey", "baz.co")
     assert isinstance(client, ClockifyClient)
 
 

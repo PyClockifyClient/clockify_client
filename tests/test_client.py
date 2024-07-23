@@ -6,7 +6,7 @@ from clockify_client.models.client import Client
 
 
 def test_can_be_instantiated() -> None:
-    client = Client("0", "0")
+    client = Client("apikey", "baz.co")
     assert isinstance(client, Client)
 
 
