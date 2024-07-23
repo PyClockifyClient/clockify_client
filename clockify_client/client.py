@@ -10,7 +10,7 @@ from clockify_client.models.user import User
 from clockify_client.models.workspace import Workspace
 
 
-class ClockifyClient:
+class Clockify:
 
     def __init__(self, api_key: str, api_url: str) -> None:
         """
