@@ -32,6 +32,7 @@ class Project(AbstractClockify):
         workspace_id: str,
         project_name: str,
         client_id: str,
+        *,
         billable: bool = False,
         public: bool = False,
     ) -> JsonType:
@@ -42,6 +43,7 @@ class Project(AbstractClockify):
         :param project_name Name of new project.
         :param client_id    Id of client.
         :param billable     Bool flag.
+        :param public       Bool flag.
         :return             Dictionary representation of new project.
         """
         path = f"/workspaces/{workspace_id}/projects/"
