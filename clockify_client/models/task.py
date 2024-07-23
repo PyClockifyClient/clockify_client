@@ -27,12 +27,13 @@ class Task(AbstractClockify):
         :param task_name     Name of new task.
         :return              Dictionary with task object representation.
         """
-        url = f"{self.base_url}/workspaces/{workspace_id}/projects/{project_id}/tasks/"
+        path = f"/workspaces/{workspace_id}/projects/{project_id}/tasks/"
+
         payload = {"name": task_name, "projectId": project_id}
         if request_data:
             payload = {**payload, **request_data}
 
-        return self.post(url, payload)
+        return self.post(path, payload)
 
     def update_task(
         self,
@@ -51,9 +52,8 @@ class Task(AbstractClockify):
         :return              Dictionary with task object representation.
         """
         path = f"/workspaces/{workspace_id}/projects/{project_id}/tasks/{task_id}"
-        url = f"{self.base_url}{path}"
 
-        return self.put(url, request_data)
+        return self.put(path, request_data)
 
     def get_tasks(
         self, workspace_id: str, project_id: str, params: dict | None = None
@@ -66,14 +66,14 @@ class Task(AbstractClockify):
         :param params        Request URL query parameters.
         :return              List with dictionaries with task object representation.
         """
-        _url = f"{self.base_url}/workspaces/{workspace_id}/projects/{project_id}"
+        _url = f"/workspaces/{workspace_id}/projects/{project_id}"
         if params:
             url_params = urlencode(params)
-            url = f"{_url}/tasks?{url_params}"
+            path = f"{_url}/tasks?{url_params}"
         else:
-            url = f"{_url}/tasks/"
+            path = f"{_url}/tasks/"
 
-        return self.get(url)
+        return self.get(path)
 
     def get_task(self, workspace_id: str, project_id: str, task_id: str) -> JsonType:
         """
@@ -85,6 +85,5 @@ class Task(AbstractClockify):
         :return              List with dictionaries with task object representation.
         """
         path = f"/workspaces/{workspace_id}/projects/{project_id}/tasks/{task_id}"
-        url = f"{self.base_url}{path}"
 
-        return self.get(url)
+        return self.get(path)

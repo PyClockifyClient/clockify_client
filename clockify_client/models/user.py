@@ -15,9 +15,9 @@ class User(AbstractClockify):
         """Get user by paired with API key.
         :return User dictionary representation.
         """
-        url = f"{self.base_url}/user/"
+        path = "/user/"
 
-        return self.get(url)
+        return self.get(path)
 
     def get_users(self, workspace_id: str, params: dict | None = None) -> JsonType:
         """Returns list of all users in given workspace.
@@ -27,11 +27,11 @@ class User(AbstractClockify):
         """
         if params:
             params_str = urlencode(params, doseq=True)
-            url = f"{self.base_url}/workspaces/{workspace_id}/users?{params_str}"
+            path = f"/workspaces/{workspace_id}/users?{params_str}"
         else:
-            url = f"{self.base_url}/workspaces/{workspace_id}/users/"
+            path = f"/workspaces/{workspace_id}/users/"
 
-        return self.get(url)
+        return self.get(path)
 
     def add_user(self, workspace_id: str, email: str) -> JsonType:
         """Adds new user into workspace.
@@ -39,10 +39,10 @@ class User(AbstractClockify):
         :param email        Email of new user.
         :return             Dictionary representation of user.
         """
-        url = f"{self.base_url}/workspaces/{workspace_id}/users/"
+        path = f"/workspaces/{workspace_id}/users/"
+        
         data = {"emails": [email]}
-
-        return self.post(url, data)
+        return self.post(path, data)
 
     def update_user(self, workspace_id: str, user_id: str, status: str) -> JsonType:
         """Update user status in workspace.
@@ -52,15 +52,15 @@ class User(AbstractClockify):
         :return             Dictionary representation of user.
         """
         payload = {"status": status}
-        url = f"{self.base_url}/workspaces/{workspace_id}/users/{user_id}"
+        path = f"/workspaces/{workspace_id}/users/{user_id}"
 
-        return self.put(url, payload)
+        return self.put(path, payload)
 
     def remove_user(self, workspace_id: str, user_id: str) -> JsonType:
         """Removes user from workspace.
         :param workspace_id Id of workspace.
         :param user_id      User Id.
         """
-        url = f"{self.base_url}/workspaces/{workspace_id}/users/{user_id}"
+        path = f"/workspaces/{workspace_id}/users/{user_id}"
 
-        return self.delete(url)
+        return self.delete(path)

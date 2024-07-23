@@ -23,9 +23,9 @@ class Report(AbstractClockify):
         :param payload      Body of request for summary report.
         :return             Dictionary with summary report.
         """
-        url = f"{self.base_url}/workspaces/{workspace_id}/reports/summary/"
+        path = f"/workspaces/{workspace_id}/reports/summary/"
 
-        return self.post(url, payload)
+        return self.post(path, payload)
 
     def get_detailed_report(self, workspace_id: str, payload: dict) -> JsonType:
         """
@@ -37,9 +37,9 @@ class Report(AbstractClockify):
         :param payload      Body of request for detailed report.
         :return             Dictionary with detailed report.
         """
-        url = f"{self.base_url}/workspaces/{workspace_id}/reports/detailed/"
+        path = f"/workspaces/{workspace_id}/reports/detailed/"
 
-        return self.post(url, payload)
+        return self.post(path, payload)
 
     def get_weekly_report(self, workspace_id: str, payload: dict) -> JsonType:
         """
@@ -51,6 +51,6 @@ class Report(AbstractClockify):
         :param payload      Body of request for weekly report.
         :return             Dictionary with weekly report.
         """
-        url = f"{self.base_url}/workspaces/{workspace_id}/reports/weekly/"
+        path = f"/workspaces/{workspace_id}/reports/weekly/"
 
-        return self.post(url, payload)
+        return self.post(path, payload)

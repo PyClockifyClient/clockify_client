@@ -21,11 +21,11 @@ class Project(AbstractClockify):
         """
         if params:
             url_params = urlencode(params, doseq=True)
-            url = f"{self.base_url}/workspaces/{workspace_id}/projects?{url_params}"
+            path = f"/workspaces/{workspace_id}/projects?{url_params}"
         else:
-            url = f"{self.base_url}/workspaces/{workspace_id}/projects/"
+            path = f"/workspaces/{workspace_id}/projects/"
 
-        return self.get(url)
+        return self.get(path)
 
     def add_project(
         self,
@@ -44,12 +44,12 @@ class Project(AbstractClockify):
         :param billable     Bool flag.
         :return             Dictionary representation of new project.
         """
-        url = f"{self.base_url}/workspaces/{workspace_id}/projects/"
+        path = f"/workspaces/{workspace_id}/projects/"
+
         data = {
             "name": project_name,
             "clientId": client_id,
             "isPublic": public,
             "billable": billable,
         }
-
-        return self.post(url, data)
+        return self.post(path, data)

@@ -21,8 +21,8 @@ class Tag(AbstractClockify):
         """
         if params:
             url_params = urlencode(params)
-            url = f"{self.base_url}/workspaces/{workspace_id}/tags?{url_params}"
+            path = f"/workspaces/{workspace_id}/tags?{url_params}"
         else:
-            url = f"{self.base_url}/workspaces/{workspace_id}/tags/"
+            path = f"/workspaces/{workspace_id}/tags/"
 
-        return self.get(url)
+        return self.get(path)

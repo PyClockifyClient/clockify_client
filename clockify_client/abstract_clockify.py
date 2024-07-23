@@ -15,28 +15,32 @@ class AbstractClockify:
         self.api_key = api_key
         self.header = {"X-Api-Key": self.api_key}
 
-    def get(self, url: str) -> JsonType:
+    def get(self, path: str) -> JsonType:
+        url = f"{self.base_url}{path}"
         response = requests.get(url, headers=self.header)
         response.raise_for_status()
         if response.status_code in [200, 201, 202]:
             return response.json()
         return None
 
-    def post(self, url: str, payload: dict) -> JsonType:
+    def post(self, path: str, payload: dict) -> JsonType:
+        url = f"{self.base_url}{path}"
         response = requests.post(url, headers=self.header, json=payload)
         response.raise_for_status()
         if response.status_code in [200, 201, 202]:
             return response.json()
         return None
 
-    def put(self, url: str, payload: dict | None = None) -> JsonType:
+    def put(self, path: str, payload: dict | None = None) -> JsonType:
+        url = f"{self.base_url}{path}"
         response = requests.put(url, headers=self.header, json=payload)
         response.raise_for_status()
         if response.status_code in [200, 201, 202]:
             return response.json()
         return None
 
-    def delete(self, url: str) -> JsonType:
+    def delete(self, path: str) -> JsonType:
+        url = f"{self.base_url}{path}"
         response = requests.delete(url, headers=self.header)
         response.raise_for_status()
         if response.status_code in [200, 201, 202]:
