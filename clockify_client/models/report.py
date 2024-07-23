@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import logging
 from typing import TYPE_CHECKING
 
 from clockify_client.abstract_clockify import AbstractClockify
@@ -26,11 +25,7 @@ class Report(AbstractClockify):
         """
         url = f"{self.base_url}/workspaces/{workspace_id}/reports/summary/"
 
-        try:
-            return self.post(url, payload)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.post(url, payload)
 
     def get_detailed_report(self, workspace_id: str, payload: dict) -> JsonType:
         """
@@ -44,11 +39,7 @@ class Report(AbstractClockify):
         """
         url = f"{self.base_url}/workspaces/{workspace_id}/reports/detailed/"
 
-        try:
-            return self.post(url, payload)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.post(url, payload)
 
     def get_weekly_report(self, workspace_id: str, payload: dict) -> JsonType:
         """
@@ -62,8 +53,4 @@ class Report(AbstractClockify):
         """
         url = f"{self.base_url}/workspaces/{workspace_id}/reports/weekly/"
 
-        try:
-            return self.post(url, payload)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.post(url, payload)
