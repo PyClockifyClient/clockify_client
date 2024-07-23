@@ -16,6 +16,7 @@ class AbstractClockify:
         self.header = {"X-Api-Key": self.api_key}
 
     def get(self, path: str) -> JsonType:
+        """Send GET request to Clockify API."""
         url = f"{self.base_url}{path}"
         response = requests.get(url, headers=self.header)
         response.raise_for_status()
@@ -24,6 +25,7 @@ class AbstractClockify:
         return None
 
     def post(self, path: str, payload: dict) -> JsonType:
+        """Send POST request to Clockify API."""
         url = f"{self.base_url}{path}"
         response = requests.post(url, headers=self.header, json=payload)
         response.raise_for_status()
@@ -32,6 +34,7 @@ class AbstractClockify:
         return None
 
     def put(self, path: str, payload: dict | None = None) -> JsonType:
+        """Send PUT request to Clockify API."""
         url = f"{self.base_url}{path}"
         response = requests.put(url, headers=self.header, json=payload)
         response.raise_for_status()
@@ -40,6 +43,7 @@ class AbstractClockify:
         return None
 
     def delete(self, path: str) -> JsonType:
+        """Send DELETE request to Clockify API."""
         url = f"{self.base_url}{path}"
         response = requests.delete(url, headers=self.header)
         response.raise_for_status()
