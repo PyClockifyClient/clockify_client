@@ -40,7 +40,7 @@ class User(AbstractClockify):
         :return             Dictionary representation of user.
         """
         path = f"/workspaces/{workspace_id}/users/"
-        
+
         data = {"emails": [email]}
         return self.post(path, data)
 

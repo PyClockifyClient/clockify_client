@@ -6,7 +6,7 @@ from clockify_client.models.report import Report
 
 
 def test_can_be_instantiated() -> None:
-    report = Report("apikey", "baz.co")
+    report = Report("apikey", "baz.co/")
     assert isinstance(report, Report)
     assert report.base_url == "https://reports.baz.co"
 

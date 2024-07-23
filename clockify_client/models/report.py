@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 class Report(AbstractClockify):
     def __init__(self, api_key: str, api_url: str) -> None:
         super().__init__(api_key=api_key, api_url=api_url)
-        self.base_url = f"https://reports.{api_url}".strip("/")
+        self.base_url = f"https://reports.{api_url.strip('/')}"
 
     def get_summary_report(self, workspace_id: str, payload: dict) -> JsonType:
         """
