@@ -7,67 +7,15 @@ import responses
 from clockify_client.models.time_entry import TimeEntry
 
 
-class TestTimeEntry:
-    def test_can_be_instantiated(self) -> None:
-        time_entry = TimeEntry("apikey", "baz.co")
-        assert isinstance(time_entry, TimeEntry)
+def test_can_be_instantiated() -> None:
+    time_entry = TimeEntry("apikey", "baz.co")
+    assert isinstance(time_entry, TimeEntry)
 
-    @responses.activate
-    def test_get_time_entries(self) -> None:
-        resp_data = [
-            {
-                "billable": True,
-                "costRate": {"amount": 10500, "currency": "USD"},
-                "customFieldValues": [
-                    {
-                        "customFieldId": "5e4117fe8c625f38930d57b7",
-                        "name": "TIN",
-                        "timeEntryId": "64c777ddd3fcab07cfbb210c",
-                        "type": "WORKSPACE",
-                        "value": "20231211-12345",
-                    }
-                ],
-                "description": "This is a sample time entry description.",
-                "hourlyRate": {"amount": 10500, "currency": "USD"},
-                "id": "64c777ddd3fcab07cfbb210c",
-                "isLocked": False,
-                "kioskId": "94c777ddd3fcab07cfbb210d",
-                "projectId": "25b687e29ae1f428e7ebe123",
-                "tagIds": ["321r77ddd3fcab07cfbb567y", "44x777ddd3fcab07cfbb88f"],
-                "taskId": "54m377ddd3fcab07cfbb432w",
-                "timeInterval": {
-                    "duration": "8000",
-                    "end": "2021-01-01T00:00:00Z",
-                    "start": "2020-01-01T00:00:00Z",
-                },
-                "type": "BREAK",
-                "userId": "007",
-                "workspaceId": "123",
-            }
-        ]
-        rsp = responses.get(
-            "https://global.baz.co/workspaces/123/user/007/time-entries/",
-            json=resp_data,
-            status=200,
-        )
-        time_entry = TimeEntry("apikey", "baz.co")
-        rt = time_entry.get_time_entries("123", "007")
-        assert rt == resp_data
-        assert rsp.call_count == 1
 
-        rsp2 = responses.get(
-            "https://global.baz.co/workspaces/123/user/007/time-entries"
-            "?start=2020-01-01T00:00:00Z&end=2021-01-01T00:00:00Z",
-            json=resp_data,
-            status=200,
-        )
-        params = {"start": "2020-01-01T00:00:00Z", "end": "2021-01-01T00:00:00Z"}
-        time_entry.get_time_entries("123", "007", params)
-        assert rsp2.call_count == 1
-
-    @responses.activate
-    def test_get_time_entry(self) -> None:
-        resp_data = {
+@responses.activate
+def test_get_time_entries() -> None:
+    resp_data = [
+        {
             "billable": True,
             "costRate": {"amount": 10500, "currency": "USD"},
             "customFieldValues": [
@@ -81,107 +29,8 @@ class TestTimeEntry:
             ],
             "description": "This is a sample time entry description.",
             "hourlyRate": {"amount": 10500, "currency": "USD"},
-            "id": "987",
-            "isLocked": False,
-            "kioskId": "94c777ddd3fcab07cfbb210d",
-            "projectId": "25b687e29ae1f428e7ebe123",
-            "tagIds": ["321r77ddd3fcab07cfbb567y", "44x777ddd3fcab07cfbb88f"],
-            "taskId": "54m377ddd3fcab07cfbb432w",
-            "timeInterval": {
-                "duration": "8000",
-                "end": "2021-01-01T00:00:00Z",
-                "start": "2020-01-01T00:00:00Z",
-            },
-            "type": "BREAK",
-            "userId": "5a0ab5acb07987125438b60f",
-            "workspaceId": "123",
-        }
-        rsp = responses.get(
-            "https://global.baz.co/workspaces/123/time-entries/987",
-            json=resp_data,
-            status=200,
-        )
-        time_entry = TimeEntry("apikey", "baz.co")
-        rt = time_entry.get_time_entry("123", "987")
-        assert rt == resp_data
-        assert rsp.call_count == 1
-
-    @responses.activate
-    def test_update_time_entry(self) -> None:
-        req_data = {"start": "2020-01-01T00:00:00Z"}
-        resp_data = {
-            "billable": True,
-            "customFieldValues": [
-                {
-                    "customFieldId": "5e4117fe8c625f38930d57b7",
-                    "name": "TIN",
-                    "timeEntryId": "64c777ddd3fcab07cfbb210c",
-                    "type": "WORKSPACE",
-                    "value": "20231211-12345",
-                }
-            ],
-            "description": "This is a sample time entry description.",
-            "id": "987",
-            "isLocked": False,
-            "kioskId": "94c777ddd3fcab07cfbb210d",
-            "projectId": "25b687e29ae1f428e7ebe123",
-            "tagIds": ["321r77ddd3fcab07cfbb567y", "44x777ddd3fcab07cfbb88f"],
-            "taskId": "54m377ddd3fcab07cfbb432w",
-            "timeInterval": {
-                "duration": "8000",
-                "end": "2021-01-01T00:00:00Z",
-                "start": "2020-01-01T00:00:00Z",
-            },
-            "type": "BREAK",
-            "userId": "5a0ab5acb07987125438b60f",
-            "workspaceId": "123",
-        }
-        rsp = responses.put(
-            "https://global.baz.co/workspaces/123/time-entries/987",
-            json=resp_data,
-            status=200,
-        )
-        time_entry = TimeEntry("apikey", "baz.co")
-        rt = time_entry.update_time_entry("123", "987", req_data)
-        assert rt == resp_data
-        assert rsp.call_count == 1
-
-    @responses.activate
-    def test_add_time_entry(self) -> None:
-        req_data = {
-            "billable": True,
-            "customAttributes": [
-                {"name": "race", "namespace": "user_info", "value": "Asian"}
-            ],
-            "customFields": [
-                {
-                    "customFieldId": "5e4117fe8c625f38930d57b7",
-                    "sourceType": "WORKSPACE",
-                    "value": "new value",
-                }
-            ],
-            "description": "This is a sample time entry description.",
-            "end": "2021-01-01T00:00:00Z",
-            "projectId": "25b687e29ae1f428e7ebe123",
-            "start": "2020-01-01T00:00:00Z",
-            "tagIds": ["321r77ddd3fcab07cfbb567y", "44x777ddd3fcab07cfbb88f"],
-            "taskId": "54m377ddd3fcab07cfbb432w",
-            "type": "REGULAR",
-        }
-        resp_data = {
-            "billable": True,
-            "customFieldValues": [
-                {
-                    "customFieldId": "5e4117fe8c625f38930d57b7",
-                    "name": "TIN",
-                    "timeEntryId": "64c777ddd3fcab07cfbb210c",
-                    "type": "WORKSPACE",
-                    "value": "20231211-12345",
-                }
-            ],
-            "description": "This is a sample time entry description.",
             "id": "64c777ddd3fcab07cfbb210c",
-            "isLocked": True,
+            "isLocked": False,
             "kioskId": "94c777ddd3fcab07cfbb210d",
             "projectId": "25b687e29ae1f428e7ebe123",
             "tagIds": ["321r77ddd3fcab07cfbb567y", "44x777ddd3fcab07cfbb88f"],
@@ -192,16 +41,170 @@ class TestTimeEntry:
                 "start": "2020-01-01T00:00:00Z",
             },
             "type": "BREAK",
-            "userId": "5a0ab5acb07987125438b60f",
-            "workspaceId": "64a687e29ae1f428e7ebe303",
+            "userId": "007",
+            "workspaceId": "123",
         }
-        rsp = responses.post(
-            "https://global.baz.co/workspaces/123/user/007/time-entries/",
-            json=resp_data,
-            status=200,
-        )
-        time_entry = TimeEntry("apikey", "baz.co")
-        rt = time_entry.add_time_entry("123", "007", req_data)
-        assert rt == resp_data
-        assert rsp.call_count == 1
-        assert json.loads(rsp.calls[0].request.body) == req_data
+    ]
+    rsp = responses.get(
+        "https://global.baz.co/workspaces/123/user/007/time-entries/",
+        json=resp_data,
+        status=200,
+    )
+    time_entry = TimeEntry("apikey", "baz.co")
+    rt = time_entry.get_time_entries("123", "007")
+    assert rt == resp_data
+    assert rsp.call_count == 1
+
+    rsp2 = responses.get(
+        "https://global.baz.co/workspaces/123/user/007/time-entries"
+        "?start=2020-01-01T00:00:00Z&end=2021-01-01T00:00:00Z",
+        json=resp_data,
+        status=200,
+    )
+    params = {"start": "2020-01-01T00:00:00Z", "end": "2021-01-01T00:00:00Z"}
+    time_entry.get_time_entries("123", "007", params)
+    assert rsp2.call_count == 1
+
+
+@responses.activate
+def test_get_time_entry() -> None:
+    resp_data = {
+        "billable": True,
+        "costRate": {"amount": 10500, "currency": "USD"},
+        "customFieldValues": [
+            {
+                "customFieldId": "5e4117fe8c625f38930d57b7",
+                "name": "TIN",
+                "timeEntryId": "64c777ddd3fcab07cfbb210c",
+                "type": "WORKSPACE",
+                "value": "20231211-12345",
+            }
+        ],
+        "description": "This is a sample time entry description.",
+        "hourlyRate": {"amount": 10500, "currency": "USD"},
+        "id": "987",
+        "isLocked": False,
+        "kioskId": "94c777ddd3fcab07cfbb210d",
+        "projectId": "25b687e29ae1f428e7ebe123",
+        "tagIds": ["321r77ddd3fcab07cfbb567y", "44x777ddd3fcab07cfbb88f"],
+        "taskId": "54m377ddd3fcab07cfbb432w",
+        "timeInterval": {
+            "duration": "8000",
+            "end": "2021-01-01T00:00:00Z",
+            "start": "2020-01-01T00:00:00Z",
+        },
+        "type": "BREAK",
+        "userId": "5a0ab5acb07987125438b60f",
+        "workspaceId": "123",
+    }
+    rsp = responses.get(
+        "https://global.baz.co/workspaces/123/time-entries/987",
+        json=resp_data,
+        status=200,
+    )
+    time_entry = TimeEntry("apikey", "baz.co")
+    rt = time_entry.get_time_entry("123", "987")
+    assert rt == resp_data
+    assert rsp.call_count == 1
+
+
+@responses.activate
+def test_update_time_entry() -> None:
+    req_data = {"start": "2020-01-01T00:00:00Z"}
+    resp_data = {
+        "billable": True,
+        "customFieldValues": [
+            {
+                "customFieldId": "5e4117fe8c625f38930d57b7",
+                "name": "TIN",
+                "timeEntryId": "64c777ddd3fcab07cfbb210c",
+                "type": "WORKSPACE",
+                "value": "20231211-12345",
+            }
+        ],
+        "description": "This is a sample time entry description.",
+        "id": "987",
+        "isLocked": False,
+        "kioskId": "94c777ddd3fcab07cfbb210d",
+        "projectId": "25b687e29ae1f428e7ebe123",
+        "tagIds": ["321r77ddd3fcab07cfbb567y", "44x777ddd3fcab07cfbb88f"],
+        "taskId": "54m377ddd3fcab07cfbb432w",
+        "timeInterval": {
+            "duration": "8000",
+            "end": "2021-01-01T00:00:00Z",
+            "start": "2020-01-01T00:00:00Z",
+        },
+        "type": "BREAK",
+        "userId": "5a0ab5acb07987125438b60f",
+        "workspaceId": "123",
+    }
+    rsp = responses.put(
+        "https://global.baz.co/workspaces/123/time-entries/987",
+        json=resp_data,
+        status=200,
+    )
+    time_entry = TimeEntry("apikey", "baz.co")
+    rt = time_entry.update_time_entry("123", "987", req_data)
+    assert rt == resp_data
+    assert rsp.call_count == 1
+
+
+@responses.activate
+def test_add_time_entry() -> None:
+    req_data = {
+        "billable": True,
+        "customAttributes": [
+            {"name": "race", "namespace": "user_info", "value": "Asian"}
+        ],
+        "customFields": [
+            {
+                "customFieldId": "5e4117fe8c625f38930d57b7",
+                "sourceType": "WORKSPACE",
+                "value": "new value",
+            }
+        ],
+        "description": "This is a sample time entry description.",
+        "end": "2021-01-01T00:00:00Z",
+        "projectId": "25b687e29ae1f428e7ebe123",
+        "start": "2020-01-01T00:00:00Z",
+        "tagIds": ["321r77ddd3fcab07cfbb567y", "44x777ddd3fcab07cfbb88f"],
+        "taskId": "54m377ddd3fcab07cfbb432w",
+        "type": "REGULAR",
+    }
+    resp_data = {
+        "billable": True,
+        "customFieldValues": [
+            {
+                "customFieldId": "5e4117fe8c625f38930d57b7",
+                "name": "TIN",
+                "timeEntryId": "64c777ddd3fcab07cfbb210c",
+                "type": "WORKSPACE",
+                "value": "20231211-12345",
+            }
+        ],
+        "description": "This is a sample time entry description.",
+        "id": "64c777ddd3fcab07cfbb210c",
+        "isLocked": True,
+        "kioskId": "94c777ddd3fcab07cfbb210d",
+        "projectId": "25b687e29ae1f428e7ebe123",
+        "tagIds": ["321r77ddd3fcab07cfbb567y", "44x777ddd3fcab07cfbb88f"],
+        "taskId": "54m377ddd3fcab07cfbb432w",
+        "timeInterval": {
+            "duration": "8000",
+            "end": "2021-01-01T00:00:00Z",
+            "start": "2020-01-01T00:00:00Z",
+        },
+        "type": "BREAK",
+        "userId": "5a0ab5acb07987125438b60f",
+        "workspaceId": "64a687e29ae1f428e7ebe303",
+    }
+    rsp = responses.post(
+        "https://global.baz.co/workspaces/123/user/007/time-entries/",
+        json=resp_data,
+        status=200,
+    )
+    time_entry = TimeEntry("apikey", "baz.co")
+    rt = time_entry.add_time_entry("123", "007", req_data)
+    assert rt == resp_data
+    assert rsp.call_count == 1
+    assert json.loads(rsp.calls[0].request.body) == req_data
