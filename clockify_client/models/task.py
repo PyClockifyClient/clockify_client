@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import logging
 from typing import TYPE_CHECKING
 from urllib.parse import urlencode
 
@@ -33,11 +32,7 @@ class Task(AbstractClockify):
         if request_data:
             payload = {**payload, **request_data}
 
-        try:
-            return self.post(url, payload)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.post(url, payload)
 
     def update_task(
         self,
@@ -56,13 +51,9 @@ class Task(AbstractClockify):
         :return              Dictionary with task object representation.
         """
         path = f"/workspaces/{workspace_id}/projects/{project_id}/tasks/{task_id}"
-        url = f"{self.base_url}/{path}"
+        url = f"{self.base_url}{path}"
 
-        try:
-            return self.put(url, request_data)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.put(url, request_data)
 
     def get_tasks(
         self, workspace_id: str, project_id: str, params: dict | None = None
@@ -82,11 +73,7 @@ class Task(AbstractClockify):
         else:
             url = f"{_url}/tasks/"
 
-        try:
-            return self.get(url)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.get(url)
 
     def get_task(self, workspace_id: str, project_id: str, task_id: str) -> JsonType:
         """
@@ -98,10 +85,6 @@ class Task(AbstractClockify):
         :return              List with dictionaries with task object representation.
         """
         path = f"/workspaces/{workspace_id}/projects/{project_id}/tasks/{task_id}"
-        url = f"{self.base_url}/{path}"
+        url = f"{self.base_url}{path}"
 
-        try:
-            return self.get(url)
-        except Exception:
-            logging.exception("API error")
-            raise
+        return self.get(url)
