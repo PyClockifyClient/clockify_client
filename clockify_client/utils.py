@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, ClassVar, TypeVar
 
 if TYPE_CHECKING:
-    from typing_extensions import ParamSpec
+    from typing import ParamSpec
 
     P = ParamSpec("P")
     T = TypeVar("T")

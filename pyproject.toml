@@ -298,7 +298,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.10"
 requests = "*"
-typing_extensions = ">=4.8.0"
+#typing_extensions = ">=4.8.0"
 
 # convenience packages for development
 black = {version = "*", optional = true}
