@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import logging
 from typing import TYPE_CHECKING
 
 from clockify_client.abstract_clockify import AbstractClockify
@@ -15,9 +14,5 @@ class Workspace(AbstractClockify):
         """Returns all workspaces.
         :return List of Workspaces in dictionary representation.
         """
-        try:
-            url = f"{self.base_url}/workspaces/"
-            return self.get(url)
-        except Exception:
-            logging.exception("API error")
-            raise
+        url = f"{self.base_url}/workspaces/"
+        return self.get(url)
