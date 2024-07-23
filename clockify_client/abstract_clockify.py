@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from abc import ABC
 from typing import TYPE_CHECKING
 
 import requests
@@ -9,7 +8,7 @@ if TYPE_CHECKING:
     from clockify_client.types import JsonType
 
 
-class AbstractClockify(ABC):
+class AbstractClockify:
     def __init__(self, api_key: str, api_url: str) -> None:
 
         self.base_url = f"https://global.{api_url}".strip("/")

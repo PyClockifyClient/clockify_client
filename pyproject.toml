@@ -92,10 +92,6 @@ ignore = [
     "UP038", # use `int | float` in `isinstance` *slower
     "UP040", # type for TypeAlias - mypy doesnt support yet
 
-    #TEMP IGNORES
-    "B024", # abstract base class
-    "TRY002", # own exceptions
-
     # docstring rules
     
     "D100", # Missing docstring in public module
