@@ -1,9 +1,5 @@
 from __future__ import annotations
 
-from unittest import mock
-
-import pytest
-from requests import HTTPError, ConnectionError
 import responses
 
 from clockify_client.models.client import Client
@@ -28,11 +24,11 @@ class TestClient:
             "workspaceId": "123",
         }
         rsp = responses.post(
-            "https://global.baz/workspaces/123/clients/",
+            "https://global.baz.co/workspaces/123/clients/",
             json=data,
             status=201,
         )
-        client = Client("foo", "baz")
+        client = Client("apikey", "baz.co")
         rt = client.add_client("123", "Frank", "notes")
         assert rt == data
         assert rsp.call_count == 1
@@ -65,18 +61,18 @@ class TestClient:
             },
         ]
         rsp1 = responses.get(
-            "https://global.baz/workspaces/234/clients/",
+            "https://global.baz.co/workspaces/234/clients/",
             json=data,
             status=200,
         )
 
-        client = Client("foo", "baz")
+        client = Client("apikey", "baz.co")
         rt = client.get_clients("234")
         assert rt == data
         assert rsp1.call_count == 1
 
         rsp2 = responses.get(
-            "https://global.baz/workspaces/234/clients?name=Sally",
+            "https://global.baz.co/workspaces/234/clients?name=Sally",
             json=data,
             status=200,
         )
