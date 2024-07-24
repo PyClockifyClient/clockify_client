@@ -22,13 +22,13 @@ class TimeEntry(AbstractClockify):
         :param params       Request URL query params.
         :return  List with dictionary representation of time entries from clockify.
         """
-        _path = f"/workspaces/{workspace_id}/user/{user_id}/time-entries"
+        base_path = f"/workspaces/{workspace_id}/user/{user_id}/time-entries"
 
         if params:
             url_params = urlencode(params, doseq=True)
-            path = f"{_path}?{url_params}"
+            path = f"{base_path}?{url_params}"
         else:
-            path = f"{_path}/"
+            path = f"{base_path}/"
 
         return self.get(path)
 

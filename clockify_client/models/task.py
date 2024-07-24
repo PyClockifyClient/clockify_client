@@ -65,12 +65,12 @@ class Task(AbstractClockify):
         :param params        Request URL query parameters.
         :return              List with dictionaries with task object representation.
         """
-        _url = f"/workspaces/{workspace_id}/projects/{project_id}"
+        base_path = f"/workspaces/{workspace_id}/projects/{project_id}"
         if params:
             url_params = urlencode(params)
-            path = f"{_url}/tasks?{url_params}"
+            path = f"{base_path}/tasks?{url_params}"
         else:
-            path = f"{_url}/tasks/"
+            path = f"{base_path}/tasks/"
 
         return self.get(path)
 
