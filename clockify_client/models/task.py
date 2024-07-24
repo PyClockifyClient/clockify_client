@@ -29,10 +29,10 @@ class Task(AbstractClockify):
         """
         path = f"/workspaces/{workspace_id}/projects/{project_id}/tasks/"
 
-        _payload = {"name": task_name, "projectId": project_id}
-        payload = {**_payload, **payload} if payload else _payload
+        final_payload = {"name": task_name, "projectId": project_id}
+        final_payload.update(payload or {})
 
-        return self.post(path, payload=payload)
+        return self.post(path, payload=final_payload)
 
     def update_task(
         self,
