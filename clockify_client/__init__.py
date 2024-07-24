@@ -1,3 +1,3 @@
-from clockify_client.client import Clockify
+from clockify_client.clockify import Clockify
 
 __all__ = ["Clockify"]
