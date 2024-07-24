@@ -27,15 +27,15 @@ class Client(AbstractClockify):
         :param note         Description of client
         :return             Dictionary representation of new client.
         """
-        data = {
+        path = f"/workspaces/{workspace_id}/clients/"
+
+        payload = {
             "address": address,
             "email": email,
             "name": name,
             "note": note,
         }
-        url = f"{self.base_url}/workspaces/{workspace_id}/clients/"
-
-        return self.post(url, payload=data)
+        return self.post(path, payload=payload)
 
     def get_clients(self, workspace_id: str, params: dict | None = None) -> JsonType:
         """
@@ -47,8 +47,8 @@ class Client(AbstractClockify):
         """
         if params:
             url_params = urlencode(params, doseq=True)
-            url = f"{self.base_url}/workspaces/{workspace_id}/clients?{url_params}"
+            path = f"/workspaces/{workspace_id}/clients?{url_params}"
         else:
-            url = f"{self.base_url}/workspaces/{workspace_id}/clients/"
+            path = f"/workspaces/{workspace_id}/clients/"
 
-        return self.get(url)
+        return self.get(path)

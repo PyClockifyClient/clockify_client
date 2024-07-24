@@ -16,30 +16,30 @@ class Task(AbstractClockify):
         workspace_id: str,
         project_id: str,
         task_name: str,
-        request_data: dict | None = None,
+        payload: dict | None = None,
     ) -> JsonType:
         """
         Creates new task in Clockify.
 
         :param workspace_id  Id of workspace.
-        :param request_data  Dictionary with request data.
+        :param payload       Dictionary with request data.
         :param project_id    Id of project.
         :param task_name     Name of new task.
         :return              Dictionary with task object representation.
         """
-        url = f"{self.base_url}/workspaces/{workspace_id}/projects/{project_id}/tasks/"
-        payload = {"name": task_name, "projectId": project_id}
-        if request_data:
-            payload = {**payload, **request_data}
+        path = f"/workspaces/{workspace_id}/projects/{project_id}/tasks/"
 
-        return self.post(url, payload)
+        final_payload = {"name": task_name, "projectId": project_id}
+        final_payload.update(payload or {})
+
+        return self.post(path, payload=final_payload)
 
     def update_task(
         self,
         workspace_id: str,
         project_id: str,
         task_id: str,
-        request_data: dict | None = None,
+        payload: dict | None = None,
     ) -> JsonType:
         """
         Updates task in Clockify.
@@ -47,13 +47,12 @@ class Task(AbstractClockify):
         :param workspace_id  Id of workspace.
         :param project_id    Id of project.
         :param task_id       Id of task.
-        :param request_data  Dictionary with request data.
+        :param payload       Dictionary with request data.
         :return              Dictionary with task object representation.
         """
         path = f"/workspaces/{workspace_id}/projects/{project_id}/tasks/{task_id}"
-        url = f"{self.base_url}{path}"
 
-        return self.put(url, request_data)
+        return self.put(path, payload=payload)
 
     def get_tasks(
         self, workspace_id: str, project_id: str, params: dict | None = None
@@ -66,14 +65,14 @@ class Task(AbstractClockify):
         :param params        Request URL query parameters.
         :return              List with dictionaries with task object representation.
         """
-        _url = f"{self.base_url}/workspaces/{workspace_id}/projects/{project_id}"
+        base_path = f"/workspaces/{workspace_id}/projects/{project_id}"
         if params:
             url_params = urlencode(params)
-            url = f"{_url}/tasks?{url_params}"
+            path = f"{base_path}/tasks?{url_params}"
         else:
-            url = f"{_url}/tasks/"
+            path = f"{base_path}/tasks/"
 
-        return self.get(url)
+        return self.get(path)
 
     def get_task(self, workspace_id: str, project_id: str, task_id: str) -> JsonType:
         """
@@ -85,6 +84,5 @@ class Task(AbstractClockify):
         :return              List with dictionaries with task object representation.
         """
         path = f"/workspaces/{workspace_id}/projects/{project_id}/tasks/{task_id}"
-        url = f"{self.base_url}{path}"
 
-        return self.get(url)
+        return self.get(path)

@@ -22,15 +22,15 @@ class TimeEntry(AbstractClockify):
         :param params       Request URL query params.
         :return  List with dictionary representation of time entries from clockify.
         """
-        _url = f"{self.base_url}/workspaces/{workspace_id}/user/{user_id}"
+        base_path = f"/workspaces/{workspace_id}/user/{user_id}/time-entries"
 
         if params:
             url_params = urlencode(params, doseq=True)
-            url = f"{_url}/time-entries?{url_params}"
+            path = f"{base_path}?{url_params}"
         else:
-            url = f"{_url}/time-entries/"
+            path = f"{base_path}/"
 
-        return self.get(url)
+        return self.get(path)
 
     def get_time_entry(self, workspace_id: str, time_entry_id: str) -> JsonType:
         """
@@ -40,9 +40,9 @@ class TimeEntry(AbstractClockify):
         :param time_entry_id Id of time entry
         :return              Dictionary representation of time entry.
         """
-        url = f"{self.base_url}/workspaces/{workspace_id}/time-entries/{time_entry_id}"
+        path = f"/workspaces/{workspace_id}/time-entries/{time_entry_id}"
 
-        return self.get(url)
+        return self.get(path)
 
     def update_time_entry(
         self, workspace_id: str, entry_id: str, payload: dict
@@ -55,9 +55,9 @@ class TimeEntry(AbstractClockify):
         :param payload      Dictionary with payload data for update.
         :return             Updated time entry.
         """
-        url = f"{self.base_url}/workspaces/{workspace_id}/time-entries/{entry_id}"
+        path = f"/workspaces/{workspace_id}/time-entries/{entry_id}"
 
-        return self.put(url, payload)
+        return self.put(path, payload=payload)
 
     def add_time_entry(
         self, workspace_id: str, user_id: str, payload: dict
@@ -71,6 +71,6 @@ class TimeEntry(AbstractClockify):
         :param payload      Dictionary with payload data for update.
         :return             Updated time entry.
         """
-        url = f"{self.base_url}/workspaces/{workspace_id}/user/{user_id}/time-entries/"
+        path = f"/workspaces/{workspace_id}/user/{user_id}/time-entries/"
 
-        return self.post(url, payload)
+        return self.post(path, payload=payload)

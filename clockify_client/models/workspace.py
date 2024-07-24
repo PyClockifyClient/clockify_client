@@ -14,5 +14,6 @@ class Workspace(AbstractClockify):
         """Returns all workspaces.
         :return List of Workspaces in dictionary representation.
         """
-        url = f"{self.base_url}/workspaces/"
-        return self.get(url)
+        path = "/workspaces/"
+
+        return self.get(path)

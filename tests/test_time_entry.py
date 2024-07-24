@@ -8,8 +8,9 @@ from clockify_client.models.time_entry import TimeEntry
 
 
 def test_can_be_instantiated() -> None:
-    time_entry = TimeEntry("apikey", "baz.co")
+    time_entry = TimeEntry("apikey", "baz.co/")
     assert isinstance(time_entry, TimeEntry)
+    assert time_entry.base_url == "https://global.baz.co"
 
 
 @responses.activate

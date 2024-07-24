@@ -8,8 +8,9 @@ from clockify_client.models.user import User
 
 
 def test_can_be_instantiated() -> None:
-    user = User("apikey", "baz.co")
+    user = User("apikey", "baz.co/")
     assert isinstance(user, User)
+    assert user.base_url == "https://global.baz.co"
 
 
 @responses.activate

@@ -21,17 +21,18 @@ class Project(AbstractClockify):
         """
         if params:
             url_params = urlencode(params, doseq=True)
-            url = f"{self.base_url}/workspaces/{workspace_id}/projects?{url_params}"
+            path = f"/workspaces/{workspace_id}/projects?{url_params}"
         else:
-            url = f"{self.base_url}/workspaces/{workspace_id}/projects/"
+            path = f"/workspaces/{workspace_id}/projects/"
 
-        return self.get(url)
+        return self.get(path)
 
     def add_project(
         self,
         workspace_id: str,
         project_name: str,
         client_id: str,
+        *,
         billable: bool = False,
         public: bool = False,
     ) -> JsonType:
@@ -42,14 +43,15 @@ class Project(AbstractClockify):
         :param project_name Name of new project.
         :param client_id    Id of client.
         :param billable     Bool flag.
+        :param public       Bool flag.
         :return             Dictionary representation of new project.
         """
-        url = f"{self.base_url}/workspaces/{workspace_id}/projects/"
-        data = {
+        path = f"/workspaces/{workspace_id}/projects/"
+
+        payload = {
             "name": project_name,
             "clientId": client_id,
             "isPublic": public,
             "billable": billable,
         }
-
-        return self.post(url, data)
+        return self.post(path, payload=payload)

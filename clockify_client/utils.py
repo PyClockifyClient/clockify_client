@@ -10,14 +10,12 @@ if TYPE_CHECKING:
 
 
 class Singleton(type):
-    """
-    Singleton metaclass.
-    Creates **singleton** instead of normal class when used as metaclass of class.
-    """
+    """Singleton metaclass."""
 
     _instances: ClassVar[dict] = {}
 
     def __call__(cls, *args: P.args, **kwargs: P.kwargs) -> Singleton:
+        """Create **singleton** instead of normal instance when used as metaclass."""
         if cls not in cls._instances:
             cls._instances[cls] = super().__call__(*args, **kwargs)
         return cls._instances[cls]

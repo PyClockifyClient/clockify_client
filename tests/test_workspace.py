@@ -6,8 +6,9 @@ from clockify_client.models.workspace import Workspace
 
 
 def test_can_be_instantiated() -> None:
-    workspace = Workspace("apikey", "baz.co")
+    workspace = Workspace("apikey", "baz.co/")
     assert isinstance(workspace, Workspace)
+    assert workspace.base_url == "https://global.baz.co"
 
 
 @responses.activate

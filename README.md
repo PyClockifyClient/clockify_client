@@ -26,14 +26,14 @@ pip install clockify_client
 ## 2. Usage
 
 ```python
-from clockify_client import ClockifyClient
+from clockify_client import Clockify
 
 
 API_KEY = 'yourclockifyAPIkey'
 API_URL = 'api.clockify.me/v1'
 
-client = ClockifyClient(API_KEY, API_URL)
+clockify = Clockify(API_KEY, API_URL)
 
-workspaces = client.workspaces.get_workspaces()  # Returns list of workspaces.
+workspaces = clockify.workspaces.get_workspaces()  # Returns list of workspaces.
 
 ```
