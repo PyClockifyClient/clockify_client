@@ -74,3 +74,13 @@ class TimeEntry(AbstractClockify):
         path = f"/workspaces/{workspace_id}/user/{user_id}/time-entries/"
 
         return self.post(path, payload=payload)
+
+    def delete_time_entry(self, workspace_id: str, entry_id: str) -> JsonType:
+        """Updates time entry in Clockify with provided payload data.
+        :param workspace_id Id of workspace.
+        :param entry_id     Id of time entry.
+        :return             Deleted time entry.
+        """
+        path = f"/workspaces/{workspace_id}/time-entries/{entry_id}"
+
+        return self.delete(path)
