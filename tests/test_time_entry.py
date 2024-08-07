@@ -209,3 +209,15 @@ def test_add_time_entry() -> None:
     assert rt == resp_data
     assert rsp.call_count == 1
     assert json.loads(rsp.calls[0].request.body) == req_data
+
+
+@responses.activate
+def test_remove_time_entry() -> None:
+    rsp = responses.delete(
+        "https://global.baz.co/workspaces/123/time-entries/987",
+        status=204,
+    )
+    time_entry = TimeEntry("apikey", "baz.co")
+    rt = time_entry.delete_time_entry("123", "987")
+    assert rt is None
+    assert rsp.call_count == 1
