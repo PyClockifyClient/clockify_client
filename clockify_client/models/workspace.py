@@ -12,7 +12,8 @@ class Workspace(AbstractClockify):
 
     def get_workspaces(self) -> JsonType:
         """Returns all workspaces.
-        :return List of Workspaces in dictionary representation.
+
+        https://docs.clockify.me/#tag/Workspace/operation/getWorkspacesOfUser
         """
         path = "/workspaces/"
 

@@ -17,10 +17,7 @@ class TimeEntry(AbstractClockify):
         """
         Returns user time entries.
 
-        :param workspace_id Id of workspace.
-        :param user_id      Id of user.
-        :param params       Request URL query params.
-        :return  List with dictionary representation of time entries from clockify.
+        https://docs.clockify.me/#tag/Time-entry/operation/getTimeEntries
         """
         base_path = f"/workspaces/{workspace_id}/user/{user_id}/time-entries"
 
@@ -36,9 +33,7 @@ class TimeEntry(AbstractClockify):
         """
         Gets specific time entry.
 
-        :param workspace_id  Id of workspace.
-        :param time_entry_id Id of time entry
-        :return              Dictionary representation of time entry.
+        https://docs.clockify.me/#tag/Time-entry/operation/getTimeEntry
         """
         path = f"/workspaces/{workspace_id}/time-entries/{time_entry_id}"
 
@@ -50,10 +45,7 @@ class TimeEntry(AbstractClockify):
         """
         Updates time entry in Clockify with provided payload data.
 
-        :param workspace_id Id of workspace.
-        :param entry_id     Id of time entry.
-        :param payload      Dictionary with payload data for update.
-        :return             Updated time entry.
+        https://docs.clockify.me/#tag/Time-entry/operation/updateTimeEntry
         """
         path = f"/workspaces/{workspace_id}/time-entries/{entry_id}"
 
@@ -66,10 +58,8 @@ class TimeEntry(AbstractClockify):
         Adds time entry in Clockify with provided payload data.
 
         Paid feature, workspace need to have active paid subscription.
-        :param workspace_id Id of workspace.
-        :param user_id      Id of workspace.
-        :param payload      Dictionary with payload data for update.
-        :return             Updated time entry.
+
+        https://docs.clockify.me/#tag/Time-entry/operation/createTimeEntry
         """
         path = f"/workspaces/{workspace_id}/user/{user_id}/time-entries/"
 
@@ -77,9 +67,8 @@ class TimeEntry(AbstractClockify):
 
     def delete_time_entry(self, workspace_id: str, entry_id: str) -> JsonType:
         """Updates time entry in Clockify with provided payload data.
-        :param workspace_id Id of workspace.
-        :param entry_id     Id of time entry.
-        :return             Deleted time entry.
+
+        https://docs.clockify.me/#tag/Time-entry/operation/deleteTimeEntry
         """
         path = f"/workspaces/{workspace_id}/time-entries/{entry_id}"
 

@@ -22,10 +22,7 @@ class Client(AbstractClockify):
         """
         Adds new client.
 
-        :param workspace_id Id of workspace to look for clients.
-        :param name         Name of the new client.
-        :param note         Description of client
-        :return             Dictionary representation of new client.
+        https://docs.clockify.me/#tag/Client/operation/createClient
         """
         path = f"/workspaces/{workspace_id}/clients/"
 
@@ -41,9 +38,7 @@ class Client(AbstractClockify):
         """
         Returns all clients.
 
-        :param workspace_id Id of workspace to look for clients.
-        :param params       URL params of request.
-        :return             List of clients(dict objects).
+        https://docs.clockify.me/#tag/Client/operation/getClients
         """
         if params:
             url_params = urlencode(params, doseq=True)
