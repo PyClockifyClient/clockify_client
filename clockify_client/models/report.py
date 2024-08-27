@@ -17,11 +17,7 @@ class Report(AbstractClockify):
         """
         Calls Clockify API for summary report.
 
-        Returns summary report object(Dictionary)
-
-        :param workspace_id Id of workspace for report.
-        :param payload      Body of request for summary report.
-        :return             Dictionary with summary report.
+        https://docs.clockify.me/#tag/Time-Entry-Report/operation/generateSummaryReport
         """
         path = f"/workspaces/{workspace_id}/reports/summary/"
 
@@ -31,11 +27,7 @@ class Report(AbstractClockify):
         """
         Calls Clockify API for detailed report.
 
-        Returns detailed report object(Dictionary)
-
-        :param workspace_id Id of workspace for report.
-        :param payload      Body of request for detailed report.
-        :return             Dictionary with detailed report.
+        https://docs.clockify.me/#tag/Time-Entry-Report/operation/generateDetailedReport
         """
         path = f"/workspaces/{workspace_id}/reports/detailed/"
 
@@ -45,11 +37,7 @@ class Report(AbstractClockify):
         """
         Calls Clockify API for weekly report.
 
-        Returns weekly report object(Dictionary)
-
-        :param workspace_id Id of workspace for report.
-        :param payload      Body of request for weekly report.
-        :return             Dictionary with weekly report.
+        https://docs.clockify.me/#tag/Time-Entry-Report/operation/generateWeeklyReport
         """
         path = f"/workspaces/{workspace_id}/reports/weekly/"
 

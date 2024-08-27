@@ -13,7 +13,8 @@ class User(AbstractClockify):
 
     def get_current_user(self) -> JsonType:
         """Get user by paired with API key.
-        :return User dictionary representation.
+
+        https://docs.clockify.me/#tag/User/operation/getLoggedUser
         """
         path = "/user/"
 
@@ -21,9 +22,8 @@ class User(AbstractClockify):
 
     def get_users(self, workspace_id: str, params: dict | None = None) -> JsonType:
         """Returns list of all users in given workspace.
-        :param workspace_id Id of workspace.
-        :param params       Request URL query params.
-        :return             List of Users dictionary representation.
+
+        https://docs.clockify.me/#tag/User/operation/getUsersOfWorkspace
         """
         if params:
             params_str = urlencode(params, doseq=True)
@@ -35,9 +35,8 @@ class User(AbstractClockify):
 
     def add_user(self, workspace_id: str, email: str) -> JsonType:
         """Adds new user into workspace.
-        :param workspace_id Id of workspace.
-        :param email        Email of new user.
-        :return             Dictionary representation of user.
+
+        https://docs.clockify.me/#tag/Workspace/operation/addUsers
         """
         path = f"/workspaces/{workspace_id}/users/"
 
@@ -46,10 +45,8 @@ class User(AbstractClockify):
 
     def update_user(self, workspace_id: str, user_id: str, status: str) -> JsonType:
         """Update user status in workspace.
-        :param workspace_id Id of workspace.
-        :param user_id      User Id.
-        :param status       ACTIVE or INACTIVE.
-        :return             Dictionary representation of user.
+
+        https://docs.clockify.me/#tag/Workspace/operation/updateUserStatus
         """
         path = f"/workspaces/{workspace_id}/users/{user_id}"
 
@@ -58,8 +55,8 @@ class User(AbstractClockify):
 
     def remove_user(self, workspace_id: str, user_id: str) -> JsonType:
         """Removes user from workspace.
-        :param workspace_id Id of workspace.
-        :param user_id      User Id.
+
+        https://docs.clockify.me/#tag/Workspace/operation/removeMember
         """
         path = f"/workspaces/{workspace_id}/users/{user_id}"
 

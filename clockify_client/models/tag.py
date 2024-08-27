@@ -15,9 +15,7 @@ class Tag(AbstractClockify):
         """
         Gets list of tags from Clockify.
 
-        :param workspace_id  Id of workspace.
-        :param params        Request URL query parameters.
-        :return              List with dictionaries with tag object representation.
+        https://docs.clockify.me/#tag/Tag/operation/getTags
         """
         if params:
             url_params = urlencode(params)

@@ -15,9 +15,7 @@ class Project(AbstractClockify):
         """
         Returns projects from given workspace with applied params if provided.
 
-        :param workspace_id Id of workspace.
-        :param params       Dictionary with request parameters.
-        :return             List of projects.
+        https://docs.clockify.me/#tag/Project/operation/getProjects
         """
         if params:
             url_params = urlencode(params, doseq=True)
@@ -39,12 +37,7 @@ class Project(AbstractClockify):
         """
         Add new project into workspace.
 
-        :param workspace_id Id of workspace.
-        :param project_name Name of new project.
-        :param client_id    Id of client.
-        :param billable     Bool flag.
-        :param public       Bool flag.
-        :return             Dictionary representation of new project.
+        https://docs.clockify.me/#tag/Project/operation/createNewProject
         """
         path = f"/workspaces/{workspace_id}/projects/"
 

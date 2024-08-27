@@ -21,11 +21,7 @@ class Task(AbstractClockify):
         """
         Creates new task in Clockify.
 
-        :param workspace_id  Id of workspace.
-        :param payload       Dictionary with request data.
-        :param project_id    Id of project.
-        :param task_name     Name of new task.
-        :return              Dictionary with task object representation.
+        https://docs.clockify.me/#tag/Task/operation/createTask
         """
         path = f"/workspaces/{workspace_id}/projects/{project_id}/tasks/"
 
@@ -44,11 +40,7 @@ class Task(AbstractClockify):
         """
         Updates task in Clockify.
 
-        :param workspace_id  Id of workspace.
-        :param project_id    Id of project.
-        :param task_id       Id of task.
-        :param payload       Dictionary with request data.
-        :return              Dictionary with task object representation.
+        https://docs.clockify.me/#tag/Task/operation/updateTask
         """
         path = f"/workspaces/{workspace_id}/projects/{project_id}/tasks/{task_id}"
 
@@ -60,10 +52,7 @@ class Task(AbstractClockify):
         """
         Gets list of tasks from Clockify.
 
-        :param workspace_id  Id of workspace.
-        :param project_id    Id of project.
-        :param params        Request URL query parameters.
-        :return              List with dictionaries with task object representation.
+        https://docs.clockify.me/#tag/Task/operation/getTasks
         """
         base_path = f"/workspaces/{workspace_id}/projects/{project_id}"
         if params:
@@ -78,10 +67,7 @@ class Task(AbstractClockify):
         """
         Gets task from Clockify.
 
-        :param workspace_id  Id of workspace.
-        :param project_id    Id of project.
-        :param task_id       Request URL query parameters.
-        :return              List with dictionaries with task object representation.
+        https://docs.clockify.me/#tag/Task/operation/getTask
         """
         path = f"/workspaces/{workspace_id}/projects/{project_id}/tasks/{task_id}"
 
