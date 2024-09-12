@@ -4,7 +4,8 @@ from typing import TYPE_CHECKING
 from urllib.parse import urlencode
 
 from clockify_client.abstract_clockify import AbstractClockify
-from clockify_client.api_objects.project import AddProjectPayload
+from clockify_client.api_objects.project import AddProjectPayload, GetProjectResponse
+
 
 if TYPE_CHECKING:
     from clockify_client.api_objects.project import GetProjectsParams
@@ -15,7 +16,7 @@ class Project(AbstractClockify):
 
     def get_projects(
         self, workspace_id: str, params: GetProjectsParams | None = None
-    ) -> JsonType:
+    ) -> GetProjectResponse | None:
         """
         Returns projects from given workspace with applied params if provided.
 

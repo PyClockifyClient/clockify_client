@@ -5,6 +5,7 @@ import json
 import responses
 
 from clockify_client.models.project import Project
+from clockify_client.api_objects.project import GetProjectsParams
 
 
 def test_can_be_instantiated() -> None:
@@ -49,7 +50,7 @@ def test_get_projects() -> None:
         json=resp_data,
         status=200,
     )
-    rt = project.get_projects("345", {"name": "MyProject"})
+    rt = project.get_projects("345", GetProjectsParams(name="MyProject"))
     assert rt == resp_data
     assert rsp2.call_count == 1
 
