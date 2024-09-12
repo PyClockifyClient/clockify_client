@@ -1,25 +1,25 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Literal
+from datetime import timedelta  # noqa: TCH003
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-if TYPE_CHECKING:
-    from datetime import timedelta
-
-    T_user_status = Literal["PENDING", "ACTIVE", "DECLINED", "INACTIVE", "ALL"]
-    T_contains_client = Literal["ACTIVE", "ARCHIVED", "ALL"]
-    T_sort_column = Literal[
-        "ID", "NAME", "CLIENT_NAME", "DURATION", "BUDGET", "PROGRESS"
-    ]
-    T_sort_order = Literal["ASCENDING", "DESCENDING"]
-    T_membership_status = Literal["PENDING", "ACTIVE", "DECLINED", "INACTIVE", "ALL"]
-    T_membership_type = Literal["WORKSPACE", "PROJECT", "USERGROUP"]
+T_user_status = Literal["PENDING", "ACTIVE", "DECLINED", "INACTIVE", "ALL"]
+T_contains_client = Literal["ACTIVE", "ARCHIVED", "ALL"]
+T_sort_column = Literal["ID", "NAME", "CLIENT_NAME", "DURATION", "BUDGET", "PROGRESS"]
+T_sort_order = Literal["ASCENDING", "DESCENDING"]
+T_membership_status = Literal["PENDING", "ACTIVE", "DECLINED", "INACTIVE", "ALL"]
+T_membership_type = Literal["WORKSPACE", "PROJECT", "USERGROUP"]
 
 
 ################################################################################
+# Get Projects
+################################################################################
 class GetProjectsParams(BaseModel):
-    model_config = ConfigDict(from_attributes=True, validate_assignment=True)
+    model_config = ConfigDict(
+        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+    )
 
     name: str | None = Field(None)
     strict_name_search: str | None = Field(None, alias="strict-name-search")
@@ -42,32 +42,137 @@ class GetProjectsParams(BaseModel):
 
 
 ################################################################################
+class EstimateWithOptionsDto(BaseModel):
+    model_config = ConfigDict(
+        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+    )
+
+    active: bool = Field()
+    estimate: int = Field()
+    include_expenses: bool = Field(alias="includeExpenses")
+    reset_option: str = Field(alias="resetOption")
+    type: str = Field()
+
+
+class RateDtoV1(BaseModel):
+    model_config = ConfigDict(
+        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+    )
+
+    amount: int = Field()
+    currency: str = Field()
+
+
+class EstimateDtoV1(BaseModel):
+    model_config = ConfigDict(
+        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+    )
+
+    estimate: str = Field()
+    type: str = Field()
+
+    @field_validator("estimate")
+    @classmethod
+    def validate_estimate(cls, estimate: str) -> str:
+        """Checks strings for proper datetime in iso format."""
+
+        class TimeDelta(BaseModel):
+            td: timedelta = Field()
+
+        TimeDelta(td=estimate)  # type: ignore[arg-type]
+        return estimate
+
+
+class EstimateResetDto(BaseModel):
+    model_config = ConfigDict(
+        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+    )
+
+    day_of_month: int = Field(alias="dayOfMonth")
+    day_of_week: str = Field(alias="dayOfWeek")
+    hour: int = Field()
+    interval: str = Field()
+    month: str = Field()
+
+
+class MembershipDtoV1(BaseModel):
+    model_config = ConfigDict(
+        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+    )
+
+    cost_rate: RateDtoV1 = Field(alias="costRate")
+    hourly_rate: RateDtoV1 = Field(alias="hourlyRate")
+    membership_status: str = Field(alias="membershipStatus")
+    membership_type: str = Field(alias="membershipType")
+    target_id: str = Field(alias="targetId")
+    user_id: str = Field(alias="userId")
+
+
+class TimeEstimateDto(BaseModel):
+    model_config = ConfigDict(
+        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+    )
+
+    active: bool = Field()
+    estimate: str = Field()
+    include_non_billable: bool = Field(alias="includeNonBillable")
+    reset_option: str = Field(alias="resetOption")
+    type: str = Field()
+
+
+class GetProjectResponse(BaseModel):
+    """Project.get_projects."""
+
+    model_config = ConfigDict(
+        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+    )
+
+    color: str = Field()
+    duration: str = Field()
+    id: str = Field()
+    memberships: list[MembershipDtoV1] = Field()
+    name: str = Field()
+    note: str = Field()
+    public: bool = Field()
+    workspace_id: str = Field(alias="workspaceId")
+
+
+################################################################################
+# Add Project
+################################################################################
 class EstimateRequest(BaseModel):
-    model_config = ConfigDict(from_attributes=True, validate_assignment=True)
+    model_config = ConfigDict(
+        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+    )
 
     estimate: str | None = Field(None)
     type: Literal["AUTO", "MANUAL"] | None = Field(None)
 
     @field_validator("estimate")
     @classmethod
-    def validate_estimate(cls, estimate: str, _info):
-        # wizard of oz lives here
+    def validate_estimate(cls, estimate: str) -> str:
+        """Checks strings for proper datetime in iso format."""
+
         class TimeDelta(BaseModel):
             td: timedelta = Field()
 
-        TimeDelta(td=estimate)
+        TimeDelta(td=estimate)  # type: ignore[arg-type]
         return estimate
 
 
 class HourlyRateRequest(BaseModel):
-    model_config = ConfigDict(from_attributes=True, validate_assignment=True)
+    model_config = ConfigDict(
+        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+    )
 
     amount: int = Field()
     since: str | None = Field(None)
 
 
 class MembershipRequest(BaseModel):
-    model_config = ConfigDict(from_attributes=True, validate_assignment=True)
+    model_config = ConfigDict(
+        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+    )
 
     hourlyRate: HourlyRateRequest | None = Field(None)
     membership_status: T_membership_status | None = Field(
@@ -78,7 +183,9 @@ class MembershipRequest(BaseModel):
 
 
 class CostRateRequest(BaseModel):
-    model_config = ConfigDict(from_attributes=True, validate_assignment=True)
+    model_config = ConfigDict(
+        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+    )
 
     amount: int | None = Field(None)
     since: str | None = Field(None)
@@ -86,7 +193,9 @@ class CostRateRequest(BaseModel):
 
 
 class TaskRequest(BaseModel):
-    model_config = ConfigDict(from_attributes=True, validate_assignment=True)
+    model_config = ConfigDict(
+        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+    )
 
     assignee_id: str | None = Field(None, alias="assigneeId")
     assignee_ids: list[str] | None = Field(None, alias="assigneeIds")
@@ -103,7 +212,9 @@ class TaskRequest(BaseModel):
 
 
 class AddProjectPayload(BaseModel):
-    model_config = ConfigDict(from_attributes=True, validate_assignment=True)
+    model_config = ConfigDict(
+        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+    )
 
     billable: bool | None = Field(None)
     client_id: str | None = Field(None, alias="clientId")
@@ -118,65 +229,10 @@ class AddProjectPayload(BaseModel):
 
 
 ################################################################################
-class EstimateWithOptionsDto(BaseModel):
-    model_config = ConfigDict(from_attributes=True, validate_assignment=True)
-
-    active: bool = Field()
-    estimate: int = Field()
-    include_expenses: bool = Field(alias="includeExpenses")
-    reset_option: str = Field(alias="resetOption")
-    type: str = Field()
-
-
-class RateDtoV1(BaseModel):
-    model_config = ConfigDict(from_attributes=True, validate_assignment=True)
-
-    amount: int = Field()
-    currency: str = Field()
-
-
-class EstimateDtoV1(BaseModel):
-    model_config = ConfigDict(from_attributes=True, validate_assignment=True)
-
-    estimate: str = Field()
-    type: str = Field()
-
-
-class EstimateResetDto(BaseModel):
-    model_config = ConfigDict(from_attributes=True, validate_assignment=True)
-
-    day_of_month: int = Field(alias="dayOfMonth")
-    day_of_week: str = Field(alias="dayOfWeek")
-    hour: int = Field()
-    interval: str = Field()
-    month: str = Field()
-
-
-class MembershipDtoV1(BaseModel):
-    model_config = ConfigDict(from_attributes=True, validate_assignment=True)
-
-    cost_rate: RateDtoV1 = Field(alias="costRate")
-    hourly_rate: RateDtoV1 = Field(alias="hourlyRate")
-    membership_status: str = Field(alias="membershipStatus")
-    membership_type: str = Field(alias="membershipType")
-    target_id: str = Field(alias="targetId")
-    user_id: str = Field(alias="userId")
-
-
-class TimeEstimateDto(BaseModel):
-    model_config = ConfigDict(from_attributes=True, validate_assignment=True)
-
-    active: bool = Field()
-    estimate: str = Field()
-    include_non_billable: bool = Field(alias="includeNonBillable")
-    reset_option: str = Field(alias="resetOption")
-    type: str = Field()
-
-
-class GetProjectResponse(BaseModel):
-    """Project.get_projects."""
-
-    model_config = ConfigDict(from_attributes=True, validate_assignment=True)
+class AddProjectResponse(BaseModel):
+    model_config = ConfigDict(
+        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+    )
 
     archived: bool = Field()
     billable: bool = Field()
@@ -184,11 +240,11 @@ class GetProjectResponse(BaseModel):
     client_id: str = Field(alias="clientId")
     client_name: str = Field(alias="clientName")
     color: str = Field()
-    cost_rate: RateDtoV1 = Field(alias="costRate")
+    costRate: RateDtoV1 = Field(alias="costRate")
     duration: str = Field()
     estimate: EstimateDtoV1 = Field()
     estimate_reset: EstimateResetDto = Field(alias="estimateReset")
-    hourly_rate: RateDtoV1 = Field(alias="hourlyRate")
+    hourlyRate: RateDtoV1 = Field(alias="hourlyRate")
     id: str = Field()
     memberships: list[MembershipDtoV1] = Field()
     name: str = Field()
