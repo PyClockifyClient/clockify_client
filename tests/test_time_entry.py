@@ -2,9 +2,15 @@ from __future__ import annotations
 
 import json
 
+import pytest
 import responses
+from pydantic import ValidationError
 
-from clockify_client.api_objects.time_entry import TimeEntryResponse
+from clockify_client.api_objects.time_entry import (
+    AddTimeEntryPayload,
+    AddTimeEntryResponse,
+    TimeEntryResponse,
+)
 from clockify_client.models.time_entry import TimeEntry
 
 
@@ -194,7 +200,7 @@ def test_add_time_entry() -> None:
         "tagIds": ["321r77ddd3fcab07cfbb567y", "44x777ddd3fcab07cfbb88f"],
         "taskId": "54m377ddd3fcab07cfbb432w",
         "timeInterval": {
-            "duration": "8000",
+            "duration": "PT30M",
             "end": "2021-01-01T00:00:00Z",
             "start": "2020-01-01T00:00:00Z",
         },
@@ -202,16 +208,97 @@ def test_add_time_entry() -> None:
         "userId": "5a0ab5acb07987125438b60f",
         "workspaceId": "64a687e29ae1f428e7ebe303",
     }
+    expected = AddTimeEntryResponse.model_validate(resp_data)
     rsp = responses.post(
         "https://global.baz.co/workspaces/123/user/007/time-entries/",
         json=resp_data,
         status=200,
     )
     time_entry = TimeEntry("apikey", "baz.co")
-    rt = time_entry.add_time_entry("123", "007", req_data)
-    assert rt == resp_data
+    rt = time_entry.add_time_entry(
+        "123", "007", AddTimeEntryPayload.model_validate(req_data)
+    )
+    assert rt == expected
     assert rsp.call_count == 1
     assert json.loads(rsp.calls[0].request.body) == req_data
+
+
+def test_add_time_entry_response() -> None:
+    req_data = {
+        "billable": True,
+        "description": "This is a sample time entry description.",
+        "end": "2021-01-01T00:00:00Z",
+        "projectId": "25b687e29ae1f428e7ebe123",
+        "start": "2020-01-01T00:00:00Z",
+        "type": "REGULAR",
+    }
+    AddTimeEntryPayload.model_validate(req_data)
+
+    req_data = {
+        # "billable": True,  # noqa: ERA001
+        "description": "This is a sample time entry description.",
+        "end": "2021-01-01T00:00:00Z",
+        "projectId": "25b687e29ae1f428e7ebe123",
+        "start": "2020-01-01T00:00:00Z",
+        "type": "REGULAR",
+    }
+    with pytest.raises(ValidationError):
+        AddTimeEntryPayload.model_validate(req_data)
+
+    req_data = {
+        "billable": True,
+        # "description": "This is a sample time entry description.",  # noqa: ERA001
+        "end": "2021-01-01T00:00:00Z",
+        "projectId": "25b687e29ae1f428e7ebe123",
+        "start": "2020-01-01T00:00:00Z",
+        "type": "REGULAR",
+    }
+    with pytest.raises(ValidationError):
+        AddTimeEntryPayload.model_validate(req_data)
+
+    req_data = {
+        "billable": True,
+        "description": "This is a sample time entry description.",
+        # "end": "2021-01-01T00:00:00Z",  # noqa: ERA001
+        "projectId": "25b687e29ae1f428e7ebe123",
+        "start": "2020-01-01T00:00:00Z",
+        "type": "REGULAR",
+    }
+    with pytest.raises(ValidationError):
+        AddTimeEntryPayload.model_validate(req_data)
+
+    req_data = {
+        "billable": True,
+        "description": "This is a sample time entry description.",
+        "end": "2021-01-01T00:00:00Z",
+        # "projectId": "25b687e29ae1f428e7ebe123",  # noqa: ERA001
+        "start": "2020-01-01T00:00:00Z",
+        "type": "REGULAR",
+    }
+    with pytest.raises(ValidationError):
+        AddTimeEntryPayload.model_validate(req_data)
+
+    req_data = {
+        "billable": True,
+        "description": "This is a sample time entry description.",
+        "end": "2021-01-01T00:00:00Z",
+        "projectId": "25b687e29ae1f428e7ebe123",
+        # "start": "2020-01-01T00:00:00Z",  # noqa: ERA001
+        "type": "REGULAR",
+    }
+    with pytest.raises(ValidationError):
+        AddTimeEntryPayload.model_validate(req_data)
+
+    req_data = {
+        "billable": True,
+        "description": "This is a sample time entry description.",
+        "end": "2021-01-01T00:00:00Z",
+        "projectId": "25b687e29ae1f428e7ebe123",
+        "start": "2020-01-01T00:00:00Z",
+        # "type": "REGULAR"
+    }
+    with pytest.raises(ValidationError):
+        AddTimeEntryPayload.model_validate(req_data)
 
 
 @responses.activate

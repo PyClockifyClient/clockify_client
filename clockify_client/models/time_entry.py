@@ -4,9 +4,13 @@ from typing import TYPE_CHECKING
 from urllib.parse import urlencode
 
 from clockify_client.abstract_clockify import AbstractClockify
-from clockify_client.api_objects.time_entry import TimeEntryResponse
+from clockify_client.api_objects.time_entry import (
+    AddTimeEntryResponse,
+    TimeEntryResponse,
+)
 
 if TYPE_CHECKING:
+    from clockify_client.api_objects.time_entry import AddTimeEntryPayload
     from clockify_client.types import JsonType
 
 
@@ -49,6 +53,26 @@ class TimeEntry(AbstractClockify):
         return TimeEntryResponse.model_validate(response)
 
     # THIS
+    def add_time_entry(
+        self, workspace_id: str, user_id: str, payload: AddTimeEntryPayload
+    ) -> AddTimeEntryResponse | None:
+        """
+        Adds time entry in Clockify with provided payload data.
+
+        Paid feature, workspace need to have active paid subscription.
+
+        https://docs.clockify.me/#tag/Time-entry/operation/createTimeEntry
+        """
+        path = f"/workspaces/{workspace_id}/user/{user_id}/time-entries/"
+
+        response = self.post(
+            path, payload=payload.model_dump(exclude_unset=True, by_alias=True)
+        )
+        if response is None:
+            return None
+        return AddTimeEntryResponse.model_validate(response)
+
+    # THIS
     def update_time_entry(
         self, workspace_id: str, entry_id: str, payload: dict
     ) -> JsonType:
@@ -60,21 +84,6 @@ class TimeEntry(AbstractClockify):
         path = f"/workspaces/{workspace_id}/time-entries/{entry_id}"
 
         return self.put(path, payload=payload)
-
-    # THIS
-    def add_time_entry(
-        self, workspace_id: str, user_id: str, payload: dict
-    ) -> JsonType:
-        """
-        Adds time entry in Clockify with provided payload data.
-
-        Paid feature, workspace need to have active paid subscription.
-
-        https://docs.clockify.me/#tag/Time-entry/operation/createTimeEntry
-        """
-        path = f"/workspaces/{workspace_id}/user/{user_id}/time-entries/"
-
-        return self.post(path, payload=payload)
 
     # THIS
     def delete_time_entry(self, workspace_id: str, entry_id: str) -> JsonType:
