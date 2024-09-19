@@ -146,7 +146,9 @@ split-on-trailing-comma = false
     "FBT",  # using a boolean as a test object is useful!
     "PLR",  # likewise using specific numbers and strings in tests.
 ]
-
+"clockify_client/api_objects/**" = [
+    "TCH001", "TCH002", "TCH003",
+]
 
 ################################################################################
 #                 END OF BOILERPLATE CONFIGURATIONS                 #

@@ -11,6 +11,7 @@ if TYPE_CHECKING:
 
 class TimeEntry(AbstractClockify):
 
+    # THIS
     def get_time_entries(
         self, workspace_id: str, user_id: str, params: dict | None = None
     ) -> JsonType:
@@ -39,6 +40,7 @@ class TimeEntry(AbstractClockify):
 
         return self.get(path)
 
+    # THIS
     def update_time_entry(
         self, workspace_id: str, entry_id: str, payload: dict
     ) -> JsonType:
@@ -51,6 +53,7 @@ class TimeEntry(AbstractClockify):
 
         return self.put(path, payload=payload)
 
+    # THIS
     def add_time_entry(
         self, workspace_id: str, user_id: str, payload: dict
     ) -> JsonType:
@@ -65,6 +68,7 @@ class TimeEntry(AbstractClockify):
 
         return self.post(path, payload=payload)
 
+    # THIS
     def delete_time_entry(self, workspace_id: str, entry_id: str) -> JsonType:
         """Updates time entry in Clockify with provided payload data.
 

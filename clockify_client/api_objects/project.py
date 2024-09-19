@@ -1,9 +1,11 @@
 from __future__ import annotations
 
-from datetime import timedelta  # noqa: TCH003
+from datetime import timedelta
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+from clockify_client.api_objects.common import MembershipDtoV1, RateDtoV1
 
 T_user_status = Literal["PENDING", "ACTIVE", "DECLINED", "INACTIVE", "ALL"]
 T_contains_client = Literal["ACTIVE", "ARCHIVED", "ALL"]
@@ -54,15 +56,6 @@ class EstimateWithOptionsDto(BaseModel):
     type: str = Field()
 
 
-class RateDtoV1(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
-    )
-
-    amount: int = Field()
-    currency: str = Field()
-
-
 class EstimateDtoV1(BaseModel):
     model_config = ConfigDict(
         from_attributes=True, validate_assignment=True, revalidate_instances="always"
@@ -93,19 +86,6 @@ class EstimateResetDto(BaseModel):
     hour: int = Field()
     interval: str = Field()
     month: str = Field()
-
-
-class MembershipDtoV1(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
-    )
-
-    cost_rate: RateDtoV1 = Field(alias="costRate")
-    hourly_rate: RateDtoV1 = Field(alias="hourlyRate")
-    membership_status: str = Field(alias="membershipStatus")
-    membership_type: str = Field(alias="membershipType")
-    target_id: str = Field(alias="targetId")
-    user_id: str = Field(alias="userId")
 
 
 class TimeEstimateDto(BaseModel):

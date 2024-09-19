@@ -4,6 +4,7 @@ import json
 
 import responses
 
+from clockify_client.api_objects.user import UserResponse
 from clockify_client.models.user import User
 
 
@@ -74,6 +75,8 @@ def test_get_current_user() -> None:
         },
         "status": "ACTIVE",
     }
+    expected = UserResponse.model_validate(resp_data)
+    
     rsp = responses.get(
         "https://global.baz.co/user/",
         json=resp_data,
@@ -81,7 +84,7 @@ def test_get_current_user() -> None:
     )
     user = User("apikey", "baz.co")
     rt = user.get_current_user()
-    assert rt == resp_data
+    assert rt == expected
     assert rsp.call_count == 1
 
 
