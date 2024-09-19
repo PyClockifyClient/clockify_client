@@ -190,6 +190,7 @@ classifiers = [
 python = "^3.10"
 requests = "*"
 pydantic = "*"
+python-dateutil = "*"
 
 # convenience packages for development
 black = {version = "*", optional = true}
