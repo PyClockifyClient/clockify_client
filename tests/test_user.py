@@ -76,7 +76,7 @@ def test_get_current_user() -> None:
         "status": "ACTIVE",
     }
     expected = UserResponse.model_validate(resp_data)
-    
+
     rsp = responses.get(
         "https://global.baz.co/user/",
         json=resp_data,
