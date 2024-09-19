@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from typing import Any, Literal
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
 from clockify_client.api_objects.common import MembershipDtoV1, T_day_of_week
+from clockify_client.types import JsonType
 
 T_dashboard_selection = Literal["ME", "TEAM"]
 T_dashboard_view_type = Literal["PROJECT", "BILLABILITY"]
@@ -27,7 +28,7 @@ class UserCustomFieldValueDtoV1(BaseModel):
     custom_field_name: str = Field(alias="customFieldName")
     custom_field_type: str = Field(alias="customFieldType")
     user_id: str = Field(alias="userId")
-    value: Any = Field()
+    value: JsonType = Field()
 
 
 class SummaryReportSettingsDtoV1(BaseModel):
