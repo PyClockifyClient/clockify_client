@@ -4,7 +4,7 @@ import json
 
 import responses
 
-from clockify_client.api_objects.time_entry import GetTimeEntriesResponse
+from clockify_client.api_objects.time_entry import TimeEntryResponse
 from clockify_client.models.time_entry import TimeEntry
 
 
@@ -52,7 +52,7 @@ def test_get_time_entries() -> None:
         json=resp_data,
         status=200,
     )
-    expected = [GetTimeEntriesResponse.model_validate(_) for _ in resp_data]
+    expected = [TimeEntryResponse.model_validate(_) for _ in resp_data]
     time_entry = TimeEntry("apikey", "baz.co")
     rt = time_entry.get_time_entries("123", "007")
     assert rt == expected
@@ -92,7 +92,7 @@ def test_get_time_entry() -> None:
         "tagIds": ["321r77ddd3fcab07cfbb567y", "44x777ddd3fcab07cfbb88f"],
         "taskId": "54m377ddd3fcab07cfbb432w",
         "timeInterval": {
-            "duration": "8000",
+            "duration": "PT30M",
             "end": "2021-01-01T00:00:00Z",
             "start": "2020-01-01T00:00:00Z",
         },
@@ -105,9 +105,10 @@ def test_get_time_entry() -> None:
         json=resp_data,
         status=200,
     )
+    expected = TimeEntryResponse.model_validate(resp_data)
     time_entry = TimeEntry("apikey", "baz.co")
     rt = time_entry.get_time_entry("123", "987")
-    assert rt == resp_data
+    assert rt == expected
     assert rsp.call_count == 1
 
 

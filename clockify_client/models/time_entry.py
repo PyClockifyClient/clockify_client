@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 from urllib.parse import urlencode
 
 from clockify_client.abstract_clockify import AbstractClockify
-from clockify_client.api_objects.time_entry import GetTimeEntriesResponse
+from clockify_client.api_objects.time_entry import TimeEntryResponse
 
 if TYPE_CHECKING:
     from clockify_client.types import JsonType
@@ -14,7 +14,7 @@ class TimeEntry(AbstractClockify):
 
     def get_time_entries(
         self, workspace_id: str, user_id: str, params: dict | None = None
-    ) -> list[GetTimeEntriesResponse] | None:
+    ) -> list[TimeEntryResponse] | None:
         """
         Returns user time entries.
 
@@ -31,9 +31,11 @@ class TimeEntry(AbstractClockify):
         response = self.get(path)
         if response is None:
             return None
-        return [GetTimeEntriesResponse.model_validate(r) for r in response]
+        return [TimeEntryResponse.model_validate(r) for r in response]
 
-    def get_time_entry(self, workspace_id: str, time_entry_id: str) -> JsonType:
+    def get_time_entry(
+        self, workspace_id: str, time_entry_id: str
+    ) -> TimeEntryResponse | None:
         """
         Gets specific time entry.
 
@@ -41,7 +43,10 @@ class TimeEntry(AbstractClockify):
         """
         path = f"/workspaces/{workspace_id}/time-entries/{time_entry_id}"
 
-        return self.get(path)
+        response = self.get(path)
+        if response is None:
+            return None
+        return TimeEntryResponse.model_validate(response)
 
     # THIS
     def update_time_entry(

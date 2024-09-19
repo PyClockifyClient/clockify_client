@@ -52,7 +52,7 @@ class TimeIntervalDtoV1(BaseModel):
         return duration
 
 
-class GetTimeEntriesResponse(BaseModel):
+class TimeEntryResponse(BaseModel):
     model_config = ConfigDict(
         from_attributes=True, validate_assignment=True, revalidate_instances="always"
     )
