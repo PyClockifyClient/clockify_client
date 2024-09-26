@@ -193,6 +193,10 @@ def test_add_time_entry() -> None:
             }
         ],
         "description": "This is a sample time entry description.",
+        "hourlyRate": {
+            "amount": 10500,
+            "currency": "USD"
+        },
         "id": "64c777ddd3fcab07cfbb210c",
         "isLocked": True,
         "kioskId": "94c777ddd3fcab07cfbb210d",

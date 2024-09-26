@@ -64,13 +64,13 @@ class BaseTimeEntryResponse(BaseModel):
     billable: bool = Field()
     custom_field_values: list[CustomFieldValueDtoV1] = Field(alias="customFieldValues")
     description: str = Field()
-    hourly_rate: RateDtoV1 = (Field(alias="hourlyRate"),)
+    hourly_rate: RateDtoV1 | None = Field(alias="hourlyRate")
     id: str = Field()
     is_locked: bool = Field(alias="isLocked")
-    kiosk_id: str = Field(alias="kioskId")
+    kiosk_id: str | None = Field(alias="kioskId")
     project_id: str = Field(alias="projectId")
     tag_ids: list[str] = Field(alias="tagIds")
-    task_id: str = Field(alias="taskId")
+    task_id: str | None = Field(alias="taskId")
     time_interval: TimeIntervalDtoV1 = Field(alias="timeInterval")
     type: str = Field()
     user_id: str = Field(alias="userId")
@@ -82,7 +82,7 @@ class TimeEntryResponse(BaseTimeEntryResponse):
         from_attributes=True, validate_assignment=True, revalidate_instances="always"
     )
 
-    cost_rate: RateDtoV1 = Field(alias="costRate")
+    cost_rate: RateDtoV1 | None = Field(alias="costRate")
 
 
 ################################################################################
