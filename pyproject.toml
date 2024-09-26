@@ -146,7 +146,9 @@ split-on-trailing-comma = false
     "FBT",  # using a boolean as a test object is useful!
     "PLR",  # likewise using specific numbers and strings in tests.
 ]
-
+"clockify_client/api_objects/**" = [
+    "TCH001", "TCH002", "TCH003",
+]
 
 ################################################################################
 #                 END OF BOILERPLATE CONFIGURATIONS                 #
@@ -187,6 +189,8 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.10"
 requests = "*"
+pydantic = "*"
+python-dateutil = "*"
 
 # convenience packages for development
 black = {version = "*", optional = true}
@@ -199,6 +203,7 @@ ruff = {version = ">=0.5.0", optional = true}
 tox = {version = "*", optional = true}
 twine = {version = "*", optional = true}
 types-requests = {version = "*", optional = true}
+types-python-dateutil = {version = "*", optional = true}
 
 [tool.poetry.extras]
 dev = [
@@ -212,6 +217,7 @@ dev = [
     "twine",
     "types-requests",
     "tox",
+    "types-python-dateutil",
 ]
 test = [
     "coverage",
@@ -231,3 +237,26 @@ exclude_also = [
     "if TYPE_CHECKING:",
     "pass",
 ]
+
+
+[tool.mypy]
+#warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+exclude = ['alembic/']
+plugins = [
+    "pydantic.mypy"
+]
+follow_imports = "silent"
+warn_redundant_casts = true
+warn_unused_ignores = true
+#disallow_any_generics = true
+check_untyped_defs = true
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+warn_untyped_fields = true
+
+ignore_missing_imports = "True"

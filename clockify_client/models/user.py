@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 from urllib.parse import urlencode
 
 from clockify_client.abstract_clockify import AbstractClockify
+from clockify_client.api_objects.user import UserResponse
 
 if TYPE_CHECKING:
     from clockify_client.types import JsonType
@@ -11,14 +12,17 @@ if TYPE_CHECKING:
 
 class User(AbstractClockify):
 
-    def get_current_user(self) -> JsonType:
+    def get_current_user(self) -> UserResponse | None:
         """Get user by paired with API key.
 
         https://docs.clockify.me/#tag/User/operation/getLoggedUser
         """
         path = "/user/"
 
-        return self.get(path)
+        response = self.get(path)
+        if response is None:
+            return None
+        return UserResponse.model_validate(response)
 
     def get_users(self, workspace_id: str, params: dict | None = None) -> JsonType:
         """Returns list of all users in given workspace.

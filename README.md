@@ -37,3 +37,6 @@ clockify = Clockify(API_KEY, API_URL)
 workspaces = clockify.workspaces.get_workspaces()  # Returns list of workspaces.
 
 ```
+
+## 3. More information
+[Official Clockify API](https://docs.clockify.me/)
