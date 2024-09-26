@@ -57,7 +57,6 @@ class TimeEntry(AbstractClockify):
             return None
         return TimeEntryResponse.model_validate(response)
 
-    # THIS
     def add_time_entry(
         self, workspace_id: str, user_id: str, payload: AddTimeEntryPayload
     ) -> AddTimeEntryResponse | None:
@@ -78,7 +77,6 @@ class TimeEntry(AbstractClockify):
             return None
         return AddTimeEntryResponse.model_validate(response)
 
-    # THIS
     def update_time_entry(
         self, workspace_id: str, entry_id: str, payload: UpdateTimeEntryPayload
     ) -> UpdateTimeEntryResponse | None:
@@ -97,7 +95,6 @@ class TimeEntry(AbstractClockify):
             return None
         return UpdateTimeEntryResponse.model_validate(response)
 
-    # THIS
     def delete_time_entry(self, workspace_id: str, entry_id: str) -> None:
         """Updates time entry in Clockify with provided payload data.
 
