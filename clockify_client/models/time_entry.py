@@ -7,10 +7,14 @@ from clockify_client.abstract_clockify import AbstractClockify
 from clockify_client.api_objects.time_entry import (
     AddTimeEntryResponse,
     TimeEntryResponse,
+    UpdateTimeEntryResponse,
 )
 
 if TYPE_CHECKING:
-    from clockify_client.api_objects.time_entry import AddTimeEntryPayload
+    from clockify_client.api_objects.time_entry import (
+        AddTimeEntryPayload,
+        UpdateTimeEntryPayload,
+    )
     from clockify_client.types import JsonType
 
 
@@ -74,8 +78,8 @@ class TimeEntry(AbstractClockify):
 
     # THIS
     def update_time_entry(
-        self, workspace_id: str, entry_id: str, payload: dict
-    ) -> JsonType:
+        self, workspace_id: str, entry_id: str, payload: UpdateTimeEntryPayload
+    ) -> UpdateTimeEntryResponse | None:
         """
         Updates time entry in Clockify with provided payload data.
 
@@ -83,7 +87,13 @@ class TimeEntry(AbstractClockify):
         """
         path = f"/workspaces/{workspace_id}/time-entries/{entry_id}"
 
-        return self.put(path, payload=payload)
+        response = self.put(
+            path, payload=payload.model_dump(exclude_unset=True, by_alias=True)
+        )
+
+        if response is None:
+            return None
+        return UpdateTimeEntryResponse.model_validate(response)
 
     # THIS
     def delete_time_entry(self, workspace_id: str, entry_id: str) -> JsonType:

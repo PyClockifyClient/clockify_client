@@ -85,30 +85,7 @@ class TimeEntryResponse(BaseTimeEntryResponse):
     cost_rate: RateDtoV1 | None = Field(alias="costRate")
 
 
-################################################################################
-# Add Time Entries
-################################################################################
-class CreateCustomAttributeRequest(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
-    )
-
-    name: str = Field()
-    namespace: str = Field()
-    value: str = Field()
-
-
-class UpdateCustomFieldRequest(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
-    )
-
-    custom_field_id: str = Field(alias="customFieldId")
-    source_type: T_source_type | None = Field(None, alias="sourceType")
-    value: JsonType = Field(None)
-
-
-class AddTimeEntryPayload(BaseModel):
+class TimeEntryPayload(BaseModel):
     model_config = ConfigDict(
         from_attributes=True, validate_assignment=True, revalidate_instances="always"
     )
@@ -136,5 +113,43 @@ class AddTimeEntryPayload(BaseModel):
         return value
 
 
+################################################################################
+# Add Time Entries
+################################################################################
+class CreateCustomAttributeRequest(BaseModel):
+    model_config = ConfigDict(
+        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+    )
+
+    name: str = Field()
+    namespace: str = Field()
+    value: str = Field()
+
+
+class UpdateCustomFieldRequest(BaseModel):
+    model_config = ConfigDict(
+        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+    )
+
+    custom_field_id: str = Field(alias="customFieldId")
+    source_type: T_source_type | None = Field(None, alias="sourceType")
+    value: JsonType = Field(None)
+
+
+class AddTimeEntryPayload(TimeEntryPayload):
+    pass
+
+
 class AddTimeEntryResponse(BaseTimeEntryResponse):
+    pass
+
+
+################################################################################
+# Update Time Entries
+################################################################################
+class UpdateTimeEntryPayload(TimeEntryPayload):
+    pass
+
+
+class UpdateTimeEntryResponse(BaseTimeEntryResponse):
     pass
