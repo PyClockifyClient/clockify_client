@@ -328,7 +328,7 @@ def test_add_time_entry_response() -> None:
 
 
 @responses.activate
-def test_remove_time_entry() -> None:
+def test_delete_time_entry() -> None:
     rsp = responses.delete(
         "https://global.baz.co/workspaces/123/time-entries/987",
         status=204,

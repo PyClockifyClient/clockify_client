@@ -15,7 +15,6 @@ if TYPE_CHECKING:
         AddTimeEntryPayload,
         UpdateTimeEntryPayload,
     )
-    from clockify_client.types import JsonType
 
 
 class TimeEntry(AbstractClockify):
@@ -37,6 +36,7 @@ class TimeEntry(AbstractClockify):
             path = f"{base_path}/"
 
         response = self.get(path)
+
         if response is None:
             return None
         return [TimeEntryResponse.model_validate(r) for r in response]
@@ -52,6 +52,7 @@ class TimeEntry(AbstractClockify):
         path = f"/workspaces/{workspace_id}/time-entries/{time_entry_id}"
 
         response = self.get(path)
+
         if response is None:
             return None
         return TimeEntryResponse.model_validate(response)
@@ -72,6 +73,7 @@ class TimeEntry(AbstractClockify):
         response = self.post(
             path, payload=payload.model_dump(exclude_unset=True, by_alias=True)
         )
+
         if response is None:
             return None
         return AddTimeEntryResponse.model_validate(response)
@@ -96,7 +98,7 @@ class TimeEntry(AbstractClockify):
         return UpdateTimeEntryResponse.model_validate(response)
 
     # THIS
-    def delete_time_entry(self, workspace_id: str, entry_id: str) -> JsonType:
+    def delete_time_entry(self, workspace_id: str, entry_id: str) -> None:
         """Updates time entry in Clockify with provided payload data.
 
         https://docs.clockify.me/#tag/Time-entry/operation/deleteTimeEntry

@@ -85,7 +85,7 @@ class TimeEntryResponse(BaseTimeEntryResponse):
     cost_rate: RateDtoV1 | None = Field(alias="costRate")
 
 
-class TimeEntryPayload(BaseModel):
+class BaseTimeEntryPayload(BaseModel):
     model_config = ConfigDict(
         from_attributes=True, validate_assignment=True, revalidate_instances="always"
     )
@@ -114,7 +114,7 @@ class TimeEntryPayload(BaseModel):
 
 
 ################################################################################
-# Add Time Entries
+# Add Time Entry
 ################################################################################
 class CreateCustomAttributeRequest(BaseModel):
     model_config = ConfigDict(
@@ -136,7 +136,7 @@ class UpdateCustomFieldRequest(BaseModel):
     value: JsonType = Field(None)
 
 
-class AddTimeEntryPayload(TimeEntryPayload):
+class AddTimeEntryPayload(BaseTimeEntryPayload):
     pass
 
 
@@ -145,9 +145,9 @@ class AddTimeEntryResponse(BaseTimeEntryResponse):
 
 
 ################################################################################
-# Update Time Entries
+# Update Time Entry
 ################################################################################
-class UpdateTimeEntryPayload(TimeEntryPayload):
+class UpdateTimeEntryPayload(BaseTimeEntryPayload):
     pass
 
 
