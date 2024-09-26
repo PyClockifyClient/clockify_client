@@ -23,8 +23,8 @@ class MembershipDtoV1(BaseModel):
         from_attributes=True, validate_assignment=True, revalidate_instances="always"
     )
 
-    cost_rate: RateDtoV1 = Field(alias="costRate")
-    hourly_rate: RateDtoV1 = Field(alias="hourlyRate")
+    cost_rate: RateDtoV1 | None = Field(alias="costRate")
+    hourly_rate: RateDtoV1 | None = Field(alias="hourlyRate")
     membership_status: str = Field(alias="membershipStatus")
     membership_type: str = Field(alias="membershipType")
     target_id: str = Field(alias="targetId")
