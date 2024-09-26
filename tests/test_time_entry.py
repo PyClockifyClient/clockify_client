@@ -334,6 +334,5 @@ def test_delete_time_entry() -> None:
         status=204,
     )
     time_entry = TimeEntry("apikey", "baz.co")
-    rt = time_entry.delete_time_entry("123", "987")
-    assert rt is None
+    assert time_entry.delete_time_entry("123", "987") is None  # type: ignore[func-returns-value]
     assert rsp.call_count == 1

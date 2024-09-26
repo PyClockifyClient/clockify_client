@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 from urllib.parse import urlencode
 
 from clockify_client.abstract_clockify import AbstractClockify
@@ -9,6 +9,7 @@ from clockify_client.api_objects.project import (
     AddProjectResponse,
     GetProjectResponse,
 )
+from clockify_client.types import JsonType
 
 if TYPE_CHECKING:
     from clockify_client.api_objects.project import GetProjectsParams
@@ -30,7 +31,7 @@ class Project(AbstractClockify):
         else:
             path = f"/workspaces/{workspace_id}/projects/"
 
-        response = self.get(path)
+        response = cast(list[JsonType], self.get(path))
         if response is None:
             return None
         return [GetProjectResponse.model_validate(r) for r in response]
