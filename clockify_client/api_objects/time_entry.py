@@ -18,7 +18,10 @@ T_source_type = Literal["WORKSPACE", "PROJECT", "TIMEENTRY"]
 ################################################################################
 class CustomFieldValueDtoV1(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     custom_field_id: str = Field(alias="customFieldId")
@@ -30,7 +33,10 @@ class CustomFieldValueDtoV1(BaseModel):
 
 class TimeIntervalDtoV1(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     duration: str = Field()
@@ -58,7 +64,10 @@ class TimeIntervalDtoV1(BaseModel):
 
 class BaseTimeEntryResponse(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     billable: bool = Field()
@@ -79,7 +88,10 @@ class BaseTimeEntryResponse(BaseModel):
 
 class TimeEntryResponse(BaseTimeEntryResponse):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     cost_rate: RateDtoV1 | None = Field(alias="costRate")
@@ -87,7 +99,10 @@ class TimeEntryResponse(BaseTimeEntryResponse):
 
 class BaseTimeEntryPayload(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     billable: bool = Field()
@@ -118,7 +133,10 @@ class BaseTimeEntryPayload(BaseModel):
 ################################################################################
 class CreateCustomAttributeRequest(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     name: str = Field()
@@ -128,7 +146,10 @@ class CreateCustomAttributeRequest(BaseModel):
 
 class UpdateCustomFieldRequest(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     custom_field_id: str = Field(alias="customFieldId")

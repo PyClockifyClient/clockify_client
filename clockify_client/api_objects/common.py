@@ -13,7 +13,10 @@ T_sort_order = Literal["ASCENDING", "DESCENDING"]
 
 class RateDtoV1(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     amount: int = Field()
@@ -22,7 +25,10 @@ class RateDtoV1(BaseModel):
 
 class MembershipDtoV1(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     cost_rate: RateDtoV1 | None = Field(alias="costRate")

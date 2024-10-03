@@ -24,7 +24,10 @@ T_membership_type = Literal["WORKSPACE", "PROJECT", "USERGROUP"]
 ################################################################################
 class GetProjectsParams(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     name: str | None = Field(None)
@@ -50,7 +53,10 @@ class GetProjectsParams(BaseModel):
 ################################################################################
 class EstimateWithOptionsDto(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     active: bool = Field()
@@ -62,7 +68,10 @@ class EstimateWithOptionsDto(BaseModel):
 
 class EstimateDtoV1(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     estimate: str = Field()
@@ -82,7 +91,10 @@ class EstimateDtoV1(BaseModel):
 
 class EstimateResetDto(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     day_of_month: int = Field(alias="dayOfMonth")
@@ -94,7 +106,10 @@ class EstimateResetDto(BaseModel):
 
 class TimeEstimateDto(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     active: bool = Field()
@@ -108,7 +123,10 @@ class GetProjectResponse(BaseModel):
     """Project.get_projects."""
 
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     color: str = Field()
@@ -126,7 +144,10 @@ class GetProjectResponse(BaseModel):
 ################################################################################
 class EstimateRequest(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     estimate: str | None = Field(None)
@@ -146,7 +167,10 @@ class EstimateRequest(BaseModel):
 
 class HourlyRateRequest(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     amount: int = Field()
@@ -155,7 +179,10 @@ class HourlyRateRequest(BaseModel):
 
 class MembershipRequest(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     hourlyRate: HourlyRateRequest | None = Field(None)
@@ -166,7 +193,10 @@ class MembershipRequest(BaseModel):
 
 class CostRateRequest(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     amount: int | None = Field(None)
@@ -176,7 +206,10 @@ class CostRateRequest(BaseModel):
 
 class TaskRequest(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     assignee_id: str | None = Field(None, alias="assigneeId")
@@ -195,7 +228,10 @@ class TaskRequest(BaseModel):
 
 class AddProjectPayload(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     billable: bool | None = Field(None)
@@ -213,7 +249,10 @@ class AddProjectPayload(BaseModel):
 ################################################################################
 class AddProjectResponse(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     archived: bool = Field()
