@@ -7,6 +7,8 @@ from pydantic import BaseModel, ConfigDict, Field
 T_day_of_week = Literal[
     "SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"
 ]
+T_status = Literal["PENDING", "ACTIVE", "DECLINED", "INACTIVE", "ALL"]
+T_sort_order = Literal["ASCENDING", "DESCENDING"]
 
 
 class RateDtoV1(BaseModel):

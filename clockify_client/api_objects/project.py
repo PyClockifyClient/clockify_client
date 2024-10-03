@@ -5,13 +5,17 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-from clockify_client.api_objects.common import MembershipDtoV1, RateDtoV1
+from clockify_client.api_objects.common import (
+    MembershipDtoV1,
+    RateDtoV1,
+    T_sort_order,
+    T_status,
+)
 
-T_user_status = Literal["PENDING", "ACTIVE", "DECLINED", "INACTIVE", "ALL"]
 T_contains_client = Literal["ACTIVE", "ARCHIVED", "ALL"]
-T_sort_column = Literal["ID", "NAME", "CLIENT_NAME", "DURATION", "BUDGET", "PROGRESS"]
-T_sort_order = Literal["ASCENDING", "DESCENDING"]
-T_membership_status = Literal["PENDING", "ACTIVE", "DECLINED", "INACTIVE", "ALL"]
+T_proj_sort_column = Literal[
+    "ID", "NAME", "CLIENT_NAME", "DURATION", "BUDGET", "PROGRESS"
+]
 T_membership_type = Literal["WORKSPACE", "PROJECT", "USERGROUP"]
 
 
@@ -31,9 +35,9 @@ class GetProjectsParams(BaseModel):
     client_status: str | None = Field(None)
     users: str | None = Field(None)
     contains_user: str | None = Field(None, alias="contains-user")
-    user_status: T_user_status | None = Field(None, alias="user-status")
+    user_status: T_status | None = Field(None, alias="user-status")
     is_template: str | None = Field(None, alias="is-template")
-    sort_column: T_sort_column | None = Field(None, alias="sort-column")
+    sort_column: T_proj_sort_column | None = Field(None, alias="sort-column")
     sort_order: T_sort_order | None = Field(None, alias="sort-order")
     hydrated: str | None = Field(None)
     page: str | None = Field(None)
@@ -155,9 +159,7 @@ class MembershipRequest(BaseModel):
     )
 
     hourlyRate: HourlyRateRequest | None = Field(None)
-    membership_status: T_membership_status | None = Field(
-        None, alias="membershipStatus"
-    )
+    membership_status: T_status | None = Field(None, alias="membershipStatus")
     membership_type: T_membership_type | None = Field(None, alias="membershipType")
     user_id: str | None = Field(None, alias="userId")
 
