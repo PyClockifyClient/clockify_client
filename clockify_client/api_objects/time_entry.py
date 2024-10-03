@@ -4,9 +4,9 @@ from datetime import timedelta
 from typing import Literal
 
 from dateutil.parser import parse
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import Field, field_validator
 
-from clockify_client.api_objects.common import RateDtoV1
+from clockify_client.api_objects.common import ClockifyBaseModel, RateDtoV1
 from clockify_client.types import JsonType
 
 T_type = Literal["REGULAR", "BREAK"]
@@ -16,11 +16,7 @@ T_source_type = Literal["WORKSPACE", "PROJECT", "TIMEENTRY"]
 ################################################################################
 # Get Time Entries
 ################################################################################
-class CustomFieldValueDtoV1(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
-    )
-
+class CustomFieldValueDtoV1(ClockifyBaseModel):
     custom_field_id: str = Field(alias="customFieldId")
     name: str = Field()
     time_entry_id: str = Field(alias="timeEntryId")
@@ -28,11 +24,7 @@ class CustomFieldValueDtoV1(BaseModel):
     value: JsonType = Field()
 
 
-class TimeIntervalDtoV1(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
-    )
-
+class TimeIntervalDtoV1(ClockifyBaseModel):
     duration: str = Field()
     end: str = Field()
     start: str = Field()
@@ -49,18 +41,14 @@ class TimeIntervalDtoV1(BaseModel):
     def validate_duration(cls, duration: str) -> str:
         """Checks strings for proper datetime in iso format."""
 
-        class TimeDelta(BaseModel):
+        class TimeDelta(ClockifyBaseModel):
             td: timedelta = Field()
 
         TimeDelta(td=duration)  # type: ignore[arg-type]
         return duration
 
 
-class BaseTimeEntryResponse(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
-    )
-
+class BaseTimeEntryResponse(ClockifyBaseModel):
     billable: bool = Field()
     custom_field_values: list[CustomFieldValueDtoV1] = Field(alias="customFieldValues")
     description: str = Field()
@@ -78,18 +66,10 @@ class BaseTimeEntryResponse(BaseModel):
 
 
 class TimeEntryResponse(BaseTimeEntryResponse):
-    model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
-    )
-
     cost_rate: RateDtoV1 | None = Field(alias="costRate")
 
 
-class BaseTimeEntryPayload(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
-    )
-
+class BaseTimeEntryPayload(ClockifyBaseModel):
     billable: bool = Field()
     custom_attributes: list[CreateCustomAttributeRequest] = Field(
         default_factory=list, alias="customAttributes"
@@ -116,21 +96,13 @@ class BaseTimeEntryPayload(BaseModel):
 ################################################################################
 # Add Time Entry
 ################################################################################
-class CreateCustomAttributeRequest(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
-    )
-
+class CreateCustomAttributeRequest(ClockifyBaseModel):
     name: str = Field()
     namespace: str = Field()
     value: str = Field()
 
 
-class UpdateCustomFieldRequest(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
-    )
-
+class UpdateCustomFieldRequest(ClockifyBaseModel):
     custom_field_id: str = Field(alias="customFieldId")
     source_type: T_source_type | None = Field(None, alias="sourceType")
     value: JsonType = Field(None)

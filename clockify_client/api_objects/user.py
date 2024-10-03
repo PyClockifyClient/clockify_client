@@ -2,9 +2,15 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import Field
 
-from clockify_client.api_objects.common import MembershipDtoV1, T_day_of_week
+from clockify_client.api_objects.common import (
+    ClockifyBaseModel,
+    MembershipDtoV1,
+    T_day_of_week,
+    T_sort_order,
+    T_status,
+)
 from clockify_client.types import JsonType
 
 T_dashboard_selection = Literal["ME", "TEAM"]
@@ -14,16 +20,16 @@ T_time_format = Literal["HOUR12", "HOUR24"]
 T_custom_field_type = Literal[
     "TXT", "NUMBER", "DROPDOWN_SINGLE", "DROPDOWN_MULTIPLE", "CHECKBOX", "LINK"
 ]
+T_user_sort_column = Literal[
+    "ID", "EMAIL", "NAME", "NAME_LOWERCASE", "ACCESS", "HOURLYRATE", "COSTRATE"
+]
+T_membership = Literal["ALL", "NONE", "WORKSPACE", "PROJECT", "USERGROUP"]
 
 
 ################################################################################
-# Get Current User
+# Get Current User & Get Users
 ################################################################################
-class UserCustomFieldValueDtoV1(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
-    )
-
+class UserCustomFieldValueDtoV1(ClockifyBaseModel):
     custom_field_id: str = Field(alias="customFieldId")
     custom_field_name: str = Field(alias="customFieldName")
     custom_field_type: str = Field(alias="customFieldType")
@@ -31,20 +37,12 @@ class UserCustomFieldValueDtoV1(BaseModel):
     value: JsonType = Field()
 
 
-class SummaryReportSettingsDtoV1(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
-    )
-
+class SummaryReportSettingsDtoV1(ClockifyBaseModel):
     group: str = Field()
     subgroup: str = Field()
 
 
-class UserSettingsDtoV1(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
-    )
-
+class UserSettingsDtoV1(ClockifyBaseModel):
     alerts: bool = Field()
     approval: bool = Field()
     collapse_all_project_lists: bool = Field(alias="collapseAllProjectLists")
@@ -78,11 +76,7 @@ class UserSettingsDtoV1(BaseModel):
     weekly_updates: bool = Field(alias="weeklyUpdates")
 
 
-class UserResponse(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
-    )
-
+class UserResponse(ClockifyBaseModel):
     active_workspace: str = Field(alias="activeWorkspace")
     custom_fields: list[UserCustomFieldValueDtoV1] = Field(alias="customFields")
     default_workspace: str = Field(alias="defaultWorkspace")
@@ -93,3 +87,17 @@ class UserResponse(BaseModel):
     profile_picture: str = Field(alias="profilePicture")
     settings: UserSettingsDtoV1 = Field()
     status: str = Field()
+
+
+class GetUsersParams(ClockifyBaseModel):
+    email: str | None = Field(None)
+    project_id: str | None = Field(None, alias="project-id")
+    status: T_status | None = Field(None)
+    account_statuses: str | None = Field(None, alias="account-statuses")
+    name: str | None = Field(None)
+    sort_column: T_user_sort_column | None = Field(None, alias="sort-column")
+    sort_order: T_sort_order | None = Field(None, alias="sort-order")
+    page: int | None = Field(None)
+    page_size: int | None = Field(None, alias="page-size")
+    memberships: T_membership | None = Field(None)
+    include_roles: bool | None = Field(None, alias="include-roles")

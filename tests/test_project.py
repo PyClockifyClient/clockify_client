@@ -23,7 +23,7 @@ def test_can_be_instantiated() -> None:
 
 @responses.activate
 def test_get_projects() -> None:
-    resp = [
+    resp_data = [
         {
             "color": "#000000",
             "duration": "60000",
@@ -44,9 +44,9 @@ def test_get_projects() -> None:
             "workspaceId": "345",
         }
     ]
-    expected = [GetProjectResponse.model_validate(_) for _ in resp]
+    expected = [GetProjectResponse.model_validate(_) for _ in resp_data]
     rsp1 = responses.get(
-        "https://global.baz.co/workspaces/345/projects/", json=resp, status=200
+        "https://global.baz.co/workspaces/345/projects/", json=resp_data, status=200
     )
     project = Project("apikey", "baz.co")
     rt = project.get_projects("345")
@@ -55,12 +55,51 @@ def test_get_projects() -> None:
 
     rsp2 = responses.get(
         "https://global.baz.co/workspaces/345/projects?name=MyProject",
-        json=resp,
+        json=resp_data,
         status=200,
     )
-    rt = project.get_projects("345", GetProjectsParams(name="MyProject"))
+    rt = project.get_projects(
+        "345", GetProjectsParams.model_validate({"name": "MyProject"})
+    )
     assert rt == expected
     assert rsp2.call_count == 1
+
+
+@responses.activate
+def test_get_projects_page_size() -> None:
+    resp_data = [
+        {
+            "color": "#000000",
+            "duration": "60000",
+            "id": "5b641568b07987035750505e",
+            "memberships": [
+                {
+                    "costRate": {"amount": 10500, "currency": "USD"},
+                    "hourlyRate": {"amount": 10500, "currency": "USD"},
+                    "membershipStatus": "PENDING",
+                    "membershipType": "PROJECT",
+                    "targetId": "64c777ddd3fcab07cfbb210c",
+                    "userId": "5a0ab5acb07987125438b60f",
+                }
+            ],
+            "name": "MyProject",
+            "note": "This is a sample note for the project.",
+            "public": True,
+            "workspaceId": "345",
+        }
+    ]
+    expected = [GetProjectResponse.model_validate(_) for _ in resp_data]
+    rsp1 = responses.get(
+        "https://global.baz.co/workspaces/345/projects?page=1&page-size=1",
+        json=resp_data,
+        status=200,
+    )
+    project = Project("apikey", "baz.co")
+    rt = project.get_projects(
+        "345", GetProjectsParams.model_validate({"page": 1, "page-size": 1})
+    )
+    assert rt == expected
+    assert rsp1.call_count == 1
 
 
 @responses.activate

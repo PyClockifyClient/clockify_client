@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import json
 
+import pytest
 import responses
+from pydantic import ValidationError
 
-from clockify_client.api_objects.user import UserResponse
+from clockify_client.api_objects.user import GetUsersParams, UserResponse
 from clockify_client.models.user import User
 
 
@@ -88,50 +90,162 @@ def test_get_current_user() -> None:
     assert rsp.call_count == 1
 
 
+def test_get_user_params() -> None:
+    rt = GetUsersParams(email="a@b.com")
+    assert rt.email == "a@b.com"
+
+    rt1 = GetUsersParams.model_validate({"project-id": "123"})
+    assert rt1.project_id == "123"
+
+    rt2 = GetUsersParams(project_id="123")
+    assert rt2.project_id == "123"
+
+    rt3 = GetUsersParams(**{"project-id": "123"})  # type: ignore[arg-type]
+    assert rt3.project_id == "123"
+
+    rt4 = GetUsersParams(include_roles=True)
+    assert rt4.include_roles is True
+
+    rt5 = GetUsersParams(page_size=2)
+    assert rt5.page_size == 2
+
+
+def test_get_user_params_invalid() -> None:
+    with pytest.raises(ValidationError):
+        GetUsersParams.model_validate({"page": "X"})
+
+    with pytest.raises(ValidationError):
+        GetUsersParams(page="X")  # type: ignore[arg-type]
+
+    with pytest.raises(ValidationError):
+        GetUsersParams.model_validate({"page-size": "X"})
+
+
 @responses.activate
 def test_get_users() -> None:
-    resp_data = {
-        "email": "johndoe@example.com",
-        "hasPassword": True,
-        "hasPendingApprovalRequest": True,
-        "imageUrl": "https://www.url.com/imageurl-1234567890.jpg",
-        "name": "John Doe",
-        "userCustomFieldValues": [
-            {
-                "customField": {
-                    "allowedValues": ["NA", "White", "Black", "Asian", "Hispanic"],
-                    "description": "This field contains a user's race.",
-                    "entityType": "USER",
-                    "id": "44a687e29ae1f428e7ebe305",
-                    "name": "race",
-                    "onlyAdminCanEdit": True,
-                    "placeholder": "Race/ethnicity",
-                    "projectDefaultValues": [
-                        {
-                            "projectId": "5b641568b07987035750505e",
-                            "status": "VISIBLE",
-                            "value": "NA",
-                        }
-                    ],
-                    "required": True,
-                    "status": "VISIBLE",
-                    "type": "DROPDOWN_MULTIPLE",
-                    "workspaceDefaultValue": "NA",
-                    "workspaceId": "64a687e29ae1f428e7ebe303",
-                },
-                "customFieldId": "5e4117fe8c625f38930d57b7",
-                "name": "race",
-                "sourceType": "WORKSPACE",
-                "type": "DROPDOWN_MULTIPLE",
-                "userId": "5a0ab5acb07987125438b60f",
-                "value": "Asian",
-            }
-        ],
-        "weekStart": "MONDAY",
-        "workCapacity": "50000",
-        "workingDays": ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"],
-        "workspaceNumber": 3,
-    }
+    resp_data = [
+        {
+            "activeWorkspace": "123",
+            "customFields": [
+                {
+                    "customFieldId": "5e4117fe8c625f38930d57b7",
+                    "customFieldName": "TIN",
+                    "customFieldType": "TXT",
+                    "userId": "5a0ab5acb07987125438b60f",
+                    "value": "20231211-12345",
+                }
+            ],
+            "defaultWorkspace": "123",
+            "email": "johndoe@example.com",
+            "id": "007",
+            "memberships": [
+                {
+                    "costRate": {"amount": 10500, "currency": "USD"},
+                    "hourlyRate": {"amount": 10500, "currency": "USD"},
+                    "membershipStatus": "PENDING",
+                    "membershipType": "PROJECT",
+                    "targetId": "64c777ddd3fcab07cfbb210c",
+                    "userId": "5a0ab5acb07987125438b60f",
+                }
+            ],
+            "name": "John Doe",
+            "profilePicture": "https://www.url.com/profile-picture1234567890.png",
+            "settings": {
+                "alerts": True,
+                "approval": False,
+                "collapseAllProjectLists": True,
+                "dashboardPinToTop": True,
+                "dashboardSelection": "ME",
+                "dashboardViewType": "BILLABILITY",
+                "dateFormat": "MM/DD/YYYY",
+                "groupSimilarEntriesDisabled": True,
+                "isCompactViewOn": False,
+                "lang": "en",
+                "longRunning": True,
+                "multiFactorEnabled": True,
+                "myStartOfDay": "09:00",
+                "onboarding": False,
+                "projectListCollapse": 15,
+                "projectPickerTaskFilter": False,
+                "pto": True,
+                "reminders": False,
+                "scheduledReports": True,
+                "scheduling": False,
+                "sendNewsletter": False,
+                "showOnlyWorkingDays": False,
+                "summaryReportSettings": {"group": "PROJECT", "subgroup": "CLIENT"},
+                "theme": "DARK",
+                "timeFormat": "HOUR24",
+                "timeTrackingManual": True,
+                "timeZone": "Asia/Aden",
+                "weekStart": "MONDAY",
+                "weeklyUpdates": False,
+            },
+            "status": "ACTIVE",
+        },
+        ################################################################################
+        {
+            "activeWorkspace": "123",
+            "customFields": [
+                {
+                    "customFieldId": "5e4117fe8c625f38930d57b7",
+                    "customFieldName": "TIN",
+                    "customFieldType": "TXT",
+                    "userId": "5a0ab5acb07987125438b60f",
+                    "value": "20231211-12345",
+                }
+            ],
+            "defaultWorkspace": "123",
+            "email": "janedoe@example.com",
+            "id": "008",
+            "memberships": [
+                {
+                    "costRate": {"amount": 20100, "currency": "USD"},
+                    "hourlyRate": {"amount": 20100, "currency": "USD"},
+                    "membershipStatus": "PENDING",
+                    "membershipType": "PROJECT",
+                    "targetId": "64c777ddd3fcab07cfbb210b",
+                    "userId": "5a0ab5acb07987125438b60d",
+                }
+            ],
+            "name": "Jane Doe",
+            "profilePicture": "https://www.url.com/profile-picture987654321.png",
+            "settings": {
+                "alerts": False,
+                "approval": True,
+                "collapseAllProjectLists": False,
+                "dashboardPinToTop": False,
+                "dashboardSelection": "TEAM",
+                "dashboardViewType": "PROJECT",
+                "dateFormat": "MM/DD/YYYY",
+                "groupSimilarEntriesDisabled": False,
+                "isCompactViewOn": True,
+                "lang": "en",
+                "longRunning": False,
+                "multiFactorEnabled": True,
+                "myStartOfDay": "08:00",
+                "onboarding": True,
+                "projectListCollapse": 15,
+                "projectPickerTaskFilter": True,
+                "pto": False,
+                "reminders": True,
+                "scheduledReports": False,
+                "scheduling": True,
+                "sendNewsletter": True,
+                "showOnlyWorkingDays": True,
+                "summaryReportSettings": {"group": "PROJECT", "subgroup": "CLIENT"},
+                "theme": "DEFAULT",
+                "timeFormat": "HOUR12",
+                "timeTrackingManual": False,
+                "timeZone": "US/Central",
+                "weekStart": "SUNDAY",
+                "weeklyUpdates": True,
+            },
+            "status": "ACTIVE",
+        },
+    ]
+
+    expected = [UserResponse.model_validate(_) for _ in resp_data]
     rsp = responses.get(
         "https://global.baz.co/workspaces/123/users/",
         json=resp_data,
@@ -139,16 +253,161 @@ def test_get_users() -> None:
     )
     user = User("apikey", "baz.co")
     rt = user.get_users("123")
-    assert rt == resp_data
+    assert rt == expected
     assert rsp.call_count == 1
 
-    rsp2 = responses.get(
-        "https://global.baz.co/workspaces/123/users?name=John+Doe",
+
+@responses.activate
+def test_get_users_filtered() -> None:
+    resp_data = [
+        {
+            "activeWorkspace": "123",
+            "customFields": [
+                {
+                    "customFieldId": "5e4117fe8c625f38930d57b7",
+                    "customFieldName": "TIN",
+                    "customFieldType": "TXT",
+                    "userId": "5a0ab5acb07987125438b60f",
+                    "value": "20231211-12345",
+                }
+            ],
+            "defaultWorkspace": "123",
+            "email": "johndoe@example.com",
+            "id": "007",
+            "memberships": [
+                {
+                    "costRate": {"amount": 10500, "currency": "USD"},
+                    "hourlyRate": {"amount": 10500, "currency": "USD"},
+                    "membershipStatus": "PENDING",
+                    "membershipType": "PROJECT",
+                    "targetId": "64c777ddd3fcab07cfbb210c",
+                    "userId": "5a0ab5acb07987125438b60f",
+                }
+            ],
+            "name": "John Doe",
+            "profilePicture": "https://www.url.com/profile-picture1234567890.png",
+            "roles": [],
+            "settings": {
+                "alerts": True,
+                "approval": False,
+                "collapseAllProjectLists": True,
+                "dashboardPinToTop": True,
+                "dashboardSelection": "ME",
+                "dashboardViewType": "BILLABILITY",
+                "dateFormat": "MM/DD/YYYY",
+                "groupSimilarEntriesDisabled": True,
+                "isCompactViewOn": False,
+                "lang": "en",
+                "longRunning": True,
+                "multiFactorEnabled": True,
+                "myStartOfDay": "09:00",
+                "onboarding": False,
+                "projectListCollapse": 15,
+                "projectPickerTaskFilter": False,
+                "pto": True,
+                "reminders": False,
+                "scheduledReports": True,
+                "scheduling": False,
+                "sendNewsletter": False,
+                "showOnlyWorkingDays": False,
+                "summaryReportSettings": {"group": "PROJECT", "subgroup": "CLIENT"},
+                "theme": "DARK",
+                "timeFormat": "HOUR24",
+                "timeTrackingManual": True,
+                "timeZone": "Asia/Aden",
+                "weekStart": "MONDAY",
+                "weeklyUpdates": False,
+            },
+            "status": "ACTIVE",
+        },
+        ################################################################################
+        {
+            "activeWorkspace": "123",
+            "customFields": [
+                {
+                    "customFieldId": "5e4117fe8c625f38930d57b7",
+                    "customFieldName": "TIN",
+                    "customFieldType": "TXT",
+                    "userId": "5a0ab5acb07987125438b60f",
+                    "value": "20231211-12345",
+                }
+            ],
+            "defaultWorkspace": "123",
+            "email": "janedoe@example.com",
+            "id": "008",
+            "memberships": [
+                {
+                    "costRate": {"amount": 20100, "currency": "USD"},
+                    "hourlyRate": {"amount": 20100, "currency": "USD"},
+                    "membershipStatus": "PENDING",
+                    "membershipType": "PROJECT",
+                    "targetId": "64c777ddd3fcab07cfbb210b",
+                    "userId": "5a0ab5acb07987125438b60d",
+                }
+            ],
+            "name": "Jane Doe",
+            "profilePicture": "https://www.url.com/profile-picture987654321.png",
+            "roles": [
+                {
+                    "entities": [
+                        {"id": "60da47db3be16d0c04c3cfd7", "name": "", "source": None}
+                    ],
+                    "formatterRoleName": "Admin",
+                    "role": "WORKSPACE_ADMIN",
+                },
+                {
+                    "entities": [
+                        {"id": "60da47db3be16d0c04c3cfd7", "name": "", "source": None}
+                    ],
+                    "formatterRoleName": "Admin",
+                    "role": "WORKSPACE_OWN",
+                },
+            ],
+            "settings": {
+                "alerts": False,
+                "approval": True,
+                "collapseAllProjectLists": False,
+                "dashboardPinToTop": False,
+                "dashboardSelection": "TEAM",
+                "dashboardViewType": "PROJECT",
+                "dateFormat": "MM/DD/YYYY",
+                "groupSimilarEntriesDisabled": False,
+                "isCompactViewOn": True,
+                "lang": "en",
+                "longRunning": False,
+                "multiFactorEnabled": True,
+                "myStartOfDay": "08:00",
+                "onboarding": True,
+                "projectListCollapse": 15,
+                "projectPickerTaskFilter": True,
+                "pto": False,
+                "reminders": True,
+                "scheduledReports": False,
+                "scheduling": True,
+                "sendNewsletter": True,
+                "showOnlyWorkingDays": True,
+                "summaryReportSettings": {"group": "PROJECT", "subgroup": "CLIENT"},
+                "theme": "DEFAULT",
+                "timeFormat": "HOUR12",
+                "timeTrackingManual": False,
+                "timeZone": "US/Central",
+                "weekStart": "SUNDAY",
+                "weeklyUpdates": True,
+            },
+            "status": "ACTIVE",
+        },
+    ]
+
+    expected = [UserResponse.model_validate(_) for _ in resp_data]
+    rsp = responses.get(
+        "https://global.baz.co/workspaces/123/users?include-roles=True",
         json=resp_data,
         status=200,
     )
-    user.get_users("123", {"name": "John Doe"})
-    assert rsp2.call_count == 1
+    user = User("apikey", "baz.co")
+    rt = user.get_users("123", GetUsersParams(include_roles=True))
+    assert rt == expected
+    assert rsp.call_count == 1
 
 
 @responses.activate

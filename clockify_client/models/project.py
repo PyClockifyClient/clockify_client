@@ -26,7 +26,9 @@ class Project(AbstractClockify):
         https://docs.clockify.me/#tag/Project/operation/getProjects
         """
         if params:
-            url_params = urlencode(params.model_dump(exclude_none=True), doseq=True)
+            url_params = urlencode(
+                params.model_dump(exclude_none=True, by_alias=True), doseq=True
+            )
             path = f"/workspaces/{workspace_id}/projects?{url_params}"
         else:
             path = f"/workspaces/{workspace_id}/projects/"
@@ -54,8 +56,8 @@ class Project(AbstractClockify):
 
         payload = AddProjectPayload(
             name=project_name,
-            clientId=client_id,
-            isPublic=public,
+            client_id=client_id,
+            is_public=public,
             billable=billable,
         )
 
