@@ -56,8 +56,8 @@ class Project(AbstractClockify):
 
         payload = AddProjectPayload(
             name=project_name,
-            clientId=client_id,
-            isPublic=public,
+            client_id=client_id,
+            is_public=public,
             billable=billable,
         )
 

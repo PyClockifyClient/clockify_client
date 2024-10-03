@@ -3,9 +3,10 @@ from __future__ import annotations
 from datetime import timedelta
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import Field, field_validator
 
 from clockify_client.api_objects.common import (
+    ClockifyBaseModel,
     MembershipDtoV1,
     RateDtoV1,
     T_sort_order,
@@ -22,14 +23,7 @@ T_membership_type = Literal["WORKSPACE", "PROJECT", "USERGROUP"]
 ################################################################################
 # Get Projects
 ################################################################################
-class GetProjectsParams(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True,
-        validate_assignment=True,
-        revalidate_instances="always",
-        populate_by_name=True,
-    )
-
+class GetProjectsParams(ClockifyBaseModel):
     name: str | None = Field(None)
     strict_name_search: str | None = Field(None, alias="strict-name-search")
     archived: str | None = Field(None)
@@ -51,14 +45,7 @@ class GetProjectsParams(BaseModel):
 
 
 ################################################################################
-class EstimateWithOptionsDto(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True,
-        validate_assignment=True,
-        revalidate_instances="always",
-        populate_by_name=True,
-    )
-
+class EstimateWithOptionsDto(ClockifyBaseModel):
     active: bool = Field()
     estimate: int = Field()
     include_expenses: bool = Field(alias="includeExpenses")
@@ -66,14 +53,7 @@ class EstimateWithOptionsDto(BaseModel):
     type: str = Field()
 
 
-class EstimateDtoV1(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True,
-        validate_assignment=True,
-        revalidate_instances="always",
-        populate_by_name=True,
-    )
-
+class EstimateDtoV1(ClockifyBaseModel):
     estimate: str = Field()
     type: str = Field()
 
@@ -82,21 +62,14 @@ class EstimateDtoV1(BaseModel):
     def validate_estimate(cls, estimate: str) -> str:
         """Checks strings for proper datetime in iso format."""
 
-        class TimeDelta(BaseModel):
+        class TimeDelta(ClockifyBaseModel):
             td: timedelta = Field()
 
         TimeDelta(td=estimate)  # type: ignore[arg-type]
         return estimate
 
 
-class EstimateResetDto(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True,
-        validate_assignment=True,
-        revalidate_instances="always",
-        populate_by_name=True,
-    )
-
+class EstimateResetDto(ClockifyBaseModel):
     day_of_month: int = Field(alias="dayOfMonth")
     day_of_week: str = Field(alias="dayOfWeek")
     hour: int = Field()
@@ -104,14 +77,7 @@ class EstimateResetDto(BaseModel):
     month: str = Field()
 
 
-class TimeEstimateDto(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True,
-        validate_assignment=True,
-        revalidate_instances="always",
-        populate_by_name=True,
-    )
-
+class TimeEstimateDto(ClockifyBaseModel):
     active: bool = Field()
     estimate: str = Field()
     include_non_billable: bool = Field(alias="includeNonBillable")
@@ -119,15 +85,8 @@ class TimeEstimateDto(BaseModel):
     type: str = Field()
 
 
-class GetProjectResponse(BaseModel):
+class GetProjectResponse(ClockifyBaseModel):
     """Project.get_projects."""
-
-    model_config = ConfigDict(
-        from_attributes=True,
-        validate_assignment=True,
-        revalidate_instances="always",
-        populate_by_name=True,
-    )
 
     color: str = Field()
     duration: str = Field()
@@ -142,14 +101,7 @@ class GetProjectResponse(BaseModel):
 ################################################################################
 # Add Project
 ################################################################################
-class EstimateRequest(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True,
-        validate_assignment=True,
-        revalidate_instances="always",
-        populate_by_name=True,
-    )
-
+class EstimateRequest(ClockifyBaseModel):
     estimate: str | None = Field(None)
     type: Literal["AUTO", "MANUAL"] | None = Field(None)
 
@@ -158,60 +110,32 @@ class EstimateRequest(BaseModel):
     def validate_estimate(cls, estimate: str) -> str:
         """Checks strings for proper datetime in iso format."""
 
-        class TimeDelta(BaseModel):
+        class TimeDelta(ClockifyBaseModel):
             td: timedelta = Field()
 
         TimeDelta(td=estimate)  # type: ignore[arg-type]
         return estimate
 
 
-class HourlyRateRequest(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True,
-        validate_assignment=True,
-        revalidate_instances="always",
-        populate_by_name=True,
-    )
-
+class HourlyRateRequest(ClockifyBaseModel):
     amount: int = Field()
     since: str | None = Field(None)
 
 
-class MembershipRequest(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True,
-        validate_assignment=True,
-        revalidate_instances="always",
-        populate_by_name=True,
-    )
-
+class MembershipRequest(ClockifyBaseModel):
     hourlyRate: HourlyRateRequest | None = Field(None)
     membership_status: T_status | None = Field(None, alias="membershipStatus")
     membership_type: T_membership_type | None = Field(None, alias="membershipType")
     user_id: str | None = Field(None, alias="userId")
 
 
-class CostRateRequest(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True,
-        validate_assignment=True,
-        revalidate_instances="always",
-        populate_by_name=True,
-    )
-
+class CostRateRequest(ClockifyBaseModel):
     amount: int | None = Field(None)
     since: str | None = Field(None)
     since_as_instant: str | None = Field(None, alias="sinceAsInstant")
 
 
-class TaskRequest(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True,
-        validate_assignment=True,
-        revalidate_instances="always",
-        populate_by_name=True,
-    )
-
+class TaskRequest(ClockifyBaseModel):
     assignee_id: str | None = Field(None, alias="assigneeId")
     assignee_ids: list[str] | None = Field(None, alias="assigneeIds")
     billable: bool | None = Field(None)
@@ -226,14 +150,7 @@ class TaskRequest(BaseModel):
     user_group_ids: list[str] | None = Field(None, alias="userGroupIds")
 
 
-class AddProjectPayload(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True,
-        validate_assignment=True,
-        revalidate_instances="always",
-        populate_by_name=True,
-    )
-
+class AddProjectPayload(ClockifyBaseModel):
     billable: bool | None = Field(None)
     client_id: str | None = Field(None, alias="clientId")
     color: str | None = Field(None)
@@ -247,14 +164,7 @@ class AddProjectPayload(BaseModel):
 
 
 ################################################################################
-class AddProjectResponse(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True,
-        validate_assignment=True,
-        revalidate_instances="always",
-        populate_by_name=True,
-    )
-
+class AddProjectResponse(ClockifyBaseModel):
     archived: bool = Field()
     billable: bool = Field()
     budget_estimate: EstimateWithOptionsDto = Field(alias="budgetEstimate")

@@ -411,7 +411,7 @@ def test_get_users_filtered() -> None:
 
 
 @responses.activate
-def test_get_users_emptry() -> None:
+def test_get_users_empty() -> None:
     resp_data: list = []
 
     expected = [UserResponse.model_validate(_) for _ in resp_data]
