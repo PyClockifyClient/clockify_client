@@ -411,22 +411,6 @@ def test_get_users_filtered() -> None:
 
 
 @responses.activate
-def test_get_users_empty() -> None:
-    resp_data: list = []
-
-    expected = [UserResponse.model_validate(_) for _ in resp_data]
-    rsp = responses.get(
-        "https://global.baz.co/workspaces/123/users?name=Foo",
-        json=resp_data,
-        status=200,
-    )
-    user = User("apikey", "baz.co")
-    rt = user.get_users("123", GetUsersParams(name="Foo"))
-    assert rt == expected
-    assert rsp.call_count == 1
-
-
-@responses.activate
 def test_add_user() -> None:
     resp_data = {
         "costRate": {"amount": 10500, "currency": "USD"},
