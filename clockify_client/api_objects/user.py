@@ -4,7 +4,12 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from clockify_client.api_objects.common import MembershipDtoV1, T_day_of_week
+from clockify_client.api_objects.common import (
+    MembershipDtoV1,
+    T_day_of_week,
+    T_sort_order,
+    T_status,
+)
 from clockify_client.types import JsonType
 
 T_dashboard_selection = Literal["ME", "TEAM"]
@@ -14,14 +19,21 @@ T_time_format = Literal["HOUR12", "HOUR24"]
 T_custom_field_type = Literal[
     "TXT", "NUMBER", "DROPDOWN_SINGLE", "DROPDOWN_MULTIPLE", "CHECKBOX", "LINK"
 ]
+T_user_sort_column = Literal[
+    "ID", "EMAIL", "NAME", "NAME_LOWERCASE", "ACCESS", "HOURLYRATE", "COSTRATE"
+]
+T_membership = Literal["ALL", "NONE", "WORKSPACE", "PROJECT", "USERGROUP"]
 
 
 ################################################################################
-# Get Current User
+# Get Current User & Get Users
 ################################################################################
 class UserCustomFieldValueDtoV1(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     custom_field_id: str = Field(alias="customFieldId")
@@ -33,7 +45,10 @@ class UserCustomFieldValueDtoV1(BaseModel):
 
 class SummaryReportSettingsDtoV1(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     group: str = Field()
@@ -42,7 +57,10 @@ class SummaryReportSettingsDtoV1(BaseModel):
 
 class UserSettingsDtoV1(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     alerts: bool = Field()
@@ -80,7 +98,10 @@ class UserSettingsDtoV1(BaseModel):
 
 class UserResponse(BaseModel):
     model_config = ConfigDict(
-        from_attributes=True, validate_assignment=True, revalidate_instances="always"
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
     )
 
     active_workspace: str = Field(alias="activeWorkspace")
@@ -93,3 +114,24 @@ class UserResponse(BaseModel):
     profile_picture: str = Field(alias="profilePicture")
     settings: UserSettingsDtoV1 = Field()
     status: str = Field()
+
+
+class GetUsersParams(BaseModel):
+    model_config = ConfigDict(
+        from_attributes=True,
+        validate_assignment=True,
+        revalidate_instances="always",
+        populate_by_name=True,
+    )
+
+    email: str | None = Field(None)
+    project_id: str | None = Field(None, alias="project-id")
+    status: T_status | None = Field(None)
+    account_statuses: str | None = Field(None, alias="account-statuses")
+    name: str | None = Field(None)
+    sort_column: T_user_sort_column | None = Field(None, alias="sort-column")
+    sort_order: T_sort_order | None = Field(None, alias="sort-order")
+    page: int | None = Field(None)
+    page_size: int | None = Field(None, alias="page-size")
+    memberships: T_membership | None = Field(None)
+    include_roles: bool | None = Field(None, alias="include-roles")

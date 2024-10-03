@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 from urllib.parse import urlencode
 
 from clockify_client.abstract_clockify import AbstractClockify
 from clockify_client.api_objects.user import UserResponse
 
 if TYPE_CHECKING:
+    from clockify_client.api_objects.user import GetUsersParams
     from clockify_client.types import JsonType
 
 
@@ -24,18 +25,25 @@ class User(AbstractClockify):
             return None
         return UserResponse.model_validate(response)
 
-    def get_users(self, workspace_id: str, params: dict | None = None) -> JsonType:
+    def get_users(
+        self, workspace_id: str, params: GetUsersParams | None = None
+    ) -> list[UserResponse] | None:
         """Returns list of all users in given workspace.
 
         https://docs.clockify.me/#tag/User/operation/getUsersOfWorkspace
         """
         if params:
-            params_str = urlencode(params, doseq=True)
-            path = f"/workspaces/{workspace_id}/users?{params_str}"
+            url_params = urlencode(
+                params.model_dump(exclude_none=True, by_alias=True), doseq=True
+            )
+            path = f"/workspaces/{workspace_id}/users?{url_params}"
         else:
             path = f"/workspaces/{workspace_id}/users/"
 
-        return self.get(path)
+        response = cast(list, self.get(path))
+        if response is None:
+            return None
+        return [UserResponse.model_validate(r) for r in response]
 
     def add_user(self, workspace_id: str, email: str) -> JsonType:
         """Adds new user into workspace.
