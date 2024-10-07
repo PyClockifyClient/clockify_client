@@ -171,7 +171,7 @@ class AddProjectResponse(ClockifyBaseModel):
     client_id: str = Field(alias="clientId")
     client_name: str = Field(alias="clientName")
     color: str = Field()
-    costRate: RateDtoV1 = Field(alias="costRate")
+    cost_rate: RateDtoV1 = Field(alias="costRate")
     duration: str = Field()
     estimate: EstimateDtoV1 = Field()
     estimate_reset: EstimateResetDto = Field(alias="estimateReset")
