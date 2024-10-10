@@ -25,6 +25,10 @@ class RateDtoV1(ClockifyBaseModel):
     currency: str = Field()
 
 
+class HourlyRateDtoV1(RateDtoV1):
+    pass
+
+
 class MembershipDtoV1(ClockifyBaseModel):
     cost_rate: RateDtoV1 | None = Field(alias="costRate")
     hourly_rate: RateDtoV1 | None = Field(alias="hourlyRate")
