@@ -4,7 +4,11 @@ from typing import TYPE_CHECKING, cast
 from urllib.parse import urlencode
 
 from clockify_client.abstract_clockify import AbstractClockify
-from clockify_client.api_objects.user import UserResponse
+from clockify_client.api_objects.user import (
+    AddUserPayload,
+    AddUserResponse,
+    UserResponse,
+)
 
 if TYPE_CHECKING:
     from clockify_client.api_objects.user import GetUsersParams
@@ -45,15 +49,21 @@ class User(AbstractClockify):
             return None
         return [UserResponse.model_validate(r) for r in response]
 
-    def add_user(self, workspace_id: str, email: str) -> JsonType:
+    def add_user(self, workspace_id: str, email: str) -> AddUserResponse | None:
         """Adds new user into workspace.
 
         https://docs.clockify.me/#tag/Workspace/operation/addUsers
         """
         path = f"/workspaces/{workspace_id}/users/"
 
-        payload = {"emails": [email]}
-        return self.post(path, payload=payload)
+        payload = AddUserPayload(email=email)
+
+        response = self.post(
+            path, payload=payload.model_dump(exclude_unset=True, by_alias=True)
+        )
+        if response is None:
+            return None
+        return AddUserResponse.model_validate(response)
 
     def update_user(self, workspace_id: str, user_id: str, status: str) -> JsonType:
         """Update user status in workspace.

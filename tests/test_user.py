@@ -6,7 +6,11 @@ import pytest
 import responses
 from pydantic import ValidationError
 
-from clockify_client.api_objects.user import GetUsersParams, UserResponse
+from clockify_client.api_objects.user import (
+    AddUserResponse,
+    GetUsersParams,
+    UserResponse,
+)
 from clockify_client.models.user import User
 
 
@@ -435,7 +439,7 @@ def test_add_user() -> None:
         "name": "Cool Company",
         "subdomain": {"enabled": True, "name": "coolcompany"},
         "workspaceSettings": {
-            "adminOnlyPages": '["PROJECT","TEAM","REPORTS"]',
+            "adminOnlyPages": ["PROJECT"],
             "automaticLock": {
                 "changeDay": "FRIDAY",
                 "dayOfMonth": 15,
@@ -449,6 +453,7 @@ def test_add_user() -> None:
             "currencyFormat": "CURRENCY_SPACE_VALUE",
             "decimalFormat": True,
             "defaultBillableProjects": True,
+            "durationFormat": "FULL",
             "forceDescription": True,
             "forceProjects": True,
             "forceTags": True,
@@ -474,6 +479,7 @@ def test_add_user() -> None:
             "trackTimeDownToSecond": True,
         },
     }
+    expected = AddUserResponse.model_validate(resp_data)
     rsp = responses.post(
         "https://global.baz.co/workspaces/123/users/",
         json=resp_data,
@@ -481,9 +487,9 @@ def test_add_user() -> None:
     )
     user = User("apikey", "baz.co")
     rt = user.add_user("123", "johndoe@example.com")
-    assert rt == resp_data
+    assert rt == expected
     assert rsp.call_count == 1
-    assert json.loads(rsp.calls[0].request.body) == {"emails": ["johndoe@example.com"]}
+    assert json.loads(rsp.calls[0].request.body) == {"email": "johndoe@example.com"}
 
 
 @responses.activate
