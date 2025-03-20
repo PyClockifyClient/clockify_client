@@ -25,7 +25,7 @@ class User(AbstractClockify):
         path = "/user/"
 
         response = self.get(path)
-        if response is None: 
+        if response is None:
             return None  # pragma: nocover
         return UserResponse.model_validate(response)
 
