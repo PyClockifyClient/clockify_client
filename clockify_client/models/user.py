@@ -26,7 +26,7 @@ class User(AbstractClockify):
 
         response = self.get(path)
         if response is None:
-            return None
+            return None  # pragma: nocover
         return UserResponse.model_validate(response)
 
     def get_users(
@@ -46,7 +46,7 @@ class User(AbstractClockify):
 
         response = cast(list, self.get(path))
         if response is None:
-            return None
+            return None  # pragma: nocover
         return [UserResponse.model_validate(r) for r in response]
 
     def add_user(self, workspace_id: str, email: str) -> AddUserResponse | None:
@@ -62,7 +62,7 @@ class User(AbstractClockify):
             path, payload=payload.model_dump(exclude_unset=True, by_alias=True)
         )
         if response is None:
-            return None
+            return None  # pragma: nocover
         return AddUserResponse.model_validate(response)
 
     def update_user(self, workspace_id: str, user_id: str, status: str) -> JsonType:

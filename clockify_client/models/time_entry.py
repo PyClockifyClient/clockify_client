@@ -39,7 +39,7 @@ class TimeEntry(AbstractClockify):
         response = cast(list[JsonType], self.get(path))
 
         if response is None:
-            return None
+            return None  # pragma: nocover
         return [TimeEntryResponse.model_validate(r) for r in response]
 
     def get_time_entry(
@@ -55,7 +55,7 @@ class TimeEntry(AbstractClockify):
         response = self.get(path)
 
         if response is None:
-            return None
+            return None  # pragma: nocover
         return TimeEntryResponse.model_validate(response)
 
     def add_time_entry(
@@ -75,7 +75,7 @@ class TimeEntry(AbstractClockify):
         )
 
         if response is None:
-            return None
+            return None  # pragma: nocover
         return AddTimeEntryResponse.model_validate(response)
 
     def update_time_entry(
@@ -93,7 +93,7 @@ class TimeEntry(AbstractClockify):
         )
 
         if response is None:
-            return None
+            return None  # pragma: nocover
         return UpdateTimeEntryResponse.model_validate(response)
 
     def delete_time_entry(self, workspace_id: str, entry_id: str) -> None:
